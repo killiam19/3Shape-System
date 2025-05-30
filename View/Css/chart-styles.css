@@ -1,0 +1,47 @@
+/* Estilos mejorados para los gráficos */
+.chart-container {
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.chart-canvas {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 350px;
+    display: block;
+}
+
+body.dark-mode .chart-container {
+    background-color: #2d3748;
+}
+
+/* Estilos para los botones de cambio de gráfico */
+.chart-switch {
+    transition: all 0.2s ease;
+}
+
+.chart-switch.active {
+    background-color: #e9ecef;
+    font-weight: 600;
+}
+
+body.dark-mode .chart-switch.active {
+    background-color: #4b5563;
+}
+
+/* Asegurar que el contenedor principal tenga suficiente espacio */
+#first_container {
+    margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+    .chart-container {
+        min-height: 350px;
+    }
+}

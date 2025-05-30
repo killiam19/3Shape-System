@@ -1,0 +1,10 @@
+# Activar el manejo de errores personalizados
+ErrorDocument 404 /3Shape_project/errors/404.php
+ErrorDocument 500 /3Shape_project/errors/500.php
+
+# Evitar listar archivos en el navegador
+Options -Indexes
+
+# Habilitar mod_rewrite (si lo usas para redirecciones)
+RewriteEngine On
+RewriteBase /3Shape_project/

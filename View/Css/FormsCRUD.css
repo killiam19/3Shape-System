@@ -1,0 +1,270 @@
+/* Estilos para el panel de administrador */
+.admin-panel {
+    background-color: #fff !important;
+    border: 1px solid rgba(222, 226, 230, 0.6) !important;
+    color: #212529 !important;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, box-shadow;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-panel:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+    border-color: rgba(222, 226, 230, 0.8) !important;
+}
+
+.admin-panel h4 {
+    color: #2c3e50;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.4;
+    margin-bottom: 1.75rem;
+}
+
+.admin-panel .btn-primary {
+    background: linear-gradient(120deg, var(--primary-color), var(--accent-color));
+    border: none;
+    border-radius: 6px;
+    padding: 0.625rem 1.25rem;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    position: relative;
+}
+
+.admin-panel .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(120deg, var(--accent-color), var(--primary-color));
+}
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #4a90e2;
+    --accent-color: #0a58ca;
+    --light-bg: #f8f9fa;
+    --border-radius: 12px;
+    --box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    --input-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.8;
+    scroll-behavior: smooth;
+    letter-spacing: 0.2px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+#FORMregistform {
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: white;
+}
+
+#FORMregistform:hover {
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.2);
+}
+
+#totalC {
+    color: var(--primary-color);
+    font-size: 2rem;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+#totalC:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 3px;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-control, .form-select {
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(222, 226, 230, 0.6);
+    padding: 0.75rem 1rem;
+    transition: var(--transition);
+    box-shadow: var(--input-shadow);
+    background-color: #ffffff;
+    font-size: 1.125rem;
+    line-height: 1.85;
+    color: #495057;
+    will-change: transform, box-shadow;
+}
+
+.form-control:hover, .form-select:hover {
+    border-color: rgba(222, 226, 230, 0.8);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+    outline: none;
+}
+
+.btn {
+    padding: 0.75rem 1.75rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    transition: var(--transition);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    will-change: transform;
+}
+
+.btn-secondary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background-image: linear-gradient(to right, var(--accent-color), var(--primary-color));
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #bb2d3b;
+    border-color: #bb2d3b;
+    transform: translateY(-2px);
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.text-danger {
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+/* Card selectors styling */
+.card-selector-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.2rem;
+}
+
+.card-selector {
+    flex: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-selector-group {
+        flex-direction: column;
+    }
+    
+    #FORMregistform {
+        padding: 1.5rem !important;
+    }
+}
+
+/* Field animation */
+.form-control, .form-select {
+    position: relative;
+    z-index: 1;
+}
+
+.form-control:focus + .focus-border,
+.form-select:focus + .focus-border {
+    transform: scaleX(1);
+    transition: transform 0.3s ease;
+}
+
+.focus-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-color);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    z-index: 0;
+}
+
+/* Small field groups */
+.field-group-sm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.field-group-sm .form-group {
+    flex: 1;
+    min-width: 120px;
+}
+
+ /*Sección de Formularios en Dark Mode */
+
+ .dark-mode .form-container {
+    background-color: #343941 !important;
+    border: 1px solid rgba(222, 226, 230, 0.6) !important;
+    color: #212529 !important;
+    margin-bottom: 24px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+    will-change: transform, box-shadow;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 2.25rem;
+    animation: modalShow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark-mode body {
+    color: var(--text-color);
+    background-color:z#2d3748 !important;
+  }
+
+.dark-mode #SettingsH1{
+  color: #ffffff;
+}
+
+.dark-mode .label-text {
+  color: #f9fafb; /* o var(--text-color) si ya lo definiste en el modo oscuro */
+}
+
+.dark-mode h5 {
+    color:#ffffff;
+  }

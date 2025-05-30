@@ -1,0 +1,169 @@
+:root {
+    --footer-bg-light: #ffffff;
+    --footer-bg-dark: #1a1a1a;
+    --footer-border-light: #e0e0e0;
+    --footer-border-dark: #444444;
+    --footer-link-light: #4a90e2;
+    --footer-link-hover-light: #357abd;
+    --footer-link-dark: #6ca9f0;
+    --footer-link-hover-dark: #8ebcf3;
+    --footer-icon-color-light: #666666;
+    --footer-icon-color-dark: #aaaaaa;
+    --footer-text-light: #212529;
+    --footer-text-dark: #e0e0e0;
+    --footer-card-bg-light: #ffffff;
+    --footer-card-bg-dark: #2a2a2a;
+    --footer-card-shadow-light: rgba(0, 0, 0, 0.05);
+    --footer-card-shadow-dark: rgba(0, 0, 0, 0.2);
+  }
+  
+  footer {
+    background-color: var(--footer-bg-light);
+    transition: all 0.3s ease;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .footer-section {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+    background-color: var(--footer-card-bg-light);
+    box-shadow: 0 4px 12px var(--footer-card-shadow-light);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .footer-section:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .footer-section:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .footer-title {
+    color: var(--footer-text-light);
+    font-size: 1.1rem;
+    border-bottom: 2px solid var(--footer-border-light);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.2rem;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .footer-icon {
+    color: var(--footer-icon-color-light);
+    transition: color 0.3s ease;
+    font-size: 1rem;
+  }
+  
+  .footer-link {
+    color: var(--footer-link-light);
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .footer-link::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--footer-link-hover-light);
+    transition: width 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .footer-link:hover {
+    color: var(--footer-link-hover-light);
+    text-decoration: none;
+  }
+  
+  .footer-link:hover::after {
+    width: 100%;
+  }
+  
+  .footer-link:hover .footer-icon {
+    color: var(--footer-link-hover-light);
+    transform: translateX(3px);
+  }
+  
+  /* Estilos específicos para el footer */
+  .developer-card {
+    transition: all 0.3s ease;
+  }
+  
+  .developer-card .text-primary {
+    transition: color 0.3s ease;
+  }
+  
+  .developer-card .text-muted {
+    transition: color 0.3s ease;
+  }
+  
+  /* Modo oscuro */
+  body.dark-mode footer {
+    background-color: var(--footer-bg-dark);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  body.dark-mode .footer-section {
+    background-color: var(--footer-card-bg-dark);
+    box-shadow: 0 4px 12px var(--footer-card-shadow-dark);
+  }
+  
+  body.dark-mode .footer-title {
+    color: var(--footer-text-dark);
+    border-color: var(--footer-border-dark);
+  }
+  
+  body.dark-mode .footer-icon {
+    color: var(--footer-icon-color-dark);
+  }
+  
+  body.dark-mode .footer-link {
+    color: var(--footer-link-dark);
+  }
+  
+  body.dark-mode .footer-link:hover {
+    color: var(--footer-link-hover-dark);
+  }
+  
+  body.dark-mode .footer-link::after {
+    background-color: var(--footer-link-hover-dark);
+  }
+  
+  body.dark-mode .footer-link:hover .footer-icon {
+    color: var(--footer-link-hover-dark);
+  }
+  
+  body.dark-mode .text-muted {
+    color: #aaaaaa !important;
+  }
+  
+  body.dark-mode .developer-card .text-primary {
+    color: var(--footer-link-dark) !important;
+  }
+  
+  body.dark-mode .border-top {
+    border-color: var(--footer-border-dark) !important;
+  }
+  
+  /* Asegurarse de que el fondo del footer sea correcto en modo oscuro */
+  body.dark-mode footer.bg-light {
+    background-color: var(--footer-bg-dark) !important;
+  }
+  
+  /* Asegurarse de que las tarjetas del footer tengan el fondo correcto en modo oscuro */
+  body.dark-mode .footer-section.bg-white {
+    background-color: var(--footer-card-bg-dark) !important;
+  }
+  

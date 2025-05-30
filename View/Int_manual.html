@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Manual</title>
+    <link rel="shortcut icon" href="../Configuration/3shape-intraoral-logo.png" type="image/x-icon">
+    <script src="../Configuration/JQuery/jquery-3.7.1.js"></script>
+    <link href="../Configuration/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../Configuration/JQuery/all.min.css">
+    <link rel="stylesheet" href="../Configuration/JQuery/fontawesome.min.css">
+    <link rel="stylesheet" href="../Configuration/DataTables/datatables.min.css">
+    <link rel="stylesheet" href="../Configuration/JQuery/sweetalert2.min.css">
+    <link rel="stylesheet" href="../Configuration/JQuery/animate.min.css">
+    <link rel="stylesheet" href="../View/Css/manual.css">
+    <link rel="stylesheet" href="../View/Css/manual-modern.css">
+    <link rel="stylesheet" href="../View/Css/dark-mode.css">
+    <script src="../Configuration/JQuery/sweetalert2.all.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pausar videos cuando se cierra el modal
+            document.querySelectorAll('.video-modal').forEach(modal => {
+                modal.addEventListener('hidden.bs.modal', function() {
+                    const iframe = this.querySelector('iframe');
+                    if (iframe) {
+                        const src = iframe.src;
+                        iframe.src = src; // Esto reinicia el video
+                    }
+                });
+            });
+        });
+    </script>
+    <style>
+        /* Additional styles for videos */
+        .btn-video {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+        }
+
+        .btn-video:hover {
+            background-color: #cc0000;
+            color: white;
+        }
+
+        .btn-group-absolute {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0.5rem;
+        }
+
+        .video-modal .modal-dialog {
+            max-width: 90vw;
+            margin: 1rem auto;
+        }
+
+        @media (max-width: 768px) {
+            .video-modal .modal-dialog {
+                max-width: 95%;
+                margin: 0.5rem auto;
+            }
+            .responsive-container {
+                padding-top: 75%; /* 4:3 para móviles */
+            }
+        }
+
+        .responsive-container {
+            position: relative;
+            padding-top: 56.25%; /* Relación 16:9 */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .responsive-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+
+            max-width: 800px;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="bg-light shadow-sm p-3"
+            style="width: 280px; height: 100vh; position: fixed; overflow-y: auto;">
+            <div class="sidebar-header mb-4">
+                <img src="../Configuration/3shape-logo.png" alt="Logo" width="150" height="31" class="d-block mx-auto">
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#inicio">Introduction</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#gestion-activos">Asset Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#registro-equipos">Equipment Registration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#notificaciones">Notifications</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#admin-features">Administrative Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.php">Back Home</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main content -->
+        <div class="main-content" style="margin-left: 280px; padding: 20px;">
+            <div class="container">
+                <section id="inicio">
+                    <h1 class="text-center mb-5">User Manual - 3Shape System</h1>
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Introduction</h3>
+                            <p class="card-text">Welcome to the 3Shape asset and equipment management system, a comprehensive platform designed to optimize the control and tracking of equipment in your company. This system provides advanced tools for efficient enterprise asset management, allowing precise inventory control, movement tracking, and preventive maintenance.</p>
+                            <p class="card-text">Main features of the system:</p>
+                            <ul>
+                                <li>Intuitive and easy-to-use interface</li>
+                                <li>Centralized asset management</li>
+                                <li>Real-time notification system</li>
+                                <li>Automatic report generation</li>
+                                <li>Complete equipment lifecycle tracking</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="gestion-activos" class="mt-5">
+                    <h2 class="mb-4">Asset Management</h2>
+                    <div class="card position-relative">
+                        <div class="card-body">
+                            <button type="button" class="btn btn-info position-absolute top-0 end-0 m-2"
+                                data-bs-toggle="modal" data-bs-target="#inventoryModal">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                            <button type="button" class="btn btn-video" data-bs-toggle="modal"
+                                data-bs-target="#inventoryVideoModal">
+                                <i class="fas fa-play"></i> Video
+                            </button>
+                            <div class="feature-icon"><i class="fas fa-laptop"></i></div>
+                            <h4>Inventory Control</h4>
+                            <p>The system allows complete inventory management:</p>
+                            <ul>
+                                <li>Detailed asset registration with complete technical information (model, serial
+                                    number,
+                                    specifications)</li>
+                                <li>Real-time tracking of each equipment's status (available, in use, under maintenance)
+                                </li>
+                                <li>Complete history of movements and maintenance with dates and responsible parties
+                                </li>
+                                <li>Advanced search with multiple criteria (location, status, assigned user)</li>
+                                <li>Flexible equipment categorization by type, department, or project</li>
+                                <li>Warranty management and scheduled maintenance dates</li>
+                                <li>Customizable reports for inventory analysis</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="registro-equipos" class="mt-5">
+                    <h2 class="mb-4">Check-In and Check-Out Registration</h2>
+                    <div class="card position-relative">
+                        <div class="card-body">
+                            <button type="button" class="btn btn-info position-absolute top-0 end-0 m-2"
+                                data-bs-toggle="modal" data-bs-target="#movementModal">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                            <button type="button" class="btn btn-video" data-bs-toggle="modal"
+                                data-bs-target="#movementVideoModal">
+                                <i class="fas fa-play"></i> Video
+                            </button>
+                            <div class="feature-icon"><i class="fas fa-exchange-alt"></i></div>
+                            <h4>Movement Control</h4>
+                            <p>Main features of movement control:</p>
+                            <ul>
+                                <li>Detailed equipment check-in and check-out records with date</li>
+                                <li>Digital signature system for movement validation with biometric security</li>
+                                <li>Automatic generation of certificates and supporting documents in PDF format</li>
+                                <li><strong>Coming soon:</strong>Photographic record of equipment condition at each
+                                    movement
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="notificaciones" class="mt-5 mb-5">
+                    <h2 class="mb-4">Notification System</h2>
+                    <div class="card position-relative">
+                        <div class="card-body">
+                            <button type="button" class="btn btn-info position-absolute top-0 end-0 m-2"
+                                data-bs-toggle="modal" data-bs-target="#alertsModal">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                            <button type="button" class="btn btn-video" data-bs-toggle="modal"
+                                data-bs-target="#alertsVideoModal">
+                                <i class="fas fa-play"></i> Video
+                            </button>
+                            <div class="feature-icon"><i class="fas fa-bell"></i></div>
+                            <h4>Alerts and Monitoring</h4>
+                            <p>Features of the notification system:</p>
+                            <ul>
+                                <li>Scheduled maintenance alerts</li>
+                                <li>Equipment movement notifications</li>
+                                <li>System activity logging</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="admin-features" class="mt-5 mb-5">
+                    <h2 class="mb-4">Administrative Features</h2>
+                    <div class="card position-relative">
+                        <div class="card-body">
+                            <button type="button" class="btn btn-info position-absolute top-0 end-0 m-2"
+                                data-bs-toggle="modal" data-bs-target="#fieldsModal">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                            <button type="button" class="btn btn-video" data-bs-toggle="modal"
+                                data-bs-target="#fieldsVideoModal">
+                                <i class="fas fa-play"></i> Video
+                            </button>
+                            <div class="feature-icon"><i class="fas fa-user-shield"></i></div>
+                            <h4>Dynamic Fields Management</h4>
+                            <p>Advanced database customization features:</p>
+                            <ul>
+                                <li>Dynamic field creation for asset and user tables</li>
+                                <li>Custom field type selection (text, number, date, etc.)</li>
+                                <li>Field validation rules configuration</li>
+                                <li>Real-time form updates without system restart</li>
+                                <li>Automatic database structure synchronization</li>
+                                <li>Field dependency management</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4 position-relative">
+                        <div class="card-body">
+                            <button type="button" class="btn btn-info position-absolute top-0 end-0 m-2"
+                                data-bs-toggle="modal" data-bs-target="#dbAdminModal">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                            <button type="button" class="btn btn-video" data-bs-toggle="modal"
+                                data-bs-target="#dbAdminVideoModal">
+                                <i class="fas fa-play"></i> Video
+                            </button>
+                            <div class="feature-icon"><i class="fas fa-database"></i></div>
+                            <h4>Database Administration</h4>
+                            <p>Comprehensive database tools:</p>
+                            <ul>
+                                <li>Database backup and restore functionality</li>
+                                <li>Table structure modification tools</li>
+                                <li>Data import/export in multiple formats</li>
+                                <li>Automated data validation checks</li>
+                                <li>Database optimization utilities</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4 position-relative">
+                        <div class="card-body">
+                            <button type="button" class="btn btn-info position-absolute top-0 end-0 m-2"
+                                data-bs-toggle="modal" data-bs-target="#dashboardModal">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                            <button type="button" class="btn btn-video" data-bs-toggle="modal"
+                                data-bs-target="#dashboardVideoModal">
+                                <i class="fas fa-play"></i> Video
+                            </button>
+                            <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+                            <h4>Dashboard and Analytics</h4>
+                            <p>Statistical monitoring features:</p>
+                            <ul>
+                                <li>Equipment status distribution charts</li>
+                                <li>Top Job Titles analysis for employees distribution</li>
+                                <li>Registered users by role tracking visualization</li>
+                                <li>Real-time data monitoring and updates</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4 position-relative">
+                        <div class="card-body">
+                            <button type="button" class="btn btn-info position-absolute top-0 end-0 m-2"
+                                data-bs-toggle="modal" data-bs-target="#maintenanceModal">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                            <button type="button" class="btn btn-video" data-bs-toggle="modal"
+                                data-bs-target="#maintenanceVideoModal">
+                                <i class="fas fa-play"></i> Video
+                            </button>
+                            <div class="feature-icon"><i class="fas fa-tools"></i></div>
+                            <h4>System Maintenance</h4>
+                            <p>Administrative maintenance tools:</p>
+                            <ul>
+                                <li>Log file management and monitoring</li>
+                                <li>System notifications configuration</li>
+                                <li>User access control and settings</li>
+                                <li>Database structure modifications</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Modales para cada sección -->
+            <div class="modal fade" id="inventoryModal" tabindex="-1" aria-labelledby="inventoryModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="inventoryModalLabel">Inventory Control Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>The main objective of
+                                this service is to optimize asset data management for users. It provides detailed
+                                functionalities covering the equipment lifecycle, such as:
+
+                                Registering new assets.
+                                Updating asset information.
+                                Managing equipment check-outs (assignments) and changes/swaps.
+                                Deleting obsolete or decommissioned assets.
+                                Additionally, it includes real-time validation to verify asset existence and the
+                                uniqueness of
+                                the equipment's serial number.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Modal for Inventory Control -->
+            <div class="modal fade video-modal" id="inventoryVideoModal" tabindex="-1" aria-labelledby="inventoryVideoModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="inventoryVideoModalLabel">Inventory Control Tutorial</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/8WMY_fBMrzw" 
+                                        title="Inventory Control Tutorial" 
+                                        allowfullscreen 
+                                        loading="lazy"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade video-modal" id="movementModal" tabindex="-1" aria-labelledby="movementModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="movementModalLabel">Movement Control Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>The main objective of this service is to retrieve specific asset information from the
+                                database,
+                                identifying them by their 'assetname', in order to generate documents or reports in PDF
+                                format.
+
+                                Additionally, it offers key functionalities such as:
+
+                                Digital Signature: Allows adding a digital signature to the selected PDF documents
+                                before their
+                                final generation or distribution.
+                                Asset Management (Separate Functionality): The overall system also includes options to
+                                modify an
+                                asset's information or to decommission it (remove it from the system)."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <!-- Video Modal for Movement Control -->
+<div class="modal fade video-modal" id="movementVideoModal" tabindex="-1" aria-labelledby="movementVideoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="movementVideoModalLabel">Movement Control Tutorial</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="ratio ratio-16x9">
+                    <!-- Replace VIDEO_ID with your actual YouTube video ID -->
+                    <iframe src="https://www.youtube.com/embed/yMoC7pZosrk" title="Movement Control Tutorial" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <div class="modal fade" id="alertsModal" tabindex="-1" aria-labelledby="alertsModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="alertsModalLabel">Alerts and Monitoring Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>The main objective of the notification system is to obtain detailed information
+                                about the various alert messages
+                                or actions previously generated by the user. In turn,
+                                this service provides an option to perform basic filtering of the notification messages
+                                and another option for history deletion.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Video Modal for Notifications -->
+            <div class="modal fade video-modal" id="alertsVideoModal" tabindex="-1" aria-labelledby="alertsVideoModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="alertsVideoModalLabel">Alerts and Notifications Tutorial</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ratio ratio-16x9">
+                                    <iframe src="https://www.youtube.com/embed/mr0O-_Dkj5I"
+                                        title="Dynamic Fields Management Tutorial" allowfullscreen>
+                                    </iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="fieldsModal" tabindex="-1" aria-labelledby="fieldsModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="fieldsModalLabel">Dynamic Fields Management Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>The dynamic fields system is a powerful feature designed to enhance software
+                                maintainability and
+                                provide administrators with greater control over the application. This system enables:
+                            </p>
+                            <ul>
+                                <li>Addition of new custom fields to the database, enhancing data collection and user
+                                    experience
+                                </li>
+                                <li>Flexible field management with options to add or remove columns as needed</li>
+                                <li>Advanced data administration system for the main table display</li>
+                                <li>Dynamic data insertion and deletion capabilities (requires active administrator
+                                    session)
+                                </li>
+                                <li>Database export functionality in CSV or TXT formats</li>
+                                <li>Comprehensive dynamic data management allowing field integration with corresponding
+                                    forms
+                                </li>
+                                <li>Real-time form updates for both registration and modification processes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Modal for Dynamic Fields -->
+            <div class="modal fade video-modal" id="fieldsVideoModal" tabindex="-1" aria-labelledby="fieldsVideoModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="fieldsVideoModalLabel">Dynamic Fields Management Tutorial</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ratio ratio-16x9">
+                                <!-- Replace VIDEO_ID with your actual YouTube video ID -->
+                                <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                                    title="Fields Management Tutorial" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade video-modal" id="dbAdminModal" tabindex="-1" aria-labelledby="dbAdminModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="dbAdminModalLabel">Database Administration Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Database administration features include:</p>
+                            <ul>
+                                <li>Automated backup and restore</li>
+                                <li>Table structure modifications</li>
+                                <li>Data import/export capabilities</li>
+                                <li>Database optimization tools</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Modal for Database Administration -->
+            <div class="modal fade video-modal" id="dbAdminVideoModal" tabindex="-1" aria-labelledby="dbAdminVideoModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="dbAdminVideoModalLabel">Database Administration Tutorial</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ratio ratio-16x9">
+                                <!-- Replace VIDEO_ID with your actual YouTube video ID -->
+                                <iframe src="https://www.youtube.com/embed/VIDEO_ID"
+                                    title="Database Administration Tutorial" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="dashboardModal" tabindex="-1" aria-labelledby="dashboardModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="dashboardModalLabel">Dashboard and Analytics Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>The analytical dashboard integrates multiple real-time data sources:</p>
+                            <ul>
+                                <li>Equipment status visualization through activity logs</li>
+                                <li>Geographic analysis using location data from the assets table</li>
+                                <li>Warranty tracking linked to the maintenance_records table</li>
+                                <li>Custom report generation (PDF/CSV) with log history</li>
+                                <li>Data updated every 5 minutes from the main database</li>
+                                <li>Integration with existing database administration tools</li>
+                            </ul>
+                            <p class="mt-3 text-muted">Reports use the same PDF generation mechanisms as the movements
+                                module
+                                (see Int_LogsDelete.php)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Modal for Dashboard and Analytics -->
+            <div class="modal fade video-modal" id="dashboardVideoModal" tabindex="-1" aria-labelledby="dashboardVideoModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="dashboardVideoModalLabel">Dashboard and Analytics Tutorial</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ratio ratio-16x9">
+                                <!-- Replace VIDEO_ID with your actual YouTube video ID -->
+                                <iframe src="https://www.youtube.com/embed/oDZ24pfbBms"
+                                    title="Dashboard and Analytics Tutorial" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="maintenanceModal" tabindex="-1" aria-labelledby="maintenanceModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="maintenanceModalLabel">System Maintenance Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>System maintenance tools include:</p>
+                            <ul>
+                                <li>Log file management</li>
+                                <li>System notification configuration</li>
+                                <li>User access control</li>
+                                <li>Database structure management</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Modal for System Maintenance -->
+            <div class="modal fade video-modal" id="maintenanceVideoModal" tabindex="-1" aria-labelledby="maintenanceVideoModalLabel"
+             aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="maintenanceVideoModalLabel">System Maintenance Tutorial</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ratio ratio-16x9">
+                                    <iframe src="https://www.youtube.com/embed/1e--0abG0dU" title="System Maintenance Tutorial"
+                                        allowfullscreen loading="lazy"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <script src="../Configuration/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script>
+                // Función para manejar la expansión/colapso de las descripciones
+                function toggleDescription(element) {
+                    const description = element.nextElementSibling;
+                    if (description.style.display === 'none' || !description.style.display) {
+                        description.style.display = 'block';
+                        element.textContent = 'Ver menos detalles';
+                    } else {
+                        description.style.display = 'none';
+                        element.textContent = 'Ver más detalles';
+                    }
+                }
+                document.querySelector('a[href="../index.php"]').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'Do you want to return to the main page?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#4a4a4a',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, return',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '../index.php';
+                        }
+                    });
+                });
+            </script>
+             <script src="../View/Js/dark-mode-toggle-new.js"></script>
+</body>
+
+</html>
+<link rel="preconnect" href="https://www.youtube.com">
+<link rel="preconnect" href="https://i.ytimg.com">

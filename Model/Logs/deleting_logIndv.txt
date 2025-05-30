@@ -1,0 +1,28 @@
+[
+    {
+        "assetname": "CO-LPT-2314",
+        "serial_number": "DGHETE",
+        "asset_status": "Bueno",
+        "asset_observations": "",
+        "HeadSet": "",
+        "headset_status": "Bueno",
+        "headset_observations": "",
+        "Dongle": "0",
+        "dongle_status": "Bueno",
+        "dongle_observations": "",
+        "Celular": "",
+        "celular_status": "Bueno",
+        "celular_observations": "",
+        "SIMcard": "",
+        "asset_photo": null,
+        "user_status": "Active User",
+        "last_user": "23145",
+        "job_title": "Unknown",
+        "cedula": "0",
+        "Carnet": "Pendiente",
+        "LLave": "Pendiente",
+        "Tipo_ID": "CC",
+        "fecha_salida": null,
+        "fecha_ingreso": null
+    }
+]

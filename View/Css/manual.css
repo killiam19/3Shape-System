@@ -1,0 +1,360 @@
+/* Añadir al inicio del archivo */
+:root {
+    --primary-color: #0d6efd;
+    --primary-hover: #0b5ed7;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --border-color: #dee2e6;
+    --background-color: #ffffff;
+    --background-secondary: #f5f7fa;
+    --text-color: #212529;
+    --text-muted: #6c757d;
+    --card-bg: #ffffff;
+    --input-bg: #ffffff;
+    --input-border: #ced4da;
+    --shadow-sm: 0 .125rem .25rem rgba(0, 0, 0, 0.075);
+    --shadow-md: 0 .5rem 1rem rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+}
+
+.dark-mode {
+    --primary-color: #3b82f6;
+    --primary-hover: #2563eb;
+    --secondary-color: #9ca3af;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+    --info-color: #06b6d4;
+    --light-color: #374151;
+    --dark-color: #f9fafb;
+    --border-color: #4b5563;
+    --background-color: #1f2937;
+    --background-secondary: #111827;
+    --text-color: #f9fafb;
+    --text-muted: #9ca3af;
+    --card-bg: #2d3748;
+    --input-bg: #374151;
+    --input-border: #4b5563;
+    --shadow-sm: 0 .125rem .25rem rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 .5rem 1rem rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.4);
+}
+
+/* Modificar los estilos existentes para usar variables */
+body {
+    background-color: var(--background-secondary) !important;
+    color: var(--text-color) !important;
+}
+
+.card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
+}
+
+.navbar {
+    background: linear-gradient(120deg, var(--light-color), var(--background-color)) !important;
+}
+
+h1, h2, h3, h4 {
+    color: var(--text-color);
+}
+
+.card-text, ul li {
+    color: var(--text-muted);
+}
+
+.modal-header {
+    background-color: var(--light-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-title {
+    color: var(--text-color);
+}
+
+.modal-body {
+    color: var(--text-muted);
+}
+
+.feature-description {
+    background-color: var(--light-color);
+}
+
+/* Añadir transiciones suaves */
+body, .card, .navbar, .modal-content {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Estilos generales del cuerpo del documento */
+body {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.8;
+    scroll-behavior: smooth;
+    letter-spacing: 0.2px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Estilos base de las tarjetas */
+.card {
+    background-color: #fff !important;
+    border: 1px solid rgba(222, 226, 230, 0.6) !important;
+    color: #212529 !important;
+    margin-bottom: 24px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+    will-change: transform, box-shadow;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Efecto hover para las tarjetas */
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+    border-color: rgba(222, 226, 230, 0.8) !important;
+}
+
+/* Estilos de los iconos de características */
+.feature-icon {
+    font-size: 2.75rem;
+    margin-bottom: 1.75rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    color: #0d6efd;
+}
+
+/* Efecto hover para los iconos */
+.feature-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Estilos de la barra de navegación */
+.navbar {
+    background: linear-gradient(120deg, #f8f9fa, #e9ecef) !important;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Estilos de los enlaces de navegación */
+.nav-link {
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0.625rem 1.25rem;
+    border-radius: 6px;
+    margin: 0 0.3rem;
+    will-change: transform;
+    position: relative;
+}
+
+/* Efecto hover para los enlaces de navegación */
+.nav-link:hover {
+    color: #0d6efd !important;
+    background-color: rgba(13, 110, 253, 0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(13, 110, 253, 0.15);
+}
+
+/* Estilos de los encabezados */
+h1, h2, h3, h4 {
+    color: #2c3e50;
+    margin-bottom: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.4;
+}
+
+/* Estilos del cuerpo de las tarjetas */
+.card-body {
+    padding: 2.25rem;
+}
+
+/* Estilos del texto en las tarjetas y listas */
+.card-text, ul li {
+    font-size: 1.125rem;
+    line-height: 1.85;
+    color: #495057;
+    margin-bottom: 1.25rem;
+}
+
+/* Estilos de las listas */
+ul {
+    padding-left: 1.5rem;
+}
+
+ul li {
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+ul li::before {
+    content: '•';
+    font-weight: bold;
+    position: absolute;
+    left: -1.2rem;
+}
+
+/* Estilos de las secciones */
+section {
+    scroll-margin-top: 100px;
+    padding: 3rem 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1.5rem;
+    }
+    .card-text, ul li {
+        font-size: 1rem;
+    }
+    h1, h2, h3, h4 {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Estilos de los botones de información */
+.btn-info {
+    background-color: #0d6efd;
+    border: none;
+    padding: 8px 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-info:hover {
+    background-color: #138496;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-info i {
+    color: white;
+    font-size: 1.1rem;
+}
+
+/* Estilos adicionales para las tarjetas */
+.card {
+    position: relative;
+    overflow: hidden;
+}
+
+.card .btn-info {
+    opacity: 0.9;
+    border-radius: 6px;
+}
+
+.card:hover .btn-info {
+    opacity: 1;
+}
+
+/* Estilos para la descripción de características */
+.feature-description {
+    display: none;
+    padding: 15px;
+    margin-top: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.feature-toggle {
+    cursor: pointer;
+    color: #0d6efd;
+    text-decoration: underline;
+}
+
+.feature-toggle:hover {
+    color: #0a58ca;
+}
+
+/* Estilos mejorados para los modales */
+.modal-content {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transform-origin: center;
+    animation: modalShow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding: 1.75rem;
+}
+
+.modal-title {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.modal-body {
+    padding: 2.5rem;
+    color: #495057;
+    font-size: 1.1rem;
+}
+
+.modal-body ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.modal-body li {
+    margin-bottom: 0.75rem;
+}
+
+/* Animaciones mejoradas para los modales */
+@keyframes modalShow {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modal.fade .modal-dialog {
+    transform: scale(0.8) translateY(-20px);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    opacity: 0;
+}
+
+.modal.show .modal-dialog {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+/* Estilos mejorados para el botón de cierre */
+.btn-close {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.7;
+    padding: 1rem;
+}
+
+.btn-close:focus {
+    box-shadow: none;
+    outline: none;
+    opacity: 1;
+}
+
+.btn-close:hover {
+    transform: rotate(90deg) scale(1.1);
+    opacity: 1;
+}

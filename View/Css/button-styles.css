@@ -1,0 +1,114 @@
+:root {
+    --secondary-color: #4a90e2;
+    --secondary-hover: #357abd;
+    --shadow-color: rgba(74, 144, 226, 0.2);
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+}
+
+.active-form {
+    display: block !important;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.form-container > form:not(.active-form) {
+    display: none !important;
+}
+
+.btn-secondary {
+    background: var(--secondary-color) !important;
+    transition: var(--transition) !important;
+    font-weight: 500 !important;
+    border-radius: var(--border-radius) !important;
+    border: none !important;
+    color: white !important;
+    padding: 12px 24px !important;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px) !important;
+    background: var(--secondary-hover) !important;
+    box-shadow: 0 4px 12px var(--shadow-color) !important;
+}
+
+.btn-secondary:focus {
+    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.2) !important;
+}
+
+@media screen and (max-width: 768px) {
+    .btn-secondary {
+        padding: 8px 20px !important;
+        font-size: 14px !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .btn-secondary {
+        padding: 6px 15px !important;
+        font-size: 13px !important;
+    }
+}
+
+.bell-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.bell-wrapper {
+    position: relative;
+}
+
+.bell-button {
+    position: relative;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.bell-button:hover {
+    transform: scale(1.1);
+    background-color: #4a90e2;
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+}
+
+.bell-button .fa-bell {
+    transition: all 0.3s ease;
+}
+
+.bell-button:hover .fa-bell {
+    color: #fff !important;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.bell-hover {
+    animation: ring 0.5s ease-in-out;
+}
+
+@keyframes ring {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(15deg); }
+    50% { transform: rotate(-15deg); }
+    75% { transform: rotate(15deg); }
+    100% { transform: rotate(0deg); }
+}
