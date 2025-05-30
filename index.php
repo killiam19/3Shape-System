@@ -15,7 +15,7 @@ if (isset($_GET['lang']) && in_array($_GET['lang'], $available_langs)) {
     $_SESSION['lang'] = $default_lang;
 }
 
-// Cargar archivo de idioma
+// Cargar archivo de idioma al index
 $lang_file = './lang/' . $_SESSION['lang'] . '.json';
 if (file_exists($lang_file)) {
     $lang = json_decode(file_get_contents($lang_file), true);
