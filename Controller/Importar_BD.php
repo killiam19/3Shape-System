@@ -3,11 +3,21 @@ ob_start(); // Iniciar buffer
 session_start();
 include('../Configuration/Connection.php');
 
-// Validación de archivo solo txt y csv
+// Instalar PhpSpreadsheet via Composer: composer require phpoffice/phpspreadsheet
+require_once '../vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
+// Validación de archivo incluyendo Excel
 function validateFile($file)
 {
-    $allowedExtensions = ['csv', 'txt'];
-    $allowedMimeTypes = ['text/csv', 'application/vnd.ms-excel', 'text/plain'];
+    $allowedExtensions = ['csv', 'txt', 'xlsx', 'xls'];
+    $allowedMimeTypes = [
+        'text/csv', 
+        'application/vnd.ms-excel', 
+        'text/plain',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // xlsx
+        'application/vnd.ms-excel' // xls
+    ];
     $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
 
     return in_array($fileExtension, $allowedExtensions) && in_array($file['type'], $allowedMimeTypes);
@@ -155,6 +165,107 @@ function insertData($pdo, $data)
         $pdo->rollBack(); // Revertir en caso de error
         throw $e;
     }
+}
+
+// Nueva función para procesar archivos Excel
+function processExcel($pdo, $filePath)
+{
+    $warnings = [];
+    
+    try {
+        // Cargar el archivo Excel
+        $spreadsheet = IOFactory::load($filePath);
+        $worksheet = $spreadsheet->getActiveSheet();
+        
+        // Obtener todas las filas como array
+        $rows = $worksheet->toArray();
+        
+        if (empty($rows)) {
+            throw new Exception("El archivo Excel está vacío.");
+        }
+        
+        // La primera fila son los headers
+        $headers = array_shift($rows);
+        
+        // Normalizar nombres de columnas
+        $normalizedHeaders = array_map(function ($header) {
+            return strtolower(preg_replace('/[^a-z0-9]/', '', $header));
+        }, $headers);
+        
+        // Mapeo de campos
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/3Shape_project/Configuration/Config_map.php';
+
+        // Validar que el array de mapeo existe
+        if (!isset($fieldMap) || empty($fieldMap)) {
+            throw new Exception("Error: El array fieldMap no está definido en Config_map.php");
+        }
+
+        // Crear mapeo de columnas
+        $columnMapping = [];
+        foreach ($fieldMap as $dbField => $possibleNames) {
+            foreach ($possibleNames as $name) {
+                $normalizedName = strtolower(preg_replace('/[^a-z0-9]/', '', $name));
+                $index = array_search($normalizedName, $normalizedHeaders);
+                if ($index !== false) {
+                    $columnMapping[$dbField] = $index;
+                    break;
+                }
+            }
+        }
+
+        // Campos obligatorios
+        $requiredFields = ['serial_number'];
+        foreach ($requiredFields as $field) {
+            if (!isset($columnMapping[$field])) {
+                throw new Exception("Missing required column: " . $fieldMap[$field][0] . " in the Excel file.");
+            }
+        }
+
+        // Procesar cada fila
+        foreach ($rows as $rowIndex => $row) {
+            $rowData = [];
+            
+            foreach ($columnMapping as $field => $index) {
+                $value = trim($row[$index] ?? '');
+
+                // Manejo especial para campos numéricos
+                switch ($field) {
+                    case 'cedula':
+                    case 'Dongle':
+                        $rowData[$field] = ($value === '') ? null : (int)$value;
+                        break;
+                    default:
+                        $rowData[$field] = $value;
+                }
+            }
+
+            // Validar campos obligatorios
+            foreach ($requiredFields as $field) {
+                if (empty($rowData[$field])) {
+                    $warnings[] = "Missing required field '{$field}' in row " . ($rowIndex + 2); // +2 porque empezamos desde 0 y saltamos header
+                    continue 2;
+                }
+            }
+
+            $originalAssetName = $rowData['assetname'] ?? '';
+            
+            // Insertar y validar registros con id único en la columna 'assetname'
+            try {
+                insertData($pdo, $rowData);
+            } catch (PDOException $e) {
+                if ($e->errorInfo[1] == 1062) {
+                    $warnings[] = "Duplicate Log: " . ($originalAssetName ?: 'Assetname') . ' - ' . $rowData['serial_number'];
+                } else {
+                    $warnings[] = "Error in row " . ($rowIndex + 2) . ": " . $e->getMessage();
+                }
+            }
+        }
+        
+    } catch (Exception $e) {
+        throw new Exception("Error processing Excel file: " . $e->getMessage());
+    }
+    
+    return $warnings;
 }
 
 function processCSV($pdo, $filePath)
@@ -322,18 +433,27 @@ if (!isset($fieldMap) || empty($fieldMap)) {
 if (isset($_FILES['Proyeccion_garan']) && $_FILES['Proyeccion_garan']['error'] == 0) {
     try {
         if (!validateFile($_FILES['Proyeccion_garan'])) {
-            throw new Exception("Invalid file format");
+            throw new Exception("Invalid file format. Supported formats: CSV, TXT, XLSX, XLS");
         }
 
         $filePath = $_FILES['Proyeccion_garan']['tmp_name'];
-        $fileExtension = pathinfo($_FILES['Proyeccion_garan']['name'], PATHINFO_EXTENSION);
+        $fileExtension = strtolower(pathinfo($_FILES['Proyeccion_garan']['name'], PATHINFO_EXTENSION));
 
         $warnings = [];
 
-        if ($fileExtension === 'csv') {
-            $warnings = processCSV($pdo, $filePath);
-        } elseif ($fileExtension === 'txt') {
-            $warnings = processTXT($pdo, $filePath);
+        switch ($fileExtension) {
+            case 'csv':
+                $warnings = processCSV($pdo, $filePath);
+                break;
+            case 'txt':
+                $warnings = processTXT($pdo, $filePath);
+                break;
+            case 'xlsx':
+            case 'xls':
+                $warnings = processExcel($pdo, $filePath);
+                break;
+            default:
+                throw new Exception("Unsupported file format: " . $fileExtension);
         }
 
         $_SESSION['warnings'] = array_slice($warnings, 0, 10); // Mostrar máximo 10 advertencias

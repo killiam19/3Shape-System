@@ -1,0 +1,17 @@
+{
+    "name": "killiamcruz/3shape_project",
+    "autoload": {
+        "psr-4": {
+            "Killiamcruz\\3shapeProject\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Killiam19",
+            "email": "killiam1119@gmail.com"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^4.3"
+    }
+}

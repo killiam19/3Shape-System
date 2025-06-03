@@ -653,6 +653,11 @@ $fieldLabels = require '../View/Fragments/field_labels.php';
                     <input class="form-check-input" type="radio" name="format" value="txt" id="format_txt">
                     <label class="form-check-label" for="format_txt">TXT</label>
                 </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="format" value="excel" id="format_txt">
+                    <label class="form-check-label" for="format_txt">Excel</label>
+                </div>
+
 
                 <div class="d-flex justify-content-between align-items-center mt-3">
                     <button type="button" class="btn btn-outline-primary nav-arrow" onclick="navigateTo('prev')">
