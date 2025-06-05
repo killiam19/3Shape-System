@@ -579,6 +579,7 @@ function __($key, $lang) {
             <br>
             <br>
 
+<?php if (isset($_SESSION['user_role']) && ($_SESSION['user_role'] === 'admin' || $_SESSION['user_role'] === 'manager')): ?>
            <!-- Admin Access Section -->
         <section class="dashboard-section mt-4 animate__animated animate__fadeIn">
             <div class="container">
@@ -601,6 +602,7 @@ function __($key, $lang) {
             </div>
         </section>
     </div>
+<?php endif; ?>
 
         <!-- Modal para mostrar las alertas -->
         <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">

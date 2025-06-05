@@ -5,7 +5,7 @@
     "total_assets": "Activos Totales",
     "registered_in_system": "Registrados en el sistema",
     "import_asset_data": "Importar Datos de Activos",
-    "upload_description": "Sube tu archivo CSV o TXT para importar información de activos al sistema.",
+    "upload_description": "Sube tu archivo CSV,Excel o TXT para importar información de activos al sistema.",
     "login": "Iniciar Sesión",
     "logout": "Salir",
     "dark_mode": "Modo Oscuro",

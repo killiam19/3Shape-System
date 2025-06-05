@@ -15,7 +15,7 @@ $lang_file = '../lang/' . $_SESSION['lang'] . '.json';
 if (file_exists($lang_file)) {
     $lang = json_decode(file_get_contents($lang_file), true);
 } else {
-    $lang = json_decode(file_get_contents('./lang/en.json'), true);
+    $lang = json_decode(file_get_contents('../lang/en.json'), true);
 }
 
 // Función de traducción

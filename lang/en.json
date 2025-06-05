@@ -5,7 +5,7 @@
   "total_assets": "Total Assets",
   "registered_in_system": "Registered in the system",
   "import_asset_data": "Import Asset Data",
-  "upload_description": "Upload your CSV or TXT file to import asset information into the system.",
+  "upload_description": "Upload your CSV,Excel or TXT file to import asset information into the system.",
   "login": "Login",
   "logout": "Logout",
   "dark_mode": "Dark Mode",
