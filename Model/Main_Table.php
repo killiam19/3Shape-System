@@ -1,10 +1,26 @@
 <?php
+// Incluir la conexión a la base de datos
+include_once './Configuration/Connection.php';
+
 // Precalcula el colspan una vez
 $colspan = count($selectedColumns) + 12;
 
+// Inicializar $resultados
+$resultados = [];
+
 // Verificar si hay resultados de búsqueda en la sesión
-if (!isset($resultados) && isset($_SESSION['resultados_busqueda'])) {
+if (isset($_SESSION['resultados_busqueda'])) {
    $resultados = $_SESSION['resultados_busqueda'];
+} else {
+    // Si no hay resultados en la sesión, obtener todos los registros
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM vista_equipos_usuarios");
+        $stmt->execute();
+        $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Error al obtener datos: " . $e->getMessage());
+        $resultados = [];
+    }
 }
 
 if ($resultados && is_array($resultados) && count($resultados) > 0) {
@@ -52,12 +68,10 @@ if ($resultados && is_array($resultados) && count($resultados) > 0) {
            "<td><span class='$userStatusClass'>" . (isset($row['user_status']) ? htmlspecialchars($row['user_status']) : '') . "</span></td>",
            "<td>" . (isset($row['last_user']) ? htmlspecialchars($row['last_user']) : '') . "</td>",
            "<td><span class='text-muted'>" . (isset($row['job_title']) ? htmlspecialchars($row['job_title']) : '') . "</span></td>",
-            $rowHtml[] = "<td>" . (isset($row['cedula']) ? htmlspecialchars($row['cedula']) : '') . "</td>",
-            $rowHtml[] = "<td>" . (isset($row['fecha_ingreso']) ? htmlspecialchars($row['fecha_ingreso']) : '') . "</td>"
+           "<td>" . (isset($row['cedula']) ? htmlspecialchars($row['cedula']) : '') . "</td>",
+           "<td>" . (isset($row['fecha_ingreso']) ? htmlspecialchars($row['fecha_ingreso']) : '') . "</td>",
+           "<td>" . (isset($row['fecha_salida']) ? htmlspecialchars($row['fecha_salida']) : '') . "</td>"
        ];
-
-       
-       $rowHtml[] = "<td>" . (isset($row['fecha_ingreso']) ? htmlspecialchars($row['fecha_salida']) : '') . "</td>";
 
        // Optimización 3: Procesamiento de columnas dinámicas
        foreach ($selectedColumns as $column) {

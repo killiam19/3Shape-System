@@ -80,15 +80,15 @@ function __($key, $lang) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#import" class="nav-link" data-section="import">
-                                <i class="bi bi-upload"></i>
-                                <span><?php echo __('import_data', $lang); ?></span>
+                            <a href="#adjustment" class="nav-link" data-section="adjustment">
+                                <i class="bi bi-arrow-left-right"></i>
+                                <span><?php echo __('asset_adjustment', $lang); ?></span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#filters" class="nav-link" data-section="filters">
-                                <i class="bi bi-funnel"></i>
-                                <span><?php echo __('filters', $lang); ?></span>
+                            <a href="#import" class="nav-link" data-section="import">
+                                <i class="bi bi-upload"></i>
+                                <span><?php echo __('import_data', $lang); ?></span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -398,160 +398,242 @@ function __($key, $lang) {
                 </section>
 
                 <!-- Assets Section -->
-                      <!-- Filters Section -->
-                <section id="filters-section" class="content-section">
-                    <div class="section-header">
-                        <h2><?php echo __('filter_assets', $lang); ?></h2>
-                        <p class="text-muted"><?php echo __('filter_description', $lang); ?></p>
-                    </div>
-
-                    <form method="GET" action="">
-                        <div class="row g-4">
-                            <!-- Asset Information -->
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h6 class="card-title mb-0">
-                                            <i class="bi bi-laptop me-2"></i><?php echo __('asset_information', $lang); ?>
-                                        </h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('asset_name', $lang); ?></label>
-                                            <input type="text" name="search_assetname" class="form-control" placeholder="Enter asset name" oninput="this.value = this.value.toUpperCase()">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('serial_number', $lang); ?></label>
-                                            <input type="text" name="search_serial" class="form-control" placeholder="Enter serial number" oninput="this.value = this.value.toUpperCase()">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('user_status', $lang); ?></label>
-                                            <select name="search_user_status[]" class="form-select">
-                                                <option value="0"><?php echo __('select_user_status', $lang); ?></option>
-                                                <option value="Stock"><?php echo __('stock', $lang); ?></option>
-                                                <option value="Active User"><?php echo __('active_user', $lang); ?></option>
-                                                <option value="Old User"><?php echo __('old_user', $lang); ?></option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- User Information -->
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h6 class="card-title mb-0">
-                                            <i class="bi bi-person me-2"></i><?php echo __('user_information', $lang); ?>
-                                        </h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('user_id', $lang); ?></label>
-                                            <input type="number" name="search_cedula" class="form-control" placeholder="Enter user ID" min="0">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('last_user', $lang); ?></label>
-                                            <input type="text" name="search_user" class="form-control" placeholder="Enter last user">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('job_title', $lang); ?></label>
-                                            <input type="text" name="search_job_title" class="form-control" placeholder="Enter job title">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Status & Warranty -->
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h6 class="card-title mb-0">
-                                            <i class="bi bi-shield-check me-2"></i><?php echo __('status_warranty', $lang); ?>
-                                        </h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('status_change', $lang); ?></label>
-                                            <input type="text" name="search_status_change" class="form-control" placeholder="Enter status change">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('entry_date', $lang); ?></label>
-                                            <input type="date" name="search_entry_date" class="form-control">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('departure_date', $lang); ?></label>
-                                            <input type="date" name="search_departure_date" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="text-center mt-4">
-                            <button type="submit" class="btn btn-success me-2">
-                                <i class="bi bi-search"></i> <?php echo __('search', $lang); ?>
-                            </button>
-                            <button type="reset" class="btn btn-secondary me-2">
-                                <i class="bi bi-arrow-clockwise"></i> <?php echo __('clear', $lang); ?>
-                            </button>
-                            <button type="button" class="btn btn-primary" onclick="window.location.href = window.location.pathname">
-                                <i class="bi bi-arrow-repeat"></i> <?php echo __('refresh', $lang); ?>
-                            </button>
-                        </div>
-                    </form>
-                </section>
                 <section id="assets-section" class="content-section">
                     <div class="section-header">
                         <h2><?php echo __('asset_management', $lang); ?></h2>
                         <p class="text-muted"><?php echo __('manage_all_assets', $lang); ?></p>
                     </div>
 
+                    <!-- Filtros de búsqueda -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-funnel me-2"></i><?php echo __('filter_assets', $lang); ?>
+                            </h5>
+                            <button class="btn btn-sm btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false">
+                                <i class="bi bi-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="collapse" id="filterCollapse">
+                            <div class="card-body">
+                                <form method="GET" action="">
+                                    <div class="row g-3">
+                                        <!-- Asset Information -->
+                                        <div class="col-lg-4">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h6 class="card-title mb-0">
+                                                        <i class="bi bi-laptop me-2"></i><?php echo __('asset_information', $lang); ?>
+                                                    </h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><?php echo __('asset_name', $lang); ?></label>
+                                                        <input type="text" name="search_assetname" class="form-control" placeholder="Enter asset name" oninput="this.value = this.value.toUpperCase()">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><?php echo __('serial_number', $lang); ?></label>
+                                                        <input type="text" name="search_serial" class="form-control" placeholder="Enter serial number" oninput="this.value = this.value.toUpperCase()">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><?php echo __('user_status', $lang); ?></label>
+                                                        <select name="search_user_status[]" class="form-select">
+                                                            <option value="0"><?php echo __('select_user_status', $lang); ?></option>
+                                                            <option value="Stock"><?php echo __('stock', $lang); ?></option>
+                                                            <option value="Active User"><?php echo __('active_user', $lang); ?></option>
+                                                            <option value="Old User"><?php echo __('old_user', $lang); ?></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- User Information -->
+                                        <div class="col-lg-4">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h6 class="card-title mb-0">
+                                                        <i class="bi bi-person me-2"></i><?php echo __('user_information', $lang); ?>
+                                                    </h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><?php echo __('user_id', $lang); ?></label>
+                                                        <input type="number" name="search_cedula" class="form-control" placeholder="Enter user ID" min="0">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><?php echo __('last_user', $lang); ?></label>
+                                                        <input type="text" name="search_user" class="form-control" placeholder="Enter last user">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><?php echo __('job_title', $lang); ?></label>
+                                                        <input type="text" name="search_job_title" class="form-control" placeholder="Enter job title">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Status & Warranty -->
+                                        <div class="col-lg-4">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h6 class="card-title mb-0">
+                                                        <i class="bi bi-shield-check me-2"></i><?php echo __('status_warranty', $lang); ?>
+                                                    </h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><?php echo __('status_change', $lang); ?></label>
+                                                        <input type="text" name="search_status_change" class="form-control" placeholder="Enter status change">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><?php echo __('entry_date', $lang); ?></label>
+                                                        <input type="date" name="search_entry_date" class="form-control">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><?php echo __('departure_date', $lang); ?></label>
+                                                        <input type="date" name="search_departure_date" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center mt-4">
+                                        <button type="submit" class="btn btn-success me-2">
+                                            <i class="bi bi-search"></i> <?php echo __('search', $lang); ?>
+                                        </button>
+                                        <button type="reset" class="btn btn-secondary me-2">
+                                            <i class="bi bi-arrow-clockwise"></i> <?php echo __('clear', $lang); ?>
+                                        </button>
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href = window.location.pathname">
+                                            <i class="bi bi-arrow-repeat"></i> <?php echo __('refresh', $lang); ?>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="card-title mb-0"><?php echo __('all_assets', $lang); ?></h5>
-    <div class="btn-group">
-        <a href="./View/Int_Registro_equipo.php" class="btn btn-primary btn-sm">
-            <i class="bi bi-plus-lg"></i> <?php echo __('register_new_device', $lang); ?>
-        </a>
-        <button id="procesarSeleccionados" type="button" class="btn btn-warning btn-sm">
-            <i class="fas fa-cog"></i> <?php echo __('select_process', $lang); ?>
-        </button>
-        <button id="deleteAllButton" type="button" class="btn btn-danger btn-sm">
-            <i class="bi bi-trash"></i> <?php echo __('delete_all_logs', $lang); ?>
-        </button>
-    </div>
-</div>
+                            <h5 class="card-title mb-0"><?php echo __('all_assets', $lang); ?></h5>
+                            <div class="btn-group">
+                                <a href="./View/Int_Registro_equipo.php" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-plus-lg"></i> <?php echo __('register_new_device', $lang); ?>
+                                </a>
+                                <button id="procesarSeleccionados" type="button" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-cog"></i> <?php echo __('select_process', $lang); ?>
+                                </button>
+                                <button id="deleteAllButton" type="button" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-trash"></i> <?php echo __('delete_all_logs', $lang); ?>
+                                </button>
+                            </div>
+                        </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table id="mainTable" class="table table-hover">
                                     <thead>
-    <tr>
-        <th><input type="checkbox" class="form-check-input select-all-checkbox" title="Select All"></th>
-        <th><?php echo __('asset_name', $lang); ?></th>
-        <th><?php echo __('serial_number', $lang); ?></th>
-        <th><?php echo __('user_status', $lang); ?></th>
-        <th><?php echo __('last_user', $lang); ?></th>
-        <th><?php echo __('job_title', $lang); ?></th>
-        <th>ID</th>
-        <th><?php echo __('entry_date', $lang); ?></th>
-        <th><?php echo __('departure_date', $lang); ?></th>
-        <?php
-        $selectedColumns = $_SESSION['selected_fields'] ?? [];
-        foreach ($selectedColumns as $column) {
-            echo "<th class='text-center'>" . htmlspecialchars($column) . "</th>";
-        }
-        ?>
-        <th class="text-center"><i class="bi bi-arrow-repeat" title="Update"></i></th>
-        <th class="text-center"><i class="bi bi-eye" title="Preview PDF"></i></th>
-        <th class="text-center"><i class="bi bi-check-square" title="Status And Observations"></i></th>
-        <th class="text-center"><i class="bi bi-trash" title="Delete"></i></th>
-    </tr>
-</thead>
+                                        <tr>
+                                            <th><input type="checkbox" class="form-check-input select-all-checkbox" title="Select All"></th>
+                                            <th><?php echo __('asset_name', $lang); ?></th>
+                                            <th><?php echo __('serial_number', $lang); ?></th>
+                                            <th><?php echo __('user_status', $lang); ?></th>
+                                            <th><?php echo __('last_user', $lang); ?></th>
+                                            <th><?php echo __('job_title', $lang); ?></th>
+                                            <th>ID</th>
+                                            <th><?php echo __('entry_date', $lang); ?></th>
+                                            <th><?php echo __('departure_date', $lang); ?></th>
+                                            <?php
+                                            $selectedColumns = $_SESSION['selected_fields'] ?? [];
+                                            foreach ($selectedColumns as $column) {
+                                                echo "<th class='text-center'>" . htmlspecialchars($column) . "</th>";
+                                            }
+                                            ?>
+                                            <th class="text-center"><i class="bi bi-arrow-repeat" title="Update"></i></th>
+                                            <th class="text-center"><i class="bi bi-eye" title="Preview PDF"></i></th>
+                                            <th class="text-center"><i class="bi bi-check-square" title="Status And Observations"></i></th>
+                                            <th class="text-center"><i class="bi bi-trash" title="Delete"></i></th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         <?php include './Model/Main_Table.php'; ?>
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Asset Adjustment Section -->
+                <section id="adjustment-section" class="content-section">
+                    <div class="section-header">
+                        <h2><?php echo __('asset_adjustment', $lang); ?></h2>
+                        <p class="text-muted"><?php echo __('asset_adjustment_description', $lang); ?></p>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="card text-center h-100">
+                                <div class="card-body d-flex flex-column">
+                                    <i class="bi bi-arrow-repeat text-primary fs-1 mb-3"></i>
+                                    <h5 class="card-title"><?php echo __('change_asset', $lang); ?></h5>
+                                    <p class="card-text flex-grow-1"><?php echo __('change_asset_description', $lang); ?></p>
+                                    <div class="mt-auto">
+                                        <a href="./View/Int_entrada.php" class="btn btn-primary">
+                                            <i class="bi bi-arrow-repeat me-2"></i><?php echo __('change_asset', $lang); ?>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card text-center h-100">
+                                <div class="card-body d-flex flex-column">
+                                    <i class="bi bi-box-arrow-up text-warning fs-1 mb-3"></i>
+                                    <h5 class="card-title"><?php echo __('output_asset', $lang); ?></h5>
+                                    <p class="card-text flex-grow-1"><?php echo __('output_asset_description', $lang); ?></p>
+                                    <div class="mt-auto">
+                                        <a href="./View/Int_salida.php" class="btn btn-warning">
+                                            <i class="bi bi-box-arrow-up me-2"></i><?php echo __('output_asset', $lang); ?>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Asset Search -->
+                    <div class="row g-4 mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">
+                                        <i class="bi bi-search me-2"></i><?php echo __('quick_asset_search', $lang); ?>
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <form class="row g-3" onsubmit="searchAsset(event)">
+                                        <div class="col-md-6">
+                                            <label class="form-label"><?php echo __('search_by_serial', $lang); ?></label>
+                                            <input type="text" class="form-control" id="quickSearchSerial" placeholder="<?php echo __('enter_serial_number', $lang); ?>">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label"><?php echo __('search_by_asset_name', $lang); ?></label>
+                                            <input type="text" class="form-control" id="quickSearchName" placeholder="<?php echo __('enter_asset_name', $lang); ?>">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">&nbsp;</label>
+                                            <div class="d-grid">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-search"></i> <?php echo __('search', $lang); ?>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div id="quickSearchResults" class="mt-3"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -590,110 +672,6 @@ function __($key, $lang) {
                             </form>
                         </div>
                     </div>
-                </section>
-
-                <!-- Filters Section -->
-                <section id="filters-section" class="content-section">
-                    <div class="section-header">
-                        <h2><?php echo __('filter_assets', $lang); ?></h2>
-                        <p class="text-muted"><?php echo __('filter_description', $lang); ?></p>
-                    </div>
-
-                    <form method="GET" action="">
-                        <div class="row g-4">
-                            <!-- Asset Information -->
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h6 class="card-title mb-0">
-                                            <i class="bi bi-laptop me-2"></i><?php echo __('asset_information', $lang); ?>
-                                        </h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('asset_name', $lang); ?></label>
-                                            <input type="text" name="search_assetname" class="form-control" placeholder="Enter asset name" oninput="this.value = this.value.toUpperCase()">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('serial_number', $lang); ?></label>
-                                            <input type="text" name="search_serial" class="form-control" placeholder="Enter serial number" oninput="this.value = this.value.toUpperCase()">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('user_status', $lang); ?></label>
-                                            <select name="search_user_status[]" class="form-select">
-                                                <option value="0"><?php echo __('select_user_status', $lang); ?></option>
-                                                <option value="Stock"><?php echo __('stock', $lang); ?></option>
-                                                <option value="Active User"><?php echo __('active_user', $lang); ?></option>
-                                                <option value="Old User"><?php echo __('old_user', $lang); ?></option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- User Information -->
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h6 class="card-title mb-0">
-                                            <i class="bi bi-person me-2"></i><?php echo __('user_information', $lang); ?>
-                                        </h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('user_id', $lang); ?></label>
-                                            <input type="number" name="search_cedula" class="form-control" placeholder="Enter user ID" min="0">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('last_user', $lang); ?></label>
-                                            <input type="text" name="search_user" class="form-control" placeholder="Enter last user">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('job_title', $lang); ?></label>
-                                            <input type="text" name="search_job_title" class="form-control" placeholder="Enter job title">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Status & Warranty -->
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h6 class="card-title mb-0">
-                                            <i class="bi bi-shield-check me-2"></i><?php echo __('status_warranty', $lang); ?>
-                                        </h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('status_change', $lang); ?></label>
-                                            <input type="text" name="search_status_change" class="form-control" placeholder="Enter status change">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('entry_date', $lang); ?></label>
-                                            <input type="date" name="search_entry_date" class="form-control">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label"><?php echo __('departure_date', $lang); ?></label>
-                                            <input type="date" name="search_departure_date" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="text-center mt-4">
-                            <button type="submit" class="btn btn-success me-2">
-                                <i class="bi bi-search"></i> <?php echo __('search', $lang); ?>
-                            </button>
-                            <button type="reset" class="btn btn-secondary me-2">
-                                <i class="bi bi-arrow-clockwise"></i> <?php echo __('clear', $lang); ?>
-                            </button>
-                            <button type="button" class="btn btn-primary" onclick="window.location.href = window.location.pathname">
-                                <i class="bi bi-arrow-repeat"></i> <?php echo __('refresh', $lang); ?>
-                            </button>
-                        </div>
-                    </form>
                 </section>
 
                 <!-- Reports Section -->

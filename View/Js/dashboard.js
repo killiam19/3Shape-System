@@ -41,8 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const sectionTitles = {
     dashboard: "Dashboard",
     assets: "Asset Management",
+    adjustment: "Asset Adjustment",
     import: "Import Data",
-    filters: "Filter Assets",
     reports: "Reports",
     admin: "Admin Panel",
     users: "User Management",
@@ -129,191 +129,212 @@ document.addEventListener("DOMContentLoaded", () => {
     dropZone.addEventListener("drop", (e) => {
       e.preventDefault()
       dropZone.classList.remove("dragover")
-
       if (e.dataTransfer.files.length) {
         fileInput.files = e.dataTransfer.files
-        updateFileName(e.dataTransfer.files[0].name)
+        updateFileName()
       }
     })
 
-    fileInput.addEventListener("change", () => {
-      if (fileInput.files.length) {
-        updateFileName(fileInput.files[0].name)
-      }
-    })
+    fileInput.addEventListener("change", updateFileName)
 
-    function updateFileName(name) {
-      fileName.textContent = name
-      fileName.classList.add("text-primary")
+    function updateFileName() {
+      if (fileInput.files.length > 0) {
+        fileName.textContent = fileInput.files[0].name
+      } else {
+        fileName.textContent = "No file selected"
+      }
     }
   }
 
-  // Delete all confirmation
-  const deleteAllButton = document.getElementById("deleteAllButton")
-  if (deleteAllButton) {
-    deleteAllButton.addEventListener("click", () => {
-      if (typeof Swal !== "undefined") {
-        Swal.fire({
-          title: "Are you sure?",
-          text: "This action will delete all logs permanently!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#dc3545",
-          cancelButtonColor: "#6c757d",
-          confirmButtonText: '<i class="fas fa-trash-alt me-2"></i>Yes, delete all!',
-          cancelButtonText: '<i class="fas fa-times me-2"></i>Cancel',
-          customClass: {
-            confirmButton: "btn btn-danger",
-            cancelButton: "btn btn-secondary",
-          },
-          buttonsStyling: false,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = "./Controller/delete_regist.php"
-          }
-        })
-      } else {
-        if (confirm("Are you sure you want to delete all logs? This action cannot be undone.")) {
-          window.location.href = "./Controller/delete_regist.php"
-        }
-      }
+  // DataTables initialization
+  if (window.jQuery && window.jQuery.fn.DataTable && document.getElementById("mainTable")) {
+    window.jQuery("#mainTable").DataTable({
+      responsive: true,
+      language: {
+        search: "Search:",
+        lengthMenu: "Show _MENU_ entries",
+        info: "Showing _START_ to _END_ of _TOTAL_ entries",
+        paginate: {
+          first: "First",
+          last: "Last",
+          next: "Next",
+          previous: "Previous",
+        },
+      },
+      dom: '<"top"lf>rt<"bottom"ip><"clear">',
     })
   }
 
-  // Language selector functionality
-  document.querySelectorAll(".language-selector").forEach((item) => {
-    item.addEventListener("click", function (e) {
+  // Admin panel access
+  const showAdminModal = document.getElementById("showAdminModal")
+  const adminLoginModal = document.getElementById("adminLoginModal")
+
+  if (showAdminModal && adminLoginModal) {
+    showAdminModal.addEventListener("click", () => {
+      const adminModal = new bootstrap.Modal(adminLoginModal)
+      adminModal.show()
+    })
+  }
+
+  // Language selector
+  const languageSelectors = document.querySelectorAll(".language-selector")
+  languageSelectors.forEach((selector) => {
+    selector.addEventListener("click", function (e) {
       e.preventDefault()
       const lang = this.getAttribute("data-lang")
-
-      const url = new URL(window.location.href)
-      url.searchParams.set("lang", lang)
-      window.location.href = url.toString()
+      window.location.href = `?lang=${lang}`
     })
   })
 
-  // Dark mode toggle
-  const darkModeToggle = document.getElementById("darkModeToggle")
-
-  if (
-    localStorage.getItem("darkMode") === "enabled" ||
-    (window.matchMedia("(prefers-color-scheme: dark)").matches && localStorage.getItem("darkMode") !== "disabled")
-  ) {
-    document.body.classList.add("dark-mode")
-    if (darkModeToggle) darkModeToggle.checked = true
-  }
-
-  if (darkModeToggle) {
-    darkModeToggle.addEventListener("change", function () {
-      if (this.checked) {
-        document.body.classList.add("dark-mode")
-        localStorage.setItem("darkMode", "enabled")
-      } else {
-        document.body.classList.remove("dark-mode")
-        localStorage.setItem("darkMode", "disabled")
-      }
-    })
-  }
-
-  // Notification functionality
+  // Notification count
   function updateNotificationCount() {
     fetch("./Controller/get_notification_count.php")
       .then((response) => response.json())
       .then((data) => {
         const badge = document.querySelector(".notification-badge")
         if (badge) {
-          badge.textContent = data.count || 0
-          badge.style.display = data.count > 0 ? "block" : "none"
+          badge.textContent = data.count
+          if (data.count > 0) {
+            badge.style.display = "inline-block"
+
+            // Check if we should play a sound
+            if (data.new_notifications && data.sound_enabled) {
+              playNotificationSound()
+            }
+
+            // Show notification alert if there are new notifications
+            if (data.new_notifications && data.latest_message) {
+              showNotificationAlert(data.latest_message)
+            }
+          } else {
+            badge.style.display = "none"
+          }
         }
       })
-      .catch((error) => console.error("Error updating notification count:", error))
+      .catch((error) => console.error("Error fetching notification count:", error))
   }
 
-  // Update notification count on page load
+  // Play notification sound
+  function playNotificationSound() {
+    const audio = new Audio("./View/assets/audio/notification-sound.mp3")
+    audio.play().catch((e) => console.log("Audio play prevented:", e))
+  }
+
+  // Show notification alert
+  function showNotificationAlert(message) {
+    const alert = document.getElementById("notificationAlert")
+    const text = document.getElementById("notificationText")
+
+    if (alert && text) {
+      text.textContent = message
+      alert.style.display = "block"
+
+      // Hide after 5 seconds
+      setTimeout(() => {
+        alert.style.display = "none"
+      }, 5000)
+    }
+  }
+
+  // Check for notifications on page load and periodically
   updateNotificationCount()
+  setInterval(updateNotificationCount, 60000) // Check every minute
 
-  // Update notification count every 30 seconds
-  setInterval(updateNotificationCount, 30000)
+  // Filter notifications
+  const notificationFilter = document.getElementById("notificationFilter")
+  if (notificationFilter) {
+    notificationFilter.addEventListener("input", function () {
+      const filterText = this.value.toLowerCase()
+      const notifications = document.querySelectorAll(".notification-item")
 
-  // Initialize DataTable for assets
-  if (document.getElementById("mainTable")) {
-    // DataTable initialization will be handled by existing scripts
-    console.log("DataTable container found")
-  }
-
-  // Quick action buttons in dashboard
-  document.querySelectorAll("[data-section]").forEach((button) => {
-    if (button.tagName === "BUTTON" || button.tagName === "A") {
-      button.addEventListener("click", function (e) {
-        const section = this.getAttribute("data-section")
-        if (section && this.tagName === "BUTTON") {
-          e.preventDefault()
-          showSection(section)
+      notifications.forEach((item) => {
+        const text = item.textContent.toLowerCase()
+        if (text.includes(filterText)) {
+          item.style.display = "block"
+        } else {
+          item.style.display = "none"
         }
       })
-    }
-  })
-
-  // Responsive handling
-  function handleResize() {
-    if (window.innerWidth > 991.98) {
-      sidebar.classList.remove("show")
-    }
-  }
-
-  window.addEventListener("resize", handleResize)
-
-  // Initialize tooltips if Bootstrap is available
-  if (typeof bootstrap !== "undefined") {
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    tooltipTriggerList.map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl))
-  }
-})
-
-// Global function for showing notification modal
-function showModal() {
-  const modal = new bootstrap.Modal(document.getElementById("notificationModal"))
-  modal.show()
-}
-
-// Global function for clearing logs
-function clearLogs() {
-  if (typeof Swal !== "undefined") {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "This will delete all notification logs. This action cannot be undone.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#dc3545",
-      cancelButtonColor: "#6c757d",
-      confirmButtonText: "Yes, delete all!",
-      cancelButtonText: "Cancel",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch("./Model/clear_logs.php", {
-          method: "POST",
-        })
-          .then((response) => response.text())
-          .then((data) => {
-            Swal.fire({
-              title: "Success!",
-              text: data,
-              icon: "success",
-              confirmButtonColor: "#0d6efd",
-            }).then(() => {
-              location.reload()
-            })
-          })
-          .catch((error) => {
-            console.error("Error:", error)
-            Swal.fire({
-              title: "Error!",
-              text: "An error occurred while clearing logs.",
-              icon: "error",
-              confirmButtonColor: "#0d6efd",
-            })
-          })
-      }
     })
   }
-}
+
+  // Show notification modal
+  window.showModal = () => {
+    const notificationModal = new bootstrap.Modal(document.getElementById("notificationModal"))
+    notificationModal.show()
+  }
+
+  // Clear notification logs
+  window.clearLogs = () => {
+    if (confirm("Are you sure you want to clear all notification history?")) {
+      fetch("./Controller/clear_logs.php")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            const container = document.querySelector(".notification-container")
+            container.innerHTML = `
+              <div class='text-center p-4'>
+                <i class='bi bi-inbox fs-1 text-muted'></i>
+                <p class='mt-3 text-muted'>No notifications</p>
+              </div>
+            `
+            updateNotificationCount()
+          }
+        })
+        .catch((error) => console.error("Error clearing logs:", error))
+    }
+  }
+
+  // Quick asset search functionality
+  window.searchAsset = (event) => {
+    event.preventDefault()
+    const serial = document.getElementById("quickSearchSerial").value
+    const name = document.getElementById("quickSearchName").value
+    const resultsContainer = document.getElementById("quickSearchResults")
+
+    if (!serial && !name) {
+      resultsContainer.innerHTML = `<div class="alert alert-warning">Please enter a serial number or asset name to search</div>`
+      return
+    }
+
+    resultsContainer.innerHTML = `<div class="text-center"><div class="spinner-border text-primary" role="status"></div><p class="mt-2">Searching...</p></div>`
+
+    // This would be replaced with an actual AJAX call to your backend
+    setTimeout(() => {
+      // Simulate search results
+      if (serial || name) {
+        resultsContainer.innerHTML = `
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Asset Name</th>
+                  <th>Serial Number</th>
+                  <th>Status</th>
+                  <th>User</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>LAPTOP-${name || "XPS"}</td>
+                  <td>${serial || "SN12345678"}</td>
+                  <td><span class="badge bg-success">Active</span></td>
+                  <td>John Doe</td>
+                  <td>
+                    <div class="btn-group btn-group-sm">
+                      <a href="./View/Int_entrada.php?serial=${serial || "SN12345678"}" class="btn btn-primary">Change</a>
+                      <a href="./View/Int_salida.php?serial=${serial || "SN12345678"}" class="btn btn-warning">Output</a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        `
+      } else {
+        resultsContainer.innerHTML = `<div class="alert alert-info">No assets found matching your search criteria</div>`
+      }
+    }, 1000)
+  }
+})

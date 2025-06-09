@@ -1,16 +1,4 @@
 window.onload = function () {
-  // Crear botón dinámicamente
-  const procesarSeleccionadosBtn = `
-    <button id="procesarSeleccionados" class="shadow btn btn-secondary my-2" title="Process Selected Items">
-    <i class="fas fa-cog"></i> Process Selected
-    </button>`;
-  const table = document.querySelector("table");
-  if (table) {
-    table.insertAdjacentHTML("beforebegin", procesarSeleccionadosBtn);
-  } else {
-    console.error("dont found a table to the DOM.");
-    return;
-  }
   // Variable global para almacenar los parámetros seleccionados
   let parametros = "";
 
@@ -283,14 +271,3 @@ window.onload = function () {
     modal.style.display = "none";
   };
 };
-document
-  .getElementById("procesarSeleccionados")
-  .addEventListener("click", function () {
-    let icon = this.querySelector("i");
-    icon.classList.add("spin");
-
-    // Detener la animación después de 2 segundos
-    setTimeout(() => {
-      icon.classList.remove("spin");
-    }, 2000);
-  });
