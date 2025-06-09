@@ -381,7 +381,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'SIMcard' => $SIMcard
         ];
 
-
         $_SESSION["success"] = "Datos actualizados correctamente";
 
         // Manejar generación de PDF si fue solicitado
