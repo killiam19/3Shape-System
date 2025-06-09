@@ -251,5 +251,39 @@
   "notice_info": "This website is for informational purposes only",
   "user_manual": "User Manual",
   "created": "Created",
-  "last_updated": "Last Updated"
+  "last_updated": "Last Updated",
+
+
+  "dashboard": "Dashboard",
+  "import_data": "Import Data",
+  "filters": "Filters",
+  "reports": "Reports",
+  "admin_panel": "Admin Panel",
+  "documentation": "Documentation",
+  "dashboard_overview": "Dashboard Overview",
+  "asset_management": "Asset Management",
+  "manage_all_assets": "Manage and track all your company assets",
+  "all_assets": "All Assets",
+  "recent_assets": "Recent Assets",
+  "quick_actions": "Quick Actions",
+  "generate_report": "Generate Report",
+  "view_notifications": "View Notifications",
+  "active_assets": "Active Assets",
+  "expired_warranties": "Expired Warranties",
+  "in_stock": "In Stock",
+  "select_file": "Select File",
+  "generate_various_reports": "Generate various reports for your assets",
+  "complete_asset_report": "Complete report of all assets in the system",
+  "employee_entry_certificate": "Certificate for employee asset assignment",
+  "employee_departure_certificate": "Certificate for employee asset return",
+  "generate": "Generate",
+  "administrative_functions": "Administrative functions and system settings",
+  "access_admin_panel": "Access Admin Panel",
+  "system_documentation": "System documentation and help guides",
+  "complete_user_guide": "Complete guide for using the system",
+  "faq": "FAQ",
+  "frequently_asked_questions": "Frequently asked questions and answers"
+
 }
+
+
