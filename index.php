@@ -93,7 +93,6 @@ function __($key, $lang) {
                     <div class="stats-description"><?php echo __('registered_in_system', $lang); ?></div> <!-- Registered in the system -->
                 </div>
             </div>
-
               <!-- Upload Card -->
               <div class="col-lg-8 col-md-6">
                 <div class="upload-card animate__animated animate__fadeInRight">
@@ -125,7 +124,6 @@ function __($key, $lang) {
                 <h2 class="section-title"><i class="bi bi-filter me-2"></i><?php echo __('filter_assets', $lang); ?></h2> <!-- Filter Assets -->
                 <p class="section-description"><?php echo __('filter_description', $lang); ?></p> <!-- Refine your search by selection one or multiple criteria to quickly find and asset information -->
             </div>
-
             <form method="GET" action="">
                 <div class="row g-3">
                     <!-- Categoría 1: Información del Activo -->
@@ -212,7 +210,6 @@ function __($key, $lang) {
                             </div>
                         </div>
                     </div>
-
                     <!-- Categoría 3: Estado y Garantía -->
 <div class="col-lg-4 col-md-12">
     <div class="card h-100">
@@ -464,13 +461,13 @@ function __($key, $lang) {
     </div>
     </form>
     <div class="table-responsive my-5">
-        <!--Boton para registrar un nuevo equipo-->
-
+        
         <!--Tabla Principal donde se muestran los datos en este caso los activos de la empresa-->
         <div class="table-container">
             <?php
             $selectedColumns = isset($_SESSION['selected_fields']) ? $_SESSION['selected_fields'] : [];
             ?>
+            <!--Boton para registrar un nuevo equipo-->
             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                 <a href="./View/Int_Registro_equipo.php" class="shadow btn btn-secondary "><i class="fas fa-plus"></i>
                     <?php echo __('register_new_device', $lang); ?></a>
