@@ -2,6 +2,15 @@
 // Incluir la conexión a la base de datos
 include_once './Configuration/Connection.php';
 
+// Mostrar mensajes de error o éxito si existen
+if (isset($_SESSION['error_message'])) {
+    echo '<div class="alert alert-danger mt-3" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            ' . htmlspecialchars($_SESSION['error_message']) . '
+          </div>';
+    unset($_SESSION['error_message']);
+}
+
 // Precalcula el colspan una vez
 $colspan = count($selectedColumns) + 12;
 
@@ -11,6 +20,20 @@ $resultados = [];
 // Verificar si hay resultados de búsqueda en la sesión
 if (isset($_SESSION['resultados_busqueda'])) {
    $resultados = $_SESSION['resultados_busqueda'];
+   
+   // Mostrar mensaje de resultados
+   if (empty($resultados)) {
+       echo '<div class="alert alert-info mt-3" role="alert">
+               <i class="bi bi-info-circle me-2"></i>
+               No se encontraron resultados para los criterios de búsqueda especificados.
+             </div>';
+   } else {
+       $count = count($resultados);
+       echo '<div class="alert alert-success mt-3" role="alert">
+               <i class="bi bi-check-circle me-2"></i>
+               Se encontraron ' . $count . ' resultado(s).
+             </div>';
+   }
 } else {
     // Si no hay resultados en la sesión, obtener todos los registros
     try {

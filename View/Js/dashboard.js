@@ -337,4 +337,46 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, 1000)
   }
+
+  // Función para mostrar la sección activa
+  function showActiveSection() {
+    const hash = window.location.hash.substring(1) || 'dashboard';
+    const sections = document.querySelectorAll('.content-section');
+    sections.forEach(section => {
+      section.classList.remove('active');
+      if (section.id === hash + '-section') {
+        section.classList.add('active');
+      }
+    });
+
+    // Actualizar el título de la página
+    const pageTitle = document.getElementById('pageTitle');
+    if (pageTitle) {
+      pageTitle.textContent = document.querySelector(`[data-section="${hash}"] span`).textContent;
+    }
+
+    // Actualizar el ítem activo en el menú
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+      item.classList.remove('active');
+      if (item.querySelector(`[data-section="${hash}"]`)) {
+        item.classList.add('active');
+      }
+    });
+  }
+
+  // Mostrar la sección activa al cargar la página
+  showActiveSection();
+
+  // Mostrar la sección activa cuando cambie el hash
+  window.addEventListener('hashchange', showActiveSection);
+
+  // Manejar clics en los enlaces del menú
+  document.querySelectorAll('.nav-link[data-section]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const section = this.getAttribute('data-section');
+      window.location.hash = section;
+    });
+  });
 })

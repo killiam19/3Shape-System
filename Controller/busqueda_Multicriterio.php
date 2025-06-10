@@ -5,7 +5,14 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Incluir la conexión a la base de datos
-include_once "./Configuration/Connection.php";
+include_once "../Configuration/Connection.php";
+
+// Verificar si la conexión está establecida
+if (!isset($pdo)) {
+    $_SESSION['error_message'] = "Error de conexión a la base de datos";
+    header('Location: ../index.php');
+    exit;
+}
 
 try {
     // Inicializar variables
@@ -61,18 +68,6 @@ try {
             $params[':fecha_salida'] = $departureDate;
         }
         
-        // Procesar rango de fechas si ambas están presentes
-        if (isset($_GET['search_entry_date']) && !empty($_GET['search_entry_date']) && 
-            isset($_GET['search_departure_date']) && !empty($_GET['search_departure_date'])) {
-            $entryDate = $_GET['search_entry_date'];
-            $departureDate = $_GET['search_departure_date'];
-            
-            $sql .= " AND DATE(fecha_ingreso) >= :fecha_ingreso AND DATE(departure_date) <= :departure_date";
-            $params[':fecha_ingreso'] = $entryDate;
-            $params[':departure_date'] = $departureDate;
-        }
-        
-        
         // Procesar selecciones múltiples (estado de usuario)
         if (isset($_GET['search_user_status']) && is_array($_GET['search_user_status'])) {
             $filteredStatuses = array_filter($_GET['search_user_status'], function($value) {
@@ -111,40 +106,33 @@ try {
         $_SESSION['resultados_busqueda'] = $resultados;
         $_SESSION['search_debug_info'] = $debugInfo;
         
-        // Mostrar mensaje si no hay resultados
-        if (empty($resultados)) {
-            echo '<div class="alert alert-info mt-3" role="alert">
-                    <i class="bi bi-info-circle me-2"></i>
-                    No se encontraron resultados para los criterios de búsqueda especificados.
-                  </div>';
-        } else {
-            $count = count($resultados);
-            echo '<div class="alert alert-success mt-3" role="alert">
-                    <i class="bi bi-check-circle me-2"></i>
-                    Se encontraron ' . $count . ' resultado(s).
-                  </div>';
-        }
+        // Redirigir de vuelta a index.php manteniendo la sección de assets
+        header('Location: ../index.php#assets');
+        exit;
+        
     } else {
         // Si no hay parámetros de búsqueda, obtener todos los registros
         $stmt = $pdo->prepare("SELECT * FROM vista_equipos_usuarios ORDER BY assetname ASC");
         $stmt->execute();
         $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $_SESSION['resultados_busqueda'] = $resultados;
+        
+        // Redirigir de vuelta a index.php manteniendo la sección de assets
+        header('Location: ../index.php#assets');
+        exit;
     }
 } catch (PDOException $e) {
     // Manejar errores de base de datos
-    $errorMessage = "Error en la búsqueda: " . $e->getMessage();
-    echo '<div class="alert alert-danger mt-3" role="alert">
-            <i class="bi bi-exclamation-triangle me-2"></i>
-            ' . htmlspecialchars($errorMessage) . '
-          </div>';
-    
-    // Registrar el error para depuración
+    $_SESSION['error_message'] = "Error en la búsqueda: " . $e->getMessage();
     error_log("Error en busqueda_Multicriterio.php: " . $e->getMessage());
     
     // Inicializar resultados vacíos para evitar errores
     $resultados = [];
     $_SESSION['resultados_busqueda'] = [];
+    
+    // Redirigir de vuelta a index.php con mensaje de error manteniendo la sección de assets
+    header('Location: ../index.php#assets');
+    exit;
 }
 
 // Función para mostrar información de depuración si está habilitada

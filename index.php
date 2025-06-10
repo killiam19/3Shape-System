@@ -381,10 +381,10 @@ function __($key, $lang) {
                                         <a href="./View/Int_Registro_equipo.php" class="btn btn-primary">
                                             <i class="bi bi-plus-lg me-2"></i><?php echo __('register_new_device', $lang); ?>
                                         </a>
-                                        <a href="#" class="btn btn-outline-secondary" data-section="import">
+                                        <a href="#import" class="btn btn-outline-secondary" data-section="import">
                                             <i class="bi bi-upload me-2"></i><?php echo __('import_data', $lang); ?>
                                         </a>
-                                        <a href="#" class="btn btn-outline-info" data-section="reports">
+                                        <a href="#reports" class="btn btn-outline-info" data-section="reports">
                                             <i class="bi bi-file-earmark-text me-2"></i><?php echo __('generate_report', $lang); ?>
                                         </a>
                                         <button class="btn btn-outline-warning" onclick="showModal()">
@@ -416,7 +416,7 @@ function __($key, $lang) {
                         </div>
                         <div class="collapse" id="filterCollapse">
                             <div class="card-body">
-                                <form method="GET" action="">
+                                <form method="GET" action="./Controller/busqueda_Multicriterio.php">
                                     <div class="row g-3">
                                         <!-- Asset Information -->
                                         <div class="col-lg-4">
@@ -506,9 +506,9 @@ function __($key, $lang) {
                                         <button type="reset" class="btn btn-secondary me-2">
                                             <i class="bi bi-arrow-clockwise"></i> <?php echo __('clear', $lang); ?>
                                         </button>
-                                        <button type="button" class="btn btn-primary" onclick="window.location.href = window.location.pathname">
+                                        <a href="./Controller/busqueda_Multicriterio.php" class="btn btn-primary">
                                             <i class="bi bi-arrow-repeat"></i> <?php echo __('refresh', $lang); ?>
-                                        </button>
+                                        </a>
                                     </div>
                                 </form>
                             </div>
@@ -773,7 +773,7 @@ function __($key, $lang) {
                                         <i class="bi bi-question-circle me-2"></i><?php echo __('faq', $lang); ?>
                                     </h5>
                                     <p class="card-text"><?php echo __('frequently_asked_questions', $lang); ?></p>
-                                    <a href="#" class="btn btn-outline-primary">
+                                    <a href="./View/Int_faq.php" class="btn btn-outline-primary">
                                         <i class="bi bi-eye"></i> <?php echo __('view', $lang); ?>
                                     </a>
                                 </div>
