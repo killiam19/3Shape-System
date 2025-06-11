@@ -785,9 +785,6 @@ function __($key, $lang) {
         </main>
     </div>
 
-    <!-- Modals -->
-    <?php include './View/Fragments/modals.php'; ?>
-
     <!-- Scripts -->
     <script src="./Configuration/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="./Configuration/DataTables/datatables.min.js"></script>

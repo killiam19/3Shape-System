@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Notification count
   function updateNotificationCount() {
-    fetch("./Controller/get_notification_count.php")
+    fetch("./Model/get_notification_count.php")
       .then((response) => response.json())
       .then((data) => {
         const badge = document.querySelector(".notification-badge")
@@ -212,12 +212,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       })
       .catch((error) => console.error("Error fetching notification count:", error))
-  }
-
-  // Play notification sound
-  function playNotificationSound() {
-    const audio = new Audio("./View/assets/audio/notification-sound.mp3")
-    audio.play().catch((e) => console.log("Audio play prevented:", e))
   }
 
   // Show notification alert
@@ -267,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Clear notification logs
   window.clearLogs = () => {
     if (confirm("Are you sure you want to clear all notification history?")) {
-      fetch("./Controller/clear_logs.php")
+      fetch("./Model/clear_logs.php")
         .then((response) => response.json())
         .then((data) => {
           if (data.success) {
