@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((response) => response.json())
         .then((data) => {
           if (data.success) {
-            const container = document.querySelector(".notification-container")
+            const container = document.getElementById("notificationHistoryContainer")
             container.innerHTML = `
               <div class='text-center p-4'>
                 <i class='bi bi-inbox fs-1 text-muted'></i>

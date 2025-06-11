@@ -525,7 +525,7 @@ function __($key, $lang) {
                                 <button id="procesarSeleccionados" type="button" class="btn btn-warning btn-sm">
                                     <i class="fas fa-cog"></i> <?php echo __('select_process', $lang); ?>
                                 </button>
-                                <button id="deleteAllButton" type="button" class="btn btn-danger btn-sm">
+                                <button id="deleteAllButton" type="button" class="btn btn-danger btn-sm" onclick="deleteAllRecords()">
                                     <i class="bi bi-trash"></i> <?php echo __('delete_all_logs', $lang); ?>
                                 </button>
                             </div>
@@ -789,7 +789,7 @@ function __($key, $lang) {
     <script src="./Configuration/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="./Configuration/DataTables/datatables.min.js"></script>
     <script src="./View/Js/dashboard.js"></script>
-    <script src="./View/Js/ModalReport.js"></script>
+    <script src="./View/Js/ModalReportGeneral.js"></script>
     <script src="./View/Js/dark-mode-toggle.js"></script>
     <script src="./View/Js/Select_proccess.js"></script>
 
@@ -817,7 +817,7 @@ function __($key, $lang) {
                 </div>
                 <div class="modal-body">
                     <input type="text" id="notificationFilter" class="form-control mb-3" placeholder="<?php echo __('filter_notifications', $lang); ?>">
-                    <div class="notification-container">
+                    <div class="notification-container" id="notificationHistoryContainer">
                         <?php
                         $jsonFilePath = './Model/Logs/session_messages.json';
                         $alerts = [];

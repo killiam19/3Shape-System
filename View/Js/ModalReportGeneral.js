@@ -72,9 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const bellButton = document.querySelector('.bell-button');
   const bellContainer = document.querySelector('.bell-container');
   
-  // Asegurarnos de cargar el archivo de sonido anticipadamente
-  const notificationSound = new Audio('../View/assets/audio/notification-sound.mp3');
-  
   if (bellButton) {
     bellButton.addEventListener('click', function(e) {
       e.preventDefault();
@@ -123,15 +120,8 @@ function fetchNotificationCount(isInitialFetch) {
       if (data.count > 0) {
         updateNotificationBadge(data.count);
         
-        // Play sound for new notifications (but not on initial page load)
+        // Mostrar animación para nuevas notificaciones (pero no en la carga inicial)
         if (!isInitialFetch && data.count > notificationCount) {
-          const notificationSound = new Audio('../View/assets/audio/notification-sound.mp3');
-          notificationSound.volume = 0.5; // 50% del volumen
-          notificationSound.play().catch(e => {
-            console.log("Error playing sound. User interaction may be needed first:", e);
-          });
-          
-          // También mostramos una animación
           notifyUser();
         }
       }
@@ -185,4 +175,60 @@ function clearLogs() {
       })
       .catch((error) => console.error("Error:", error));
   }
+}
+
+// Function to delete all records
+function deleteAllRecords() {
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: "Esta acción eliminará todos los registros del sistema y no se puede deshacer.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Sí, eliminar todo',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Mostrar estado de carga
+      Swal.fire({
+        title: 'Eliminando...',
+        html: 'Por favor espere mientras se eliminan los registros.',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      fetch("./Controller/delete_regist.php", {
+        method: "POST",
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          Swal.fire(
+            '¡Eliminado!',
+            'Todos los registros han sido eliminados exitosamente.',
+            'success'
+          ).then(() => {
+            location.reload();
+          });
+        } else {
+          Swal.fire(
+            'Error',
+            data.message || 'Hubo un problema al eliminar los registros.',
+            'error'
+          );
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        Swal.fire(
+          'Error',
+          'Hubo un problema al eliminar los registros.',
+          'error'
+        );
+      });
+    }
+  });
 }
