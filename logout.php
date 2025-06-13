@@ -1,10 +1,10 @@
 <?php
-// Start the session
+// Iniciar la sesión
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Log the logout action
+// Registrar la acción de cierre de sesión
 $username = $_SESSION['username'] ?? 'Unknown user';
 $log_message = [
     'message' => "User {$username} logged out",
@@ -18,9 +18,9 @@ if (file_exists($log_file)) {
     file_put_contents($log_file, json_encode($log_data));
 }
 
-// Remove remember me cookie if it exists
+// Eliminar la cookie de recordarme si existe
 if (isset($_COOKIE['remember_token'])) {
-    // Remove token from database if needed
+    // Eliminar el token de la base de datos si es necesario
     if (isset($_SESSION['user_id'])) {
         include_once './Configuration/Connection.php';
         try {
@@ -31,14 +31,14 @@ if (isset($_COOKIE['remember_token'])) {
         }
     }
     
-    // Delete the cookie
+    // Eliminar la cookie
     setcookie('remember_token', '', time() - 3600, '/', '', true, true);
 }
 
-// Clear all session variables
+// Borrar todas las variables de sesión
 $_SESSION = [];
 
-// Destroy the session cookie
+// Destruir la cookie de sesión
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
     setcookie(
@@ -52,9 +52,9 @@ if (ini_get("session.use_cookies")) {
     );
 }
 
-// Destroy the session
+// Destruir la sesión
 session_destroy();
 
-// Redirect to login page
+// Redirigir a la página de inicio de sesión
 header("Location: login.php");
 exit;

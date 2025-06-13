@@ -16,11 +16,14 @@ function validateFile($file)
         'application/vnd.ms-excel', 
         'text/plain',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // xlsx
-        'application/vnd.ms-excel' // xls
+        'application/vnd.ms-excel', // xls
+        'application/octet-stream' // Para manejar MIME types inconsistentes
     ];
-    $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
-    return in_array($fileExtension, $allowedExtensions) && in_array($file['type'], $allowedMimeTypes);
+    return in_array($fileExtension, $allowedExtensions) && 
+           (in_array($file['type'], $allowedMimeTypes) || 
+           ($fileExtension == 'xlsx' || $fileExtension == 'xls')); // Verificación adicional para Excel
 }
 
 function generateUniqueAssetName($pdo)
@@ -167,14 +170,19 @@ function insertData($pdo, $data)
     }
 }
 
-// Nueva función para procesar archivos Excel
+// Mejorada la función para procesar archivos Excel
 function processExcel($pdo, $filePath)
 {
     $warnings = [];
     
     try {
+        // Detectar automáticamente el tipo de archivo de Excel
+        $inputFileType = IOFactory::identify($filePath);
+        $reader = IOFactory::createReader($inputFileType);
+        $reader->setReadDataOnly(true);
+        
         // Cargar el archivo Excel
-        $spreadsheet = IOFactory::load($filePath);
+        $spreadsheet = $reader->load($filePath);
         $worksheet = $spreadsheet->getActiveSheet();
         
         // Obtener todas las filas como array
@@ -339,16 +347,8 @@ if (!isset($fieldMap) || empty($fieldMap)) {
         } catch (PDOException $e) {
             if ($e->errorInfo[1] == 1062) {
                 $warnings[] = "Duplicate Log: " . ($originalAssetName ?: 'Assetname') . ' - ' . $rowData['serial_number'];
-            }
-        }
-
-        try {
-            insertData($pdo, $rowData);
-        } catch (PDOException $e) {
-            if ($e->errorInfo[1] == 1062) { // Código de error para duplicados
-                $warnings[] = "Duplicate Log: " . $rowData['assetname'];
             } else {
-                $warnings[] = "Error in row file " . (ftell($file) + 1) . ": " . $e->getMessage();
+                $warnings[] = "Error in row " . (ftell($file) + 1) . ": " . $e->getMessage();
             }
         }
     }

@@ -55,7 +55,7 @@ if (!$is_logged_in && isset($_COOKIE['remember_token'])) {
             
             $is_logged_in = true;
         } else {
-            // Invalid token, clear the cookie
+            // Token no válido, borre la cookie
             setcookie('remember_token', '', time() - 3600, '/', '', true, true);
         }
     } catch (PDOException $e) {
@@ -79,10 +79,10 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 
     $_SESSION = [];
     session_destroy();
     
-    // Redirect to login with timeout message
+    // Redirigir al inicio de sesión con mensaje de tiempo de espera
     header("Location: login.php?timeout=1");
     exit;
 }
 
-// Update last activity time
+// Actualizar la hora de la última actividad
 $_SESSION['last_activity'] = time();

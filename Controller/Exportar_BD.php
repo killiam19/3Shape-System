@@ -65,6 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $columnLetter = 'A';
             foreach ($headers as $header) {
                 $sheet->setCellValue($columnLetter . '1', $header);
+                // Aplicar estilo a los encabezados
+                $sheet->getStyle($columnLetter . '1')->getFont()->setBold(true);
+                $sheet->getStyle($columnLetter . '1')->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()->setARGB('FFD3D3D3'); // Gris claro
                 $columnLetter++;
             }
             
@@ -76,6 +81,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $sheet->setCellValue($columnLetter . $rowIndex, $value);
                     $columnLetter++;
                 }
+                // Alternar el color de fondo de las filas
+                if ($rowIndex % 2 == 0) {
+                    $lastColumn = --$columnLetter; // Última columna usada
+                    $sheet->getStyle('A' . $rowIndex . ':' . $lastColumn . $rowIndex)
+                        ->getFill()
+                        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setARGB('FFEBEBEB'); // Gris muy claro
+                }
                 $rowIndex++;
             }
             
@@ -85,6 +98,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $sheet->getColumnDimension($columnLetter)->setAutoSize(true);
                 $columnLetter++;
             }
+
+            // Aplicar bordes a todas las celdas con datos
+            $lastColumn = --$columnLetter; // Última columna usada
+            $lastRow = $rowIndex - 1; // Última fila usada
+            $styleArray = [
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    ],
+                ],
+            ];
+            $sheet->getStyle('A1:' . $lastColumn . $lastRow)->applyFromArray($styleArray);
             
             // Crear el writer
             $writer = new Xlsx($spreadsheet);

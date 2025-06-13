@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $stockAssetname = $stockRecord['assetname'];
 
-                // Function to update equipment data
+                // Función para actualizar información de equipos
                 function updateEquipment($pdo, $data, $assetname)
                 {
                     $updateSql = "UPDATE equipos AS e 
@@ -94,13 +94,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     return $stmt->execute();
                 }
 
-                // Update selected equipment with stock data
+                //Actualizar equipos seleccionados con datos de stock
                 updateEquipment($pdo, $stockRecord, $assetname);
 
-                // Update stock equipment with selected data
+                // Actualizar el stock de equipos con los datos seleccionados
                 updateEquipment($pdo, $currentData, $stockAssetname);
 
-                // Function to update user status
+                // Función para actualizar el estado del usuario
                 function updateUserStatus($pdo, $assetname, $status)
                 {
                     $updateStatusSql = "UPDATE usuarios_equipos AS ue 

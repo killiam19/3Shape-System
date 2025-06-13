@@ -3,18 +3,18 @@ if (session_status() === PHP_SESSION_NONE) {
    session_start();
 }
 
-// Initialize variables
+// Inicializar variables
 $error_message = '';
 $username = '';
 $remember = false;
 
-// Check if user is already logged in
+// Comprobar si el usuario ya ha iniciado sesión
 if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) {
    header('Location: index.php');
    exit;
 }
 
-// Process login form submission
+// Procesar el envío del formulario de inicio de sesión
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    // Verify CSRF token
    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
@@ -24,22 +24,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
        $password = $_POST['password'] ?? '';
        $remember = isset($_POST['remember']);
        
-       // Basic validation
+       // Validación básica
        if (empty($username) || empty($password)) {
            $error_message = 'Please enter both username and password.';
        } else {
-           // Here you would connect to your database and verify credentials
-           // This is a placeholder for your actual authentication logic
+           // Aquí podrá conectarse a su base de datos y verificar las credenciales.
+           // Este es un marcador de posición para su lógica de autenticación actual
            include_once './Configuration/Connection.php';
            
            try {
-               // Use prepared statement to prevent SQL injection - check both username and email
+               // Utilice una declaración preparada para evitar la inyección de SQL: verifica tanto el nombre de usuario como el correo electrónico
                $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :identifier OR email = :identifier LIMIT 1");
                $stmt->execute(['identifier' => $username]);
                $user = $stmt->fetch(PDO::FETCH_ASSOC);
                
                if ($user && password_verify($password, $user['password'])) {
-                   // Login successful
+                   // Inicio de sesión exitoso
                    $_SESSION['user_logged_in'] = true;
                    $_SESSION['user_id'] = $user['id'];
                    $_SESSION['username'] = $user['username'];
@@ -51,25 +51,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                        $_SESSION['is_admin'] = true;
                    }
                    
-                   // Set remember me cookie if requested
+                   //Establecer cookie de recordatorio si se solicita
                    if ($remember) {
                        $token = bin2hex(random_bytes(32));
-                       // Store token in database associated with user
+                       // Almacenar el token en la base de datos asociada con el usuario
                        $stmt = $pdo->prepare("UPDATE users SET remember_token = :token WHERE id = :id");
                        $stmt->execute([
                            'token' => $token,
                            'id' => $user['id']
                        ]);
                        
-                       // Set cookie to expire in 30 days
+                       // Configurar la cookie para que caduque en 30 días
                        setcookie('remember_token', $token, time() + (86400 * 30), '/', '', true, true);
                    }
                    
-                   // Update last login time
+                   // Actualizar la hora del último inicio de sesión
                    $stmt = $pdo->prepare("UPDATE users SET last_login = NOW() WHERE id = :id");
                    $stmt->execute(['id' => $user['id']]);
                    
-                   // Determine if login was via username or email
+                   // Determinar si el inicio de sesión se realizó mediante nombre de usuario o correo electrónico
                    $login_type = ($username === $user['email']) ? 'email' : 'username';
                    $log_message = [
                        'message' => "User {$user['username']} logged in successfully via {$login_type}",
@@ -83,11 +83,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                        file_put_contents($log_file, json_encode($log_data));
                    }
                    
-                   // Redirect to dashboard
+                   // Redirigir al dashboard
                    header('Location: index.php');
                    exit;
                } else {
-                   // Login failed
+                   // Error de inicio de sesion
                    $error_message = 'Invalid credentials provided.';
                    
                    $log_message = [
@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    }
 }
 
-// Generate CSRF token
+// Generar token CSRF
 if (empty($_SESSION['csrf_token'])) {
    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -344,7 +344,7 @@ if (empty($_SESSION['csrf_token'])) {
    
    <script>
        document.addEventListener('DOMContentLoaded', function() {
-           // Toggle password visibility
+           // Activar o desactivar la visibilidad de la contraseña
            const togglePassword = document.getElementById('togglePassword');
            const passwordField = document.getElementById('password');
            
@@ -352,12 +352,12 @@ if (empty($_SESSION['csrf_token'])) {
                const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
                passwordField.setAttribute('type', type);
                
-               // Toggle eye icon
+               // Icono de ojo de alternancia
                this.querySelector('i').classList.toggle('fa-eye');
                this.querySelector('i').classList.toggle('fa-eye-slash');
            });
            
-           // Auto-hide alert after 5 seconds
+           // Ocultar automáticamente la alerta después de 5 segundos
            const alert = document.querySelector('.alert');
            if (alert) {
                setTimeout(function() {

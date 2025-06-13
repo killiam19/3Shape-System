@@ -133,7 +133,7 @@ function __($key, $lang) {
                 </div>
             </nav>
 
-            <!-- User Profile Section -->
+            <!-- Sección de Perfil de Usuario -->
             <div class="sidebar-footer">
                 <?php if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in']): ?>
                 <div class="user-profile dropdown">
@@ -184,7 +184,7 @@ function __($key, $lang) {
                     <h1 class="page-title" id="pageTitle"><?php echo __('dashboard', $lang); ?></h1>
                 </div>
                 <div class="header-right">
-                    <!-- Notifications -->
+                    <!-- Notificaciones -->
                     <div class="notification-container">
                         <button class="notification-btn" onclick="showModal()">
                             <i class="bi bi-bell"></i>
@@ -192,7 +192,7 @@ function __($key, $lang) {
                         </button>
                     </div>
                     
-                    <!-- Quick Actions -->
+                    <!-- Acciones Rápidas -->
                     <div class="quick-actions">
                         <a href="./View/Int_Registro_equipo.php" class="btn btn-primary btn-sm">
                             <i class="bi bi-plus-lg"></i>
@@ -202,9 +202,9 @@ function __($key, $lang) {
                 </div>
             </header>
 
-            <!-- Content Sections -->
+            <!-- Secciones de contenido -->
             <div class="content-wrapper">
-                <!-- Dashboard Section -->
+                <!-- Sección de Dashboard -->
                 <section id="dashboard-section" class="content-section active">
                     <div class="section-header">
                         <div class="d-flex justify-content-between align-items-center">
@@ -448,7 +448,7 @@ function __($key, $lang) {
                                             </div>
                                         </div>
 
-                                        <!-- User Information -->
+                                        <!-- Información del usuario -->
                                         <div class="col-lg-4">
                                             <div class="card">
                                                 <div class="card-header">
@@ -473,7 +473,7 @@ function __($key, $lang) {
                                             </div>
                                         </div>
 
-                                        <!-- Status & Warranty -->
+                                        <!-- Estado y Fechas -->
                                         <div class="col-lg-4">
                                             <div class="card">
                                                 <div class="card-header">
@@ -604,7 +604,7 @@ function __($key, $lang) {
                         </div>
                     </div>
 
-                    <!-- Quick Asset Search -->
+                    <!-- Búsqueda rápida de activos -->
                     <div class="row g-4 mt-4">
                         <div class="col-12">
                             <div class="card">
@@ -639,7 +639,7 @@ function __($key, $lang) {
                     </div>
                 </section>
 
-                <!-- Import Section -->
+                <!-- Sección de Importación -->
                 <section id="import-section" class="content-section">
                     <div class="section-header">
                         <h2><?php echo __('import_asset_data', $lang); ?></h2>
@@ -674,7 +674,7 @@ function __($key, $lang) {
                     </div>
                 </section>
 
-                <!-- Reports Section -->
+                <!-- Sección de Informes -->
                 <section id="reports-section" class="content-section">
                     <div class="section-header">
                         <h2><?php echo __('reports', $lang); ?></h2>
@@ -723,7 +723,7 @@ function __($key, $lang) {
                     </div>
                 </section>
 
-                <!-- Admin Section -->
+                <!-- Sección de Admin (Exclusiva) -->
                 <?php if (isset($_SESSION['user_role']) && ($_SESSION['user_role'] === 'admin' || $_SESSION['user_role'] === 'manager')): ?>
                 <section id="admin-section" class="content-section">
                     <div class="section-header">
@@ -744,7 +744,7 @@ function __($key, $lang) {
                 </section>
                 <?php endif; ?>
 
-                <!-- Documentation Section -->
+                <!-- Sección de documentación -->
                 <section id="documentation-section" class="content-section">
                     <div class="section-header">
                         <h2><?php echo __('documentation', $lang); ?></h2>
@@ -805,7 +805,7 @@ function __($key, $lang) {
         </div>
     </div>
 
-    <!-- Notification Modal -->
+    <!-- Modal de Notificaciones -->
     <div class="modal fade" id="notificationModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -854,7 +854,7 @@ function __($key, $lang) {
         </div>
     </div>
 
-    <!-- Admin Login Modal -->
+    <!-- Modal de inicio de sesión de admin -->
     <div class="modal fade" id="adminLoginModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
