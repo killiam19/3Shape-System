@@ -4,11 +4,13 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 include_once '../Configuration/Connection.php';
+include_once '../Configuration/MailConfig.php';
 
 // Initialize variables
 $error_message = '';
 $success_message = '';
 $identifier = '';
+$showResetForm = false;
 
 // Generate CSRF token if not exists
 if (empty($_SESSION['csrf_token'])) {
@@ -19,73 +21,124 @@ if (empty($_SESSION['csrf_token'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verify CSRF token
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        $error_message = 'Security validation failed. Please try again.';
+        $error_message = 'Error de validación de seguridad. Por favor, inténtalo de nuevo.';
     } else {
-        $identifier = trim($_POST['identifier'] ?? '');
-        $new_password = $_POST['new_password'] ?? '';
-        $confirm_password = $_POST['confirm_password'] ?? '';
-        
-        // Basic validation
-        if (empty($identifier)) {
-            $error_message = 'Please enter your username or email.';
-        } elseif (empty($new_password)) {
-            $error_message = 'Please enter a new password.';
-        } elseif (strlen($new_password) < 6) {
-            $error_message = 'Password must be at least 6 characters long.';
-        } elseif ($new_password !== $confirm_password) {
-            $error_message = 'Passwords do not match.';
-        } else {
-            try {
-                // Check if user exists
-                $stmt = $pdo->prepare("SELECT id, username FROM users WHERE username = :identifier OR email = :identifier LIMIT 1");
-                $stmt->execute(['identifier' => $identifier]);
-                $user = $stmt->fetch(PDO::FETCH_ASSOC);
-                
-                if ($user) {
-                    // Update password
-                    $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-                    $stmt = $pdo->prepare("UPDATE users SET password = :password WHERE id = :id");
-                    $result = $stmt->execute([
-                        'password' => $hashed_password,
-                        'id' => $user['id']
-                    ]);
+        if (isset($_POST['request_reset'])) {
+            // Procesar solicitud de restablecimiento
+            $identifier = trim($_POST['identifier'] ?? '');
+            
+            if (empty($identifier)) {
+                $error_message = 'Por favor, ingresa tu nombre de usuario o correo electrónico.';
+            } else {
+                try {
+                    // Verificar si el usuario existe
+                    $stmt = $pdo->prepare("SELECT id, username, email FROM users WHERE username = :identifier OR email = :identifier LIMIT 1");
+                    $stmt->execute(['identifier' => $identifier]);
+                    $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     
-                    if ($result) {
-                        // Log the action
-                        $log_message = [
-                            'message' => "Password reset for user {$user['username']}",
-                            'timestamp' => date('Y-m-d H:i:s')
-                        ];
+                    if ($user) {
+                        // Generar token de restablecimiento
+                        $resetToken = bin2hex(random_bytes(32));
+                        $expiryTime = date('Y-m-d H:i:s', strtotime('+1 hour'));
                         
-                        $log_file = '../Model/Logs/session_messages.json';
-                        if (file_exists($log_file)) {
-                            $log_data = json_decode(file_get_contents($log_file), true);
-                            $log_data['success'][] = $log_message;
-                            file_put_contents($log_file, json_encode($log_data));
+                        // Guardar token en la base de datos
+                        $stmt = $pdo->prepare("UPDATE users SET reset_token = :token, reset_token_expiry = :expiry WHERE id = :id");
+                        $stmt->execute([
+                            'token' => $resetToken,
+                            'expiry' => $expiryTime,
+                            'id' => $user['id']
+                        ]);
+                        
+                        // Enviar correo electrónico
+                        $mailer = new MailConfig();
+                        try {
+                            if ($mailer->sendPasswordResetEmail($user['email'], $resetToken)) {
+                                $success_message = 'Se ha enviado un correo electrónico con instrucciones para restablecer tu contraseña.';
+                                $identifier = ''; // Limpiar el formulario
+                            }
+                        } catch (Exception $e) {
+                            $error_message = 'Error al enviar el correo: ' . $e->getMessage();
+                            error_log("Error en reset_password.php: " . $e->getMessage());
                         }
-                        
-                        $success_message = 'Password has been reset successfully. You can now login with your new password.';
-                        $identifier = ''; // Clear the form
                     } else {
-                        $error_message = 'Failed to reset password. Please try again.';
+                        $error_message = 'No se encontró ninguna cuenta con ese nombre de usuario o correo electrónico.';
                     }
-                } else {
-                    $error_message = 'No account found with that username or email.';
+                } catch (PDOException $e) {
+                    $error_message = 'Error de base de datos. Por favor, inténtalo más tarde.';
+                    error_log("Error de restablecimiento de contraseña: " . $e->getMessage());
                 }
-            } catch (PDOException $e) {
-                $error_message = 'Database error. Please try again later.';
-                error_log("Password reset error: " . $e->getMessage());
+            }
+        } elseif (isset($_POST['reset_password'])) {
+            // Procesar restablecimiento de contraseña
+            $token = $_POST['token'] ?? '';
+            $new_password = $_POST['new_password'] ?? '';
+            $confirm_password = $_POST['confirm_password'] ?? '';
+            
+            if (empty($token)) {
+                $error_message = 'Token de restablecimiento inválido.';
+            } elseif (empty($new_password)) {
+                $error_message = 'Por favor, ingresa una nueva contraseña.';
+            } elseif (strlen($new_password) < 6) {
+                $error_message = 'La contraseña debe tener al menos 6 caracteres.';
+            } elseif ($new_password !== $confirm_password) {
+                $error_message = 'Las contraseñas no coinciden.';
+            } else {
+                try {
+                    // Verificar token y expiración
+                    $stmt = $pdo->prepare("SELECT id, username FROM users WHERE reset_token = :token AND reset_token_expiry > NOW() LIMIT 1");
+                    $stmt->execute(['token' => $token]);
+                    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                    
+                    if ($user) {
+                        // Actualizar contraseña
+                        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+                        $stmt = $pdo->prepare("UPDATE users SET password = :password, reset_token = NULL, reset_token_expiry = NULL WHERE id = :id");
+                        $result = $stmt->execute([
+                            'password' => $hashed_password,
+                            'id' => $user['id']
+                        ]);
+                        
+                        if ($result) {
+                            $success_message = 'La contraseña ha sido restablecida exitosamente. Ahora puedes iniciar sesión con tu nueva contraseña.';
+                            header("refresh:3;url=../login.php");
+                        } else {
+                            $error_message = 'Error al restablecer la contraseña. Por favor, inténtalo de nuevo.';
+                        }
+                    } else {
+                        $error_message = 'Token de restablecimiento inválido o expirado.';
+                    }
+                } catch (PDOException $e) {
+                    $error_message = 'Error de base de datos. Por favor, inténtalo más tarde.';
+                    error_log("Error de restablecimiento de contraseña: " . $e->getMessage());
+                }
             }
         }
     }
 }
+
+// Verificar si hay un token en la URL
+if (isset($_GET['token'])) {
+    $token = $_GET['token'];
+    try {
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE reset_token = :token AND reset_token_expiry > NOW() LIMIT 1");
+        $stmt->execute(['token' => $token]);
+        if ($stmt->fetch()) {
+            $showResetForm = true;
+        } else {
+            $error_message = 'Token de restablecimiento inválido o expirado.';
+        }
+    } catch (PDOException $e) {
+        $error_message = 'Error de base de datos. Por favor, inténtalo más tarde.';
+        error_log("Error de verificación de token: " . $e->getMessage());
+    }
+}
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Password - Asset Management System</title>
+    <title>Restablecer Contraseña - Sistema de Gestión de Activos</title>
     <link rel="shortcut icon" href="../Configuration/3shape-intraoral-logo.png" type="image/x-icon">
     
     <!-- Critical CSS -->
@@ -195,6 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             z-index: 10;
             cursor: pointer;
             color: #6c757d;
+            padding: 5px;
         }
         
         .password-toggle:hover {
@@ -259,65 +313,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="reset-container">
         <div class="reset-card">
             <div class="reset-header">
-                <img src="../Configuration/3shape-logo.png" alt="Logo" class="reset-logo">
-                <h1 class="reset-title">Reset Password</h1>
-                <p class="reset-subtitle">Enter your username or email and set a new password</p>
+                <img src="../Configuration/3shape-intraoral-logo.png" alt="Logo" class="reset-logo">
+                <h1 class="reset-title">Restablecer Contraseña</h1>
+                <p class="reset-subtitle">
+                    <?php echo $showResetForm ? 'Ingresa tu nueva contraseña' : 'Ingresa tu nombre de usuario o correo electrónico'; ?>
+                </p>
             </div>
             
             <div class="reset-body">
-                <?php if (!empty($error_message)): ?>
-                    <div class="alert alert-danger" role="alert">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
-                        <?php echo htmlspecialchars($error_message); ?>
-                    </div>
+                <?php if ($error_message): ?>
+                    <div class="alert alert-danger"><?php echo $error_message; ?></div>
                 <?php endif; ?>
                 
-                <?php if (!empty($success_message)): ?>
-                    <div class="alert alert-success" role="alert">
-                        <i class="fas fa-check-circle me-2"></i>
-                        <?php echo htmlspecialchars($success_message); ?>
-                        <div class="mt-2">
-                            <a href="../login.php" class="btn btn-sm btn-success">Go to Login</a>
+                <?php if ($success_message): ?>
+                    <div class="alert alert-success"><?php echo $success_message; ?></div>
+                <?php endif; ?>
+                
+                <?php if ($showResetForm): ?>
+                    <form method="POST" action="">
+                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                        <input type="hidden" name="token" value="<?php echo htmlspecialchars($_GET['token']); ?>">
+                        
+                        <div class="form-floating mb-3 position-relative">
+                            <input type="password" class="form-control" id="new_password" name="new_password" required>
+                            <label for="new_password">Nueva Contraseña</label>
+                            <span class="password-toggle" onclick="togglePassword('new_password')">
+                                <i class="fas fa-eye"></i>
+                            </span>
                         </div>
-                    </div>
+                        
+                        <div class="form-floating mb-3 position-relative">
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                            <label for="confirm_password">Confirmar Contraseña</label>
+                            <span class="password-toggle" onclick="togglePassword('confirm_password')">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                        </div>
+                        
+                        <button type="submit" name="reset_password" class="btn btn-reset">
+                            Restablecer Contraseña
+                        </button>
+                    </form>
                 <?php else: ?>
-                    <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+                    <form method="POST" action="">
+                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                         
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="identifier" name="identifier" placeholder="Username or Email" value="<?php echo htmlspecialchars($identifier); ?>" required autofocus>
-                            <label for="identifier">Username or Email</label>
+                            <input type="text" class="form-control" id="identifier" name="identifier" value="<?php echo htmlspecialchars($identifier); ?>" required>
+                            <label for="identifier">Nombre de Usuario o Correo Electrónico</label>
                         </div>
                         
-                        <div class="form-floating mb-3 position-relative">
-                            <input type="password" class="form-control" id="new_password" name="new_password" placeholder="New Password" required>
-                            <label for="new_password">New Password</label>
-                            <span class="password-toggle" id="toggleNewPassword">
-                                <i class="fas fa-eye"></i>
-                            </span>
-                        </div>
-                        
-                        <div class="password-strength" id="passwordStrength"></div>
-                        <small class="text-muted mb-3 d-block">Password must be at least 6 characters</small>
-                        
-                        <div class="form-floating mb-3 position-relative">
-                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
-                            <label for="confirm_password">Confirm Password</label>
-                            <span class="password-toggle" id="toggleConfirmPassword">
-                                <i class="fas fa-eye"></i>
-                            </span>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-reset">
-                            <i class="fas fa-key me-2"></i> Reset Password
+                        <button type="submit" name="request_reset" class="btn btn-reset">
+                            Enviar Enlace de Restablecimiento
                         </button>
                     </form>
                 <?php endif; ?>
                 
                 <div class="text-center mt-3">
-                    <a href="../login.php" class="text-decoration-none">
-                        <i class="fas fa-arrow-left me-1"></i> Back to Login
-                    </a>
+                    <a href="../login.php" class="text-decoration-none">Volver al Inicio de Sesión</a>
                 </div>
             </div>
             
@@ -327,89 +380,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
     
+    <script src="../Configuration/JQuery/jquery-3.6.0.min.js"></script>
+    <script src="../Configuration/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Toggle password visibility for new password
-            const toggleNewPassword = document.getElementById('toggleNewPassword');
-            const newPasswordField = document.getElementById('new_password');
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const icon = input.nextElementSibling.nextElementSibling.querySelector('i');
             
-            if (toggleNewPassword && newPasswordField) {
-                toggleNewPassword.addEventListener('click', function() {
-                    const type = newPasswordField.getAttribute('type') === 'password' ? 'text' : 'password';
-                    newPasswordField.setAttribute('type', type);
-                    
-                    // Toggle eye icon
-                    this.querySelector('i').classList.toggle('fa-eye');
-                    this.querySelector('i').classList.toggle('fa-eye-slash');
-                });
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
             }
-            
-            // Toggle password visibility for confirm password
-            const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
-            const confirmPasswordField = document.getElementById('confirm_password');
-            
-            if (toggleConfirmPassword && confirmPasswordField) {
-                toggleConfirmPassword.addEventListener('click', function() {
-                    const type = confirmPasswordField.getAttribute('type') === 'password' ? 'text' : 'password';
-                    confirmPasswordField.setAttribute('type', type);
-                    
-                    // Toggle eye icon
-                    this.querySelector('i').classList.toggle('fa-eye');
-                    this.querySelector('i').classList.toggle('fa-eye-slash');
-                });
-            }
-            
-            // Password strength indicator
-            const passwordField = document.getElementById('new_password');
-            const strengthIndicator = document.getElementById('passwordStrength');
-            
-            if (passwordField && strengthIndicator) {
-                passwordField.addEventListener('input', function() {
-                    const password = this.value;
-                    let strength = 0;
-                    
-                    // Length check
-                    if (password.length >= 6) {
-                        strength += 1;
-                    }
-                    
-                    // Contains number
-                    if (/\d/.test(password)) {
-                        strength += 1;
-                    }
-                    
-                    // Contains special character
-                    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-                        strength += 1;
-                    }
-                    
-                    // Update strength indicator
-                    strengthIndicator.className = 'password-strength';
-                    
-                    if (password.length === 0) {
-                        strengthIndicator.style.width = '0';
-                    } else if (strength === 1) {
-                        strengthIndicator.classList.add('strength-weak');
-                    } else if (strength === 2) {
-                        strengthIndicator.classList.add('strength-medium');
-                    } else {
-                        strengthIndicator.classList.add('strength-strong');
-                    }
-                });
-            }
-            
-            // Auto-hide alert after 5 seconds
-            const alerts = document.querySelectorAll('.alert-danger');
-            alerts.forEach(function(alert) {
-                setTimeout(function() {
-                    alert.style.opacity = '0';
-                    alert.style.transition = 'opacity 0.5s';
-                    setTimeout(function() {
-                        alert.style.display = 'none';
-                    }, 500);
-                }, 5000);
-            });
-        });
+        }
     </script>
 </body>
 </html>

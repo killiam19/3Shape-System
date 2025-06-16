@@ -65,7 +65,7 @@ function __($key, $lang) {
 
             <nav class="sidebar-nav">
                 <div class="nav-section">
-                    <span class="nav-section-title">Platform</span>
+                    <span class="nav-section-title"><?php echo __('platform', $lang); ?></span>
                     <ul class="nav-menu">
                         <li class="nav-item active">
                             <a href="#dashboard" class="nav-link" data-section="dashboard">
@@ -102,7 +102,7 @@ function __($key, $lang) {
 
                 <?php if (isset($_SESSION['user_role']) && ($_SESSION['user_role'] === 'admin' || $_SESSION['user_role'] === 'manager')): ?>
                 <div class="nav-section">
-                    <span class="nav-section-title">Administration</span>
+                    <span class="nav-section-title"><?php echo __('administration', $lang); ?></span>
                     <ul class="nav-menu">
                         <li class="nav-item">
                             <a href="#admin" class="nav-link" data-section="admin">
@@ -110,18 +110,12 @@ function __($key, $lang) {
                                 <span><?php echo __('admin_panel', $lang); ?></span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#users" class="nav-link" data-section="users">
-                                <i class="bi bi-people"></i>
-                                <span><?php echo __('user_management', $lang); ?></span>
-                            </a>
-                        </li>
                     </ul>
                 </div>
                 <?php endif; ?>
 
                 <div class="nav-section">
-                    <span class="nav-section-title">Repository</span>
+                    <span class="nav-section-title"><?php echo __('repository', $lang); ?></span>
                     <ul class="nav-menu">
                         <li class="nav-item">
                             <a href="#documentation" class="nav-link" data-section="documentation">
@@ -565,7 +559,7 @@ function __($key, $lang) {
                     </div>
                 </section>
 
-                <!-- Asset Adjustment Section -->
+                <!-- Sección de ajustes de equipos (Cambiar equipo y fecha de salida) -->
                 <section id="adjustment-section" class="content-section">
                     <div class="section-header">
                         <h2><?php echo __('asset_adjustment', $lang); ?></h2>
@@ -599,40 +593,6 @@ function __($key, $lang) {
                                             <i class="bi bi-box-arrow-up me-2"></i><?php echo __('output_asset', $lang); ?>
                                         </a>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Búsqueda rápida de activos -->
-                    <div class="row g-4 mt-4">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="card-title mb-0">
-                                        <i class="bi bi-search me-2"></i><?php echo __('quick_asset_search', $lang); ?>
-                                    </h5>
-                                </div>
-                                <div class="card-body">
-                                    <form class="row g-3" onsubmit="searchAsset(event)">
-                                        <div class="col-md-6">
-                                            <label class="form-label"><?php echo __('search_by_serial', $lang); ?></label>
-                                            <input type="text" class="form-control" id="quickSearchSerial" placeholder="<?php echo __('enter_serial_number', $lang); ?>">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label"><?php echo __('search_by_asset_name', $lang); ?></label>
-                                            <input type="text" class="form-control" id="quickSearchName" placeholder="<?php echo __('enter_asset_name', $lang); ?>">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="form-label">&nbsp;</label>
-                                            <div class="d-grid">
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="bi bi-search"></i> <?php echo __('search', $lang); ?>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <div id="quickSearchResults" class="mt-3"></div>
                                 </div>
                             </div>
                         </div>

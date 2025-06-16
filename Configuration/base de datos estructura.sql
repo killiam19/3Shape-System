@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
     role ENUM('admin', 'manager', 'user') NOT NULL DEFAULT 'user',
     remember_token VARCHAR(64) NULL,
     reset_token VARCHAR(64) NULL,
-    reset_token_expires DATETIME NULL,
+    reset_token_expiry DATETIME NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     last_login DATETIME NULL,
