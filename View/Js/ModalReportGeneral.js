@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Function to fetch notification count from server
 function fetchNotificationCount(isInitialFetch) {
   // Call the notification count endpoint
-  fetch('../Model/get_notification_count.php', {
+  fetch('./Model/get_notification_count.php', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

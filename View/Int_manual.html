@@ -148,6 +148,9 @@
                                 data-bs-target="#inventoryVideoModal">
                                 <i class="fas fa-play"></i> Video
                             </button>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#inventoryPDFModal">
+                                <i class="fas fa-file-pdf"></i> Ver PDF
+                            </button>
                             <div class="feature-icon"><i class="fas fa-laptop"></i></div>
                             <h4>Inventory Control</h4>
                             <p>The system allows complete inventory management:</p>
@@ -180,6 +183,9 @@
                                 data-bs-target="#movementVideoModal">
                                 <i class="fas fa-play"></i> Video
                             </button>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#movementPDFModal">
+                                <i class="fas fa-file-pdf"></i> Ver PDF
+                            </button>
                             <div class="feature-icon"><i class="fas fa-exchange-alt"></i></div>
                             <h4>Movement Control</h4>
                             <p>Main features of movement control:</p>
@@ -207,6 +213,9 @@
                                 data-bs-target="#alertsVideoModal">
                                 <i class="fas fa-play"></i> Video
                             </button>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#alertsPDFModal">
+                                <i class="fas fa-file-pdf"></i> Ver PDF
+                            </button>
                             <div class="feature-icon"><i class="fas fa-bell"></i></div>
                             <h4>Alerts and Monitoring</h4>
                             <p>Features of the notification system:</p>
@@ -230,6 +239,9 @@
                             <button type="button" class="btn btn-video" data-bs-toggle="modal"
                                 data-bs-target="#fieldsVideoModal">
                                 <i class="fas fa-play"></i> Video
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#fieldsPDFModal">
+                                <i class="fas fa-file-pdf"></i> Ver PDF
                             </button>
                             <div class="feature-icon"><i class="fas fa-user-shield"></i></div>
                             <h4>Dynamic Fields Management</h4>
@@ -255,6 +267,9 @@
                                 data-bs-target="#dbAdminVideoModal">
                                 <i class="fas fa-play"></i> Video
                             </button>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#dbAdminPDFModal">
+                                <i class="fas fa-file-pdf"></i> Ver PDF
+                            </button>
                             <div class="feature-icon"><i class="fas fa-database"></i></div>
                             <h4>Database Administration</h4>
                             <p>Comprehensive database tools:</p>
@@ -278,6 +293,9 @@
                                 data-bs-target="#dashboardVideoModal">
                                 <i class="fas fa-play"></i> Video
                             </button>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#dashboardPDFModal">
+                                <i class="fas fa-file-pdf"></i> Ver PDF
+                            </button>
                             <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
                             <h4>Dashboard and Analytics</h4>
                             <p>Statistical monitoring features:</p>
@@ -299,6 +317,9 @@
                             <button type="button" class="btn btn-video" data-bs-toggle="modal"
                                 data-bs-target="#maintenanceVideoModal">
                                 <i class="fas fa-play"></i> Video
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#maintenancePDFModal">
+                                <i class="fas fa-file-pdf"></i> Ver PDF
                             </button>
                             <div class="feature-icon"><i class="fas fa-tools"></i></div>
                             <h4>System Maintenance</h4>
@@ -361,6 +382,20 @@
                     </div>
                 </div>
             </div>
+            <!-- PDF Modal for Inventory Control -->
+            <div class="modal fade" id="inventoryPDFModal" tabindex="-1" aria-labelledby="inventoryPDFModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="inventoryPDFModalLabel">Manual PDF - Gestión de Activos</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <iframe src="../pdfs/gestion_activos.pdf" width="100%" height="700px" style="border:none;"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="modal fade video-modal" id="movementModal" tabindex="-1" aria-labelledby="movementModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
@@ -405,6 +440,20 @@
         </div>
     </div>
 </div>
+<!-- PDF Modal for Movement Control -->
+<div class="modal fade" id="movementPDFModal" tabindex="-1" aria-labelledby="movementPDFModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="movementPDFModalLabel">Manual PDF - Registro de Equipos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe src="../pdfs/registro_equipos.pdf" width="100%" height="700px" style="border:none;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
 
             <div class="modal fade" id="alertsModal" tabindex="-1" aria-labelledby="alertsModalLabel"
                 aria-hidden="true">
@@ -440,6 +489,20 @@
                                     </iframe>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- PDF Modal for Notifications -->
+            <div class="modal fade" id="alertsPDFModal" tabindex="-1" aria-labelledby="alertsPDFModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="alertsPDFModalLabel">Manual PDF - Notificaciones</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <iframe src="../View/assets/pdfs/Manual_Modulo_Notificaciones.pdf" width="100%" height="700px" style="border:none;"></iframe>
                         </div>
                     </div>
                 </div>
@@ -497,6 +560,20 @@
                     </div>
                 </div>
             </div>
+            <!-- PDF Modal for Dynamic Fields -->
+            <div class="modal fade" id="fieldsPDFModal" tabindex="-1" aria-labelledby="fieldsPDFModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="fieldsPDFModalLabel">Manual PDF - Campos Dinámicos</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <iframe src="../pdfs/campos_dinamicos.pdf" width="100%" height="700px" style="border:none;"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="modal fade video-modal" id="dbAdminModal" tabindex="-1" aria-labelledby="dbAdminModalLabel"
                 aria-hidden="true">
@@ -534,6 +611,20 @@
                                 <iframe src="https://www.youtube.com/embed/VIDEO_ID"
                                     title="Database Administration Tutorial" allowfullscreen></iframe>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- PDF Modal for Database Administration -->
+            <div class="modal fade" id="dbAdminPDFModal" tabindex="-1" aria-labelledby="dbAdminPDFModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="dbAdminPDFModalLabel">Manual PDF - Administración de Base de Datos</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <iframe src="../pdfs/administracion_bd.pdf" width="100%" height="700px" style="border:none;"></iframe>
                         </div>
                     </div>
                 </div>
@@ -584,6 +675,20 @@
                     </div>
                 </div>
             </div>
+            <!-- PDF Modal for Dashboard and Analytics -->
+            <div class="modal fade" id="dashboardPDFModal" tabindex="-1" aria-labelledby="dashboardPDFModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="dashboardPDFModalLabel">Manual PDF - Dashboard y Analíticas</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <iframe src="../pdfs/dashboard_analiticas.pdf" width="100%" height="700px" style="border:none;"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
             <div class="modal fade" id="maintenanceModal" tabindex="-1" aria-labelledby="maintenanceModalLabel"
@@ -625,6 +730,21 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <!-- PDF Modal for System Maintenance -->
+            <div class="modal fade" id="maintenancePDFModal" tabindex="-1" aria-labelledby="maintenancePDFModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="maintenancePDFModalLabel">Manual PDF - Mantenimiento del Sistema</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <iframe src="../pdfs/mantenimiento_sistema.pdf" width="100%" height="700px" style="border:none;"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <script src="../Configuration/bootstrap/js/bootstrap.bundle.min.js"></script>
             <script>
