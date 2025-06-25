@@ -661,7 +661,7 @@ function __($key, $lang) {
                                     <i class="bi bi-file-earmark-arrow-up text-success fs-1 mb-3"></i>
                                     <h5 class="card-title"><?php echo __('entry_certificate', $lang); ?></h5>
                                     <p class="card-text"><?php echo __('employee_entry_certificate', $lang); ?></p>
-                                    <a href="./Model/Acta_entrada.php" class="btn btn-success">
+                                    <a href="./Model/Acta_entrada.php" target="_blank" class="btn btn-success">
                                         <i class="bi bi-download"></i> <?php echo __('generate', $lang); ?>
                                     </a>
                                 </div>
@@ -674,7 +674,7 @@ function __($key, $lang) {
                                     <i class="bi bi-file-earmark-arrow-down text-warning fs-1 mb-3"></i>
                                     <h5 class="card-title"><?php echo __('departure_certificate', $lang); ?></h5>
                                     <p class="card-text"><?php echo __('employee_departure_certificate', $lang); ?></p>
-                                    <a href="./Model/Acta_salida.php" class="btn btn-warning">
+                                    <a href="./Model/Acta_salida.php" target="_blank" class="btn btn-warning">
                                         <i class="bi bi-download"></i> <?php echo __('generate', $lang); ?>
                                     </a>
                                 </div>

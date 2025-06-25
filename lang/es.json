@@ -132,6 +132,7 @@
   "last_login": "Último Inicio de Sesión",
   "actions": "Acciones",
   "back_to_admin_dashboard": "Volver al Panel de Administración",
+"hide_selected_fields" : "Ocultar campos seleccionados",
   "previous": "Anterior",
   "next": "Siguiente",
   "back": "Volver",
