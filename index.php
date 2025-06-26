@@ -43,7 +43,7 @@ function __($key, $lang) {
     <link rel="stylesheet" href="./View/Css/dark-mode.css">
     <link rel="stylesheet" href="./View/Css/button-styles.css">
     <link rel="stylesheet" href="./Configuration/JQuery/sweetalert2.min.css">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
     <!-- JavaScript Dependencies -->
     <script src="./Configuration/JQuery/jquery-3.7.1.js"></script>
     <script src="./Configuration/JQuery/sweetalert2.all.min.js" defer></script>
@@ -141,27 +141,43 @@ function __($key, $lang) {
                         </div>
                         <i class="bi bi-chevron-up"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><h6 class="dropdown-header"><?php echo __('language', $lang); ?></h6></li>
-                        <li><a class="dropdown-item language-selector" href="#" data-lang="en">🇺🇸 English</a></li>
-                        <li><a class="dropdown-item language-selector" href="#" data-lang="es">🇪🇸 Español</a></li>
-                        <li><a class="dropdown-item language-selector" href="#" data-lang="pl">🇵🇱 Polski</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <div class="dropdown-item">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="darkModeToggle">
-                                    <label class="form-check-label" for="darkModeToggle"><?php echo __('dark_mode', $lang); ?></label>
-                                </div>
-                            </div>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <a class="dropdown-item" href="logout.php">
-                                <i class="bi bi-box-arrow-right me-2"></i><?php echo __('logout', $lang); ?>
-                            </a>
-                        </li>
-                    </ul>
+             <ul class="dropdown-menu dropdown-menu-end">
+    <li><h6 class="dropdown-header"><?php echo __('language', $lang); ?></h6></li>
+    <li>
+        <a class="dropdown-item language-selector d-flex align-items-center" href="#" data-lang="en">
+            <span class="fi fi-us flag-icon me-2"></span>
+            <span>English</span>
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item language-selector d-flex align-items-center" href="#" data-lang="es">
+            <span class="fi fi-es flag-icon me-2"></span>
+            <span>Español</span>
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item language-selector d-flex align-items-center" href="#" data-lang="pl">
+            <span class="fi fi-pl flag-icon me-2"></span>
+            <span>Polski</span>
+        </a>
+    </li>
+    <li><hr class="dropdown-divider"></li>
+    <li>
+        <div class="dropdown-item">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="darkModeToggle">
+                <label class="form-check-label" for="darkModeToggle"><?php echo __('dark_mode', $lang); ?></label>
+            </div>
+        </div>
+    </li>
+    <li><hr class="dropdown-divider"></li>
+    <li>
+        <a class="dropdown-item" href="logout.php">
+            <i class="bi bi-box-arrow-right me-2"></i><?php echo __('logout', $lang); ?>
+        </a>
+    </li>
+</ul>
+
                 </div>
                 <?php endif; ?>
             </div>
@@ -814,29 +830,128 @@ function __($key, $lang) {
         </div>
     </div>
 
-    <!-- Modal de inicio de sesión de admin -->
-    <div class="modal fade" id="adminLoginModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><?php echo __('admin_login', $lang); ?></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="./Admin/token.php" method="POST">
-                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
-                        <div class="mb-3">
-                            <input type="password" name="passwordadmin" class="form-control" placeholder="<?php echo __('enter_password', $lang); ?>" required>
+   <!-- Modal de inicio de sesión de admin - Mejorado -->
+<div class="modal fade" id="adminLoginModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-shield-lock me-2"></i><?php echo __('admin_login', $lang); ?>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form action="./Admin/token.php" method="POST" id="adminLoginForm">
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
+                    
+                    <div class="mb-3">
+                        <label for="passwordadmin" class="form-label"><?php echo __('admin_password', $lang); ?></label>
+                        <div class="input-group">
+                            <input type="password" 
+                                   id="passwordadmin" 
+                                   name="passwordadmin" 
+                                   class="form-control" 
+                                   placeholder="<?php echo __('enter_password', $lang); ?>" 
+                                   required 
+                                   autocomplete="current-password">
+                            <button class="btn btn-outline-secondary" 
+                                    type="button" 
+                                    id="toggleAdminPassword"
+                                    title="<?php echo __('show_hide_password', $lang); ?>">
+                                <i class="bi bi-eye" id="passwordToggleIcon"></i>
+                            </button>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100"><?php echo __('login', $lang); ?></button>
-                        <div class="text-center mt-2">
-                            <a href="./View/Int_forgot_pasword.php"><?php echo __('forgot_password', $lang); ?></a>
+                        <div class="form-text text-muted">
+                            <i class="bi bi-info-circle me-1"></i><?php echo __('admin_access_required', $lang); ?>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100" id="adminLoginBtn">
+                        <span class="btn-text">
+                            <i class="bi bi-unlock me-2"></i><?php echo __('login', $lang); ?>
+                        </span>
+                        <span class="btn-loading d-none">
+                            <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                            <?php echo __('logging_in', $lang); ?>...
+                        </span>
+                    </button>
+                    
+                    <div class="text-center mt-3">
+                        <a href="./View/Int_forgot_pasword.php" class="text-decoration-none">
+                            <i class="bi bi-question-circle me-1"></i><?php echo __('forgot_password', $lang); ?>
+                        </a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
+<script>
+// JavaScript para mejorar la funcionalidad del modal de admin
+document.addEventListener('DOMContentLoaded', function() {
+    // Toggle password visibility
+    const toggleBtn = document.getElementById('toggleAdminPassword');
+    const passwordInput = document.getElementById('passwordadmin');
+    const toggleIcon = document.getElementById('passwordToggleIcon');
+    
+    if (toggleBtn && passwordInput && toggleIcon) {
+        toggleBtn.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Toggle icon
+            if (type === 'text') {
+                toggleIcon.classList.remove('bi-eye');
+                toggleIcon.classList.add('bi-eye-slash');
+            } else {
+                toggleIcon.classList.remove('bi-eye-slash');
+                toggleIcon.classList.add('bi-eye');
+            }
+        });
+    }
+    
+    // Form submission with loading state
+    const adminForm = document.getElementById('adminLoginForm');
+    const loginBtn = document.getElementById('adminLoginBtn');
+    
+    if (adminForm && loginBtn) {
+        adminForm.addEventListener('submit', function() {
+            const btnText = loginBtn.querySelector('.btn-text');
+            const btnLoading = loginBtn.querySelector('.btn-loading');
+            
+            if (btnText && btnLoading) {
+                btnText.classList.add('d-none');
+                btnLoading.classList.remove('d-none');
+                loginBtn.disabled = true;
+            }
+        });
+    }
+    
+    // Reset form when modal is closed
+    const adminModal = document.getElementById('adminLoginModal');
+    if (adminModal) {
+        adminModal.addEventListener('hidden.bs.modal', function() {
+            const form = adminModal.querySelector('form');
+            if (form) {
+                form.reset();
+                // Reset button state
+                const btnText = loginBtn.querySelector('.btn-text');
+                const btnLoading = loginBtn.querySelector('.btn-loading');
+                if (btnText && btnLoading) {
+                    btnText.classList.remove('d-none');
+                    btnLoading.classList.add('d-none');
+                    loginBtn.disabled = false;
+                }
+                // Reset password visibility
+                passwordInput.setAttribute('type', 'password');
+                toggleIcon.classList.remove('bi-eye-slash');
+                toggleIcon.classList.add('bi-eye');
+            }
+        });
+    }
+});
+</script>
     <?php include './View/Fragments/footer.php'; ?>
 </body>
 </html>

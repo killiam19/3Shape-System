@@ -51,6 +51,9 @@ $celular_status_options = ["Nuevo", "Bueno", "Regular", "Malo", "Dañado", "Perd
 
 // Fecha predeterminada (hoy)
 $fecha_salida = isset($asset_data['fecha_salida']) ? $asset_data['fecha_salida'] : date('d/m/Y');
+
+// Fecha ingreso
+$fecha_ingreso = isset($asset_data['fecha_ingreso']) ? $asset_data['fecha_ingreso'] : date('d/m/Y');
 ?>
 
 <!DOCTYPE html>
@@ -223,7 +226,7 @@ $fecha_salida = isset($asset_data['fecha_salida']) ? $asset_data['fecha_salida']
                             <span class="readonly-field"><?php echo htmlspecialchars($asset_data['cedula'] ?? ''); ?></span>, 
                             procede a desvincularse del cargo:
                             <span class="readonly-field"><?php echo htmlspecialchars($asset_data['job_title'] ?? ''); ?></span>
-                            que venía desempeñando, a partir de la fecha <span><?php echo htmlspecialchars($fecha_salida); ?></span>.
+                            que venía desempeñando, a partir de la fecha <span><?php echo htmlspecialchars($fecha_ingreso); ?> hasta la fecha <?php echo htmlspecialchars($fecha_salida); ?></span>.
                         </div>
                         
                         <div class="certificate-text">
