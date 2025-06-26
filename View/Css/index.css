@@ -307,36 +307,33 @@ body {
 }
 
 /* Selector de idioma */
-#languageDropdown {
-    cursor: pointer;
+.flag-icon {
+    width: 20px;
+    height: 15px;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .language-selector {
-    display: flex;
-    align-items: center;
-    padding: 8px 15px;
+    transition: all 0.2s ease;
 }
 
-.language-selector:before {
-    content: "";
-    display: inline-block;
-    width: 20px;
-    height: 15px;
-    margin-right: 8px;
-    background-size: cover;
-    background-position: center;
+.language-selector:hover {
+    background-color: var(--bs-dropdown-link-hover-bg);
 }
 
-.language-selector[data-lang="en"]:before {
-    background-image: url('../assets/images/flags/us.png');
+.language-selector:hover .flag-icon {
+    transform: scale(1.05);
 }
 
-.language-selector[data-lang="es"]:before {
-    background-image: url('../assets/images/flags/es.png');
+/* Indicador del idioma activo */
+.language-selector.active {
+    background-color: var(--bs-primary);
+    color: white;
 }
 
-.language-selector[data-lang="pl"]:before {
-    background-image: url('../assets/images/flags/pl.png');
+.language-selector.active .flag-icon {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 /* Asegurar que los menús desplegables no se corten */
