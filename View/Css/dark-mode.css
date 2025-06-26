@@ -423,6 +423,11 @@
     border-bottom: 1px solid var(--table-border);
     color: #212529; /* Mantener el color original del texto */
   }
+
+    .dark-mode #tabla-equipos td {
+    color: #212529; /* Mantener el color original del texto */
+  }
+  
   
   /* Mantener el color original del texto en la tabla principal */
   .dark-mode #mainTable tbody tr td,

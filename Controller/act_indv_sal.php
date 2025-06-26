@@ -48,7 +48,7 @@ class PDF extends FPDF
         $this->Ln(20);
     }
 
-    function addCertificadoTexto($last_user, $cedula, $fecha, $cargo, $tipo_id)
+    function addCertificadoTexto($last_user, $cedula, $fecha, $cargo, $tipo_id, $fecha_ingreso)
     {
         $this->SetFont('Arial', '', 12);
         $texto1 = "Por medio de la presente se certifica que el/la señor(a); ";
@@ -60,22 +60,22 @@ class PDF extends FPDF
         // Conditional text based on $tipo_id
         switch ($tipo_id) {
             case 'CE':
-                $tipo_text = " identificado(a) con Cédula de Extranjeria: $cedula, procede a desvincularse del cargo: $cargo que venía desempeñando, a partir de la fecha $fecha.";
+                $tipo_text = " identificado(a) con Cédula de Extranjeria: $cedula, procede a desvincularse del cargo: $cargo que venía desempeñando, a partir de la fecha $fecha_ingreso hasta la fecha $fecha.";
                 break;
             case 'PP':
-                $tipo_text = " identificado(a) con Pasaporte: $cedula, procede a desvincularse del cargo: $cargo que venía desempeñando, a partir de la fecha $fecha.";
+                $tipo_text = " identificado(a) con Pasaporte: $cedula, procede a desvincularse del cargo: $cargo que venía desempeñando, a partir de la fecha $fecha_ingreso hasta la fecha $fecha.";
                 break;
             case 'RC':
-                $tipo_text = " identificado(a) con Cédula de Residencia: $cedula, procede a desvincularse del cargo: $cargo  que venía desempeñando, a partir de la fecha $fecha.";
+                $tipo_text = " identificado(a) con Cédula de Residencia: $cedula, procede a desvincularse del cargo: $cargo que venía desempeñando, a partir de la fecha $fecha_ingreso hasta la fecha $fecha.";
                 break;
             case 'CC':
-                $tipo_text = " identificado(a) con Cédula de Ciudadania: $cedula, procede a desvincularse del cargo: $cargo  que venía desempeñando, a partir de la fecha $fecha.";
+                $tipo_text = " identificado(a) con Cédula de Ciudadania: $cedula, procede a desvincularse del cargo: $cargo que venía desempeñando, a partir de la fecha $fecha_ingreso hasta la fecha $fecha.";
                 break;
             case 'TI':
-                $tipo_text = " identificado(a) con Tarjeta de Identidad: $cedula, procede a desvincularse del cargo: $cargo que venía desempeñando, a partir de la fecha $fecha.";
+                $tipo_text = " identificado(a) con Tarjeta de Identidad: $cedula, procede a desvincularse del cargo: $cargo que venía desempeñando, a partir de la fecha $fecha_ingreso hasta la fecha $fecha.";
                 break;
             default:
-                $tipo_text = " identificado(a) con ID: $cedula, procede a desvincularse del cargo: $cargo que venía desempeñando, a partir de la fecha $fecha.";
+                $tipo_text = " identificado(a) con ID: $cedula, procede a desvincularse del cargo: $cargo que venía desempeñando, a partir de la fecha $fecha_ingreso hasta la fecha $fecha.";
                 break;
         }
 
@@ -134,6 +134,7 @@ foreach ($resultados as $index => $row) {
     $cedula = $row['cedula'];
     $serial = $row['serial_number'];
     $cargo = $row['job_title'];
+    $fecha_ingreso = $row['fecha_ingreso']; // Añadida la variable fecha_ingreso
     $asset_status = $row['asset_status'] ?? '';
     $asset_observations = $row['asset_observations'] ?? '';
     $headSet = $row['HeadSet'] ?? '';
@@ -153,7 +154,8 @@ foreach ($resultados as $index => $row) {
         convertirTexto($cedula),
         $fecha,
         convertirTexto($cargo),
-        convertirTexto($tipo_id)
+        convertirTexto($tipo_id),
+        convertirTexto($fecha_ingreso) // Añadido el parámetro fecha_ingreso
     );
 
     $itemCounter = 1;
@@ -284,3 +286,4 @@ $last_user_filename = isset($last_user) ? strtoupper(preg_replace('/[^a-zA-Z0-9 
 
 $pdf->Output('I', "$last_user_filename.pdf");
 ob_end_flush();
+?>

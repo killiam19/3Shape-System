@@ -234,7 +234,7 @@ $fieldLabels = require '../View/Fragments/field_labels.php';
             <!-- Modificar solo la sección de gráficos en index_admin.php -->
 
 <div class="col-md-6" id="first_container">
-    <div id="chartContainer" class="chart-container" style="position: relative; min-height: 380px; display: flex;">
+    <div id="chartContainer" class="chart-container" style="position: relative; min-height: 400px; display: flex;">
         <?php
         // Obtener todos los datos en una sola consulta
         try {

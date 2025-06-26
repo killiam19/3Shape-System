@@ -248,7 +248,11 @@ body {
   }
   
   body.dark-mode .form-check-label {
-    color: #e2e8f0;
+    color: #0d0d0e;
+  }
+
+   body.dark-mode .form-check-label:hover {
+    color: #eaeaf1;
   }
   
   body.dark-mode .hover-effect:hover {

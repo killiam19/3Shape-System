@@ -130,6 +130,7 @@
   "last_login": "Ostatnie Logowanie",
   "actions": "Akcje",
   "back_to_admin_dashboard": "Powrót do Panelu Administratora",
+"hide_selected_fields" : "Ukryj wybrane pola",
   "previous": "Poprzedni",
   "next": "Następny",
   "back": "Powrót",
