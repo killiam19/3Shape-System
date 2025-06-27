@@ -7,6 +7,7 @@ if (file_exists($jsonFilePath)) {
     $logData = json_decode(file_get_contents($jsonFilePath), true);
     $messageType = $_GET['message_type'] ?? null;
     $keyword = $_GET['keyword'] ?? null;
+    $date = $_GET['date'] ?? null;
     // Uso de caché para el archivo JSON
     $cacheKey = 'notification_' . filemtime($jsonFilePath);
     $logData = isset($_SESSION[$cacheKey]) ? $_SESSION[$cacheKey] : null;
@@ -25,9 +26,17 @@ if (file_exists($jsonFilePath)) {
                 'warnings' => 'warning'
             };
 
-            $filteredEntries = array_filter($logData[$type], function ($entry) use ($keyword) {
+            $filteredEntries = array_filter($logData[$type], function ($entry) use ($keyword, $date) {
                 $message = is_array($entry) ? $entry['message'] : $entry;
-                return $keyword === null || stripos($message, $keyword) !== false;
+                $timestamp = is_array($entry) && isset($entry['timestamp']) ? $entry['timestamp'] : null;
+                $matchKeyword = $keyword === null || stripos($message, $keyword) !== false;
+                $matchDate = true;
+                if ($date && $timestamp) {
+                    $matchDate = strpos($timestamp, $date) !== false;
+                } else if ($date) {
+                    $matchDate = false;
+                }
+                return $matchKeyword && $matchDate;
             });
 
             $limitedEntries = array_slice($filteredEntries, 0, $maxMessages);

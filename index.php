@@ -793,18 +793,39 @@ function __($key, $lang) {
                 </div>
                 <div class="modal-body">
                     <input type="text" id="notificationFilter" class="form-control mb-3" placeholder="<?php echo __('filter_notifications', $lang); ?>">
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-6">
+                            <select id="categoryFilter" class="form-select">
+                                <option value="all">Todas las categorías</option>
+                                <option value="success">Éxito</option>
+                                <option value="error">Error</option>
+                                <option value="error_message">Error</option>
+                                <option value="warnings">Advertencia</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="date" id="dateFilter" class="form-control" placeholder="Filtrar por fecha">
+                        </div>
+                    </div>
                     <div class="notification-container" id="notificationHistoryContainer">
                         <?php
                         $jsonFilePath = './Model/Logs/session_messages.json';
                         $alerts = [];
                         if (file_exists($jsonFilePath)) {
                             $logData = json_decode(file_get_contents($jsonFilePath), true);
+                            $typeLabels = [
+                                'success' => '<span class="badge bg-success me-2">Éxito</span>',
+                                'error' => '<span class="badge bg-danger me-2">Error</span>',
+                                'error_message' => '<span class="badge bg-danger me-2">Error</span>',
+                                'warnings' => '<span class="badge bg-warning text-dark me-2">Advertencia</span>'
+                            ];
                             foreach (['success', 'error', 'error_message', 'warnings'] as $type) {
                                 if (!empty($logData[$type])) {
                                     foreach (array_slice($logData[$type], 0, 8) as $entry) {
                                         $message = is_array($entry) ? $entry['message'] : $entry;
                                         $timestamp = is_array($entry) ? " ({$entry['timestamp']})" : '';
-                                        $alerts[] = "<div class='notification-item p-3 mb-2 bg-light rounded'>{$message}{$timestamp}</div>";
+                                        $label = $typeLabels[$type] ?? '';
+                                        $alerts[] = "<div class='notification-item p-3 mb-2 bg-light rounded'>{$label}{$message}{$timestamp}</div>";
                                     }
                                 }
                             }
@@ -950,6 +971,53 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Filtro de notificaciones por texto, categoría y fecha
+    const notificationFilter = document.getElementById('notificationFilter');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const dateFilter = document.getElementById('dateFilter');
+    const notificationItems = document.querySelectorAll('#notificationHistoryContainer .notification-item');
+
+    function filterNotifications() {
+        const text = notificationFilter.value.toLowerCase();
+        const category = categoryFilter.value;
+        const date = dateFilter.value;
+        notificationItems.forEach(item => {
+            let show = true;
+            // Filtrado por texto
+            if (text && !item.textContent.toLowerCase().includes(text)) {
+                show = false;
+            }
+            // Filtrado por categoría
+            if (category !== 'all') {
+                if (!item.innerHTML.includes('badge') || !item.innerHTML.includes(category)) {
+                    // Detectar por clase de badge o por texto
+                    const badgeMap = {
+                        'success': 'Éxito',
+                        'error': 'Error',
+                        'error_message': 'Error',
+                        'warnings': 'Advertencia'
+                    };
+                    if (!item.innerHTML.includes(badgeMap[category])) {
+                        show = false;
+                    }
+                }
+            }
+            // Filtrado por fecha
+            if (date) {
+                // Buscar la fecha en el texto (formato YYYY-MM-DD)
+                const regex = /(\d{4}-\d{2}-\d{2})/;
+                const match = item.textContent.match(regex);
+                if (!match || match[1] !== date) {
+                    show = false;
+                }
+            }
+            item.style.display = show ? '' : 'none';
+        });
+    }
+    if (notificationFilter) notificationFilter.addEventListener('input', filterNotifications);
+    if (categoryFilter) categoryFilter.addEventListener('change', filterNotifications);
+    if (dateFilter) dateFilter.addEventListener('change', filterNotifications);
 });
 </script>
     <?php include './View/Fragments/footer.php'; ?>
