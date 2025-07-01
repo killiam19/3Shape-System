@@ -55,7 +55,7 @@ if ($warnings) {
     unset($_SESSION['warnings']);
 }
 
-$logPath = $_SERVER['DOCUMENT_ROOT'].'/3Shape_project/Model/Logs/session_messages.json';
+$logPath = $_SERVER['DOCUMENT_ROOT'].'/3Shape_project/app/Model/Logs/session_messages.json';
 
 // Leer registro existente
 $existingLog = [];

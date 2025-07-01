@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Function to fetch notification count from server
 function fetchNotificationCount(isInitialFetch) {
   // Call the notification count endpoint
-  fetch('./Model/get_notification_count.php', {
+  fetch('./app/Model/get_notification_count.php', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -160,7 +160,7 @@ function notifyUser() {
 
 function clearLogs() {
   if (confirm("Are you sure you want to delete all records?")) {
-    fetch("../Model/clear_logs.php", {
+    fetch("../app/Model/clear_logs.php", {
       method: "POST",
     })
       .then((response) => response.text())
@@ -200,7 +200,7 @@ function deleteAllRecords() {
         }
       });
 
-      fetch("./Controller/delete_regist.php", {
+      fetch("../app/Controller/delete_regist.php", {
         method: "POST",
       })
       .then(response => response.json())

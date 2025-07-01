@@ -53,7 +53,7 @@ window.onload = function () {
       return;
     }
     // Redirigir a la URL de la opción 1, Firma de acta de salida
-    const urlFirmaSalida = `${window.location.origin}/3Shape_project/Model/prcsr_indv_sal.php?${parametros}`;
+    const urlFirmaSalida = `${window.location.origin}/3Shape_project/app/Model/prcsr_indv_sal.php?${parametros}`;
     console.log(`Redirigiendo a: ${urlFirmaSalida}`);
     window.location.href = urlFirmaSalida;
   };
@@ -65,7 +65,7 @@ window.onload = function () {
       return;
     }
     // Redirigir a la sección de firma de acta de entrada
-    const urlFirma = `${window.location.origin}/3Shape_project/Model/prcsr_indv_ent.php?${parametros}`;
+    const urlFirma = `${window.location.origin}/3Shape_project/app/Model/prcsr_indv_ent.php?${parametros}`;
     console.log(`Redirigiendo a: ${urlFirma}`);
     window.location.href = urlFirma;
 
@@ -80,7 +80,7 @@ window.onload = function () {
       return;
     }
     // Redirigir a la URL de la opción 3 que es un Reporte con la información de los activos seleccionador
-    const urlOpcion3 = `${window.location.origin}/3Shape_project/Model/prcr_nuevo_info.php?${parametros}`;
+    const urlOpcion3 = `${window.location.origin}/3Shape_project/app/Model/prcr_nuevo_info.php?${parametros}`;
     console.log(`Redirigiendo a: ${urlOpcion3}`);
     window.location.href = urlOpcion3;
   };
@@ -161,7 +161,7 @@ window.onload = function () {
         }
 
         // Generar PDF y código QR
-        fetch("/3Shape_project/Model/generar_qr_pdf.php", {
+        fetch("/3Shape_project/app/Model/generar_qr_pdf.php", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -227,7 +227,7 @@ window.onload = function () {
             // Simular escaneo al hacer clic (para pruebas)
             scanLink.onclick = function (e) {
               e.preventDefault();
-              fetch("/3Shape_project/Model/decode_qr_pdf.php", {
+              fetch("/3Shape_project/app/Model/decode_qr_pdf.php", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

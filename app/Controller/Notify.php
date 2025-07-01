@@ -1,5 +1,5 @@
 <?php
-$jsonFilePath = '../Model/Logs/session_messages.json';
+$jsonFilePath = '../app/Model/Logs/session_messages.json';
 $alerts = [];
 $maxMessages = 8;
 

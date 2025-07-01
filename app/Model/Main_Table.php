@@ -1,6 +1,6 @@
 <?php
 // Incluir la conexión a la base de datos
-include_once './Configuration/Connection.php';
+include_once './app/Configuration/Connection.php';
 
 // Mostrar mensajes de error o éxito si existen
 if (isset($_SESSION['error_message'])) {
@@ -108,7 +108,7 @@ if ($resultados && is_array($resultados) && count($resultados) > 0) {
        // Botones con valor ya escapado y estilos mejorados
        if (!empty($assetname)) {
            $rowHtml[] = "<td>
-               <a href='./Model/act_registro.php?assetname=$assetname' class='action-btn action-btn-edit' title='Update'>
+               <a href='./app/Model/act_registro.php?assetname=$assetname' class='action-btn action-btn-edit' title='Update'>
                    <i class='fas fa-sync-alt sync-icon'></i>
                </a>
            </td>";
@@ -121,10 +121,10 @@ if ($resultados && is_array($resultados) && count($resultados) > 0) {
                        <i class='fas fa-eye'></i>
                    </button>
                    <ul class='dropdown-menu' aria-labelledby='$uniqueId'>
-                       <li><a class='dropdown-item' href='./View/preview-salida.php?assetname=$assetname'>
+                       <li><a class='dropdown-item' href='./app/View/preview-salida.php?assetname=$assetname'>
                            <i class='fas fa-file-export me-2'></i>Departure Preview
                        </a></li>
-                       <li><a class='dropdown-item' href='./View/preview-entrada.php?assetname=$assetname'>
+                       <li><a class='dropdown-item' href='./app/View/preview-entrada.php?assetname=$assetname'>
                            <i class='fas fa-file-import me-2'></i>Entry Preview
                        </a></li>
                    </ul>
@@ -132,7 +132,7 @@ if ($resultados && is_array($resultados) && count($resultados) > 0) {
            </td>";
            
            $rowHtml[] = "<td>
-               <a href='./Model/act_registro_status.php?assetname=$assetname' class='action-btn action-btn-view' title='Status and Observations'>
+               <a href='./app/Model/act_registro_status.php?assetname=$assetname' class='action-btn action-btn-view' title='Status and Observations'>
                    <i class='far fa-check-square'></i>
                </a>
            </td>";
@@ -211,7 +211,7 @@ if ($resultados && is_array($resultados) && count($resultados) > 0) {
                        
                        // Redirect after a short delay to show loading state
                        setTimeout(() => {
-                           window.location.href = './Model/elim_registro.php?assetname=' + assetname;
+                           window.location.href = './app/Model/elim_registro.php?assetname=' + assetname;
                        }, 500);
                    }
                });

@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Notification count
   function updateNotificationCount() {
-    fetch("./Model/get_notification_count.php")
+    fetch("../app/Model/get_notification_count.php")
       .then((response) => response.json())
       .then((data) => {
         const badge = document.querySelector(".notification-badge")
@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Clear notification logs
   window.clearLogs = () => {
     if (confirm("Are you sure you want to clear all notification history?")) {
-      fetch("./Model/clear_logs.php")
+      fetch("../app/Model/clear_logs.php")
         .then((response) => response.json())
         .then((data) => {
           if (data.success) {
@@ -317,8 +317,8 @@ document.addEventListener("DOMContentLoaded", () => {
                   <td>John Doe</td>
                   <td>
                     <div class="btn-group btn-group-sm">
-                      <a href="./View/Int_entrada.php?serial=${serial || "SN12345678"}" class="btn btn-primary">Change</a>
-                      <a href="./View/Int_salida.php?serial=${serial || "SN12345678"}" class="btn btn-warning">Output</a>
+                      <a href="../app/View/Int_entrada.php?serial=${serial || "SN12345678"}" class="btn btn-primary">Change</a>
+                      <a href="../app/View/Int_salida.php?serial=${serial || "SN12345678"}" class="btn btn-warning">Output</a>
                     </div>
                   </td>
                 </tr>

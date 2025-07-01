@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
        } else {
            // Aquí podrá conectarse a su base de datos y verificar las credenciales.
            // Este es un marcador de posición para su lógica de autenticación actual
-           include_once './Configuration/Connection.php';
+           include_once './app/Configuration/Connection.php';
            
            try {
                // Utilice una declaración preparada para evitar la inyección de SQL: verifica tanto el nombre de usuario como el correo electrónico
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                        'timestamp' => date('Y-m-d H:i:s')
                    ];
                    
-                   $log_file = './Model/Logs/session_messages.json';
+                   $log_file = './app/Model/Logs/session_messages.json';
                    if (file_exists($log_file)) {
                        $log_data = json_decode(file_get_contents($log_file), true);
                        $log_data['success'][] = $log_message;
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                        'timestamp' => date('Y-m-d H:i:s')
                    ];
                    
-                   $log_file = './Model/Logs/session_messages.json';
+                   $log_file = './app/Model/Logs/session_messages.json';
                    if (file_exists($log_file)) {
                        $log_data = json_decode(file_get_contents($log_file), true);
                        $log_data['error'][] = $log_message;
@@ -122,13 +122,13 @@ if (empty($_SESSION['csrf_token'])) {
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Login - Asset Management System</title>
-   <link rel="shortcut icon" href="./Configuration/3shape-intraoral-logo.png" type="image/x-icon">
+   <link rel="shortcut icon" href="./app/Configuration/3shape-intraoral-logo.png" type="image/x-icon">
    
    <!-- Critical CSS -->
-   <link href="./Configuration/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-   <link rel="stylesheet" href="./Configuration/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
-   <link rel="stylesheet" href="./Configuration/JQuery/fontawesome.min.css">
-   <link rel="stylesheet" href="./Configuration/JQuery/all.min.css">
+   <link href="./app/Configuration/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="./app/Configuration/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
+   <link rel="stylesheet" href="./app/Configuration/JQuery/fontawesome.min.css">
+   <link rel="stylesheet" href="./app/Configuration/JQuery/all.min.css">
    
    <style>
        html, body {
@@ -150,7 +150,7 @@ if (empty($_SESSION['csrf_token'])) {
        
        .login-image {
            flex: 1;
-           background-image: url('./View/assets/images/login_image.png');
+           background-image: url('./app/View/assets/images/login_image.png');
            background-size: cover;
            background-position: center;
            position: relative;
@@ -291,7 +291,7 @@ if (empty($_SESSION['csrf_token'])) {
        <div class="login-form-container">
            <div class="login-form">
                <div class="text-center mb-4">
-                   <img src="./Configuration/3shape-logo.png" alt="Logo" class="login-logo">
+                   <img src="./app/Configuration/3shape-logo.png" alt="Logo" class="login-logo">
                    <h1 class="h4 mb-2">Asset Management System</h1>
                    <p class="text-muted">Sign in to access your dashboard</p>
                </div>
@@ -332,7 +332,7 @@ if (empty($_SESSION['csrf_token'])) {
                </form>
                
                <div class="login-links">
-                   <a href="./View/reset_password.php">Lost your password?</a>
+                   <a href="./app/View/reset_password.php">Lost your password?</a>
                    <a href="index.php">← Back to site</a>
                </div>
                
