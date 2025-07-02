@@ -329,7 +329,7 @@ $fecha_ingreso = isset($asset_data['fecha_ingreso']) ? $asset_data['fecha_ingres
                         
                         <!-- Botón de volver -->
                         <div class="text-center mt-4">
-                            <a href="../index.php" class="btn btn-secondary">
+                            <a href="../../index.php" class="btn btn-secondary">
                                 <i class="fas fa-arrow-left"></i> Back to Menu
                             </a>
                         </div>

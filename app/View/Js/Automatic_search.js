@@ -66,7 +66,7 @@ createAutocomplete({
     ...commonConfig,
     inputSelector: '#search_cedula',
     resultsSelector: '#resultados',
-    url: './Controller/buscar_id.php',
+    url: './app/Controller/buscar_id.php',
     paramName: 'cedula'
 });
 
@@ -74,7 +74,7 @@ createAutocomplete({
     ...commonConfig,
     inputSelector: '#search_serial',
     resultsSelector: '#resultados2',
-    url: './Controller/buscar_sr.php',
+    url: './app/Controller/buscar_sr.php',
     paramName: 'serial'
 });
 
@@ -82,7 +82,7 @@ createAutocomplete({
     ...commonConfig,
     inputSelector: '#search_user',
     resultsSelector: '#resultados3',
-    url: './Controller/buscar_user.php',
+    url: './app/Controller/buscar_user.php',
     paramName: 'user'
 });
 

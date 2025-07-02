@@ -196,10 +196,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     // Redirigir al usuario
-    header("Location: ../index.php");
+    header("Location: ../../index.php");
     exit();
 } else {
     $_SESSION["error"] = "Método de acceso no válido";
-    header("Location: ../index.php");
+    header("Location: ../../index.php");
     exit();
 }

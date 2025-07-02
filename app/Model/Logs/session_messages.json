@@ -1,28 +1,16 @@
 {
     "success": [
         {
-            "message": "User Killiam logged in successfully via email",
-            "timestamp": "2025-06-27 13:04:16"
+            "message": "Asset statuses updated successfully.",
+            "timestamp": "2025-07-02 10:55:52"
         },
         {
-            "message": "User Killiam logged in successfully via email",
-            "timestamp": "2025-07-01 07:26:41"
+            "message": "Asset statuses updated successfully.",
+            "timestamp": "2025-07-02 10:58:57"
         },
         {
-            "message": "User Killiam logged out",
-            "timestamp": "2025-07-01 08:40:43"
-        },
-        {
-            "message": "User Killiam logged in successfully via email",
-            "timestamp": "2025-07-01 08:40:55"
-        },
-        {
-            "message": "User Killiam logged in successfully via email",
-            "timestamp": "2025-07-01 10:46:15"
-        },
-        {
-            "message": "User Killiam logged in successfully via email",
-            "timestamp": "2025-07-01 14:32:20"
+            "message": "Asset statuses updated successfully.",
+            "timestamp": "2025-07-02 11:05:19"
         }
     ],
     "error": [],

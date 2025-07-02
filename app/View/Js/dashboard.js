@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Notification count
   function updateNotificationCount() {
-    fetch("../app/Model/get_notification_count.php")
+    fetch("./app/Model/get_notification_count.php")
       .then((response) => response.json())
       .then((data) => {
         const badge = document.querySelector(".notification-badge")
@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Clear notification logs
   window.clearLogs = () => {
     if (confirm("Are you sure you want to clear all notification history?")) {
-      fetch("../app/Model/clear_logs.php")
+      fetch("./app/Model/clear_logs.php")
         .then((response) => response.json())
         .then((data) => {
           if (data.success) {

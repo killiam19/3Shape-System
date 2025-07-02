@@ -96,7 +96,7 @@ include '../View/Fragments/idioma.php';
                         <button type="submit" class="btn btn-secondary">
                             <i class="fas fa-upload"></i> <?php echo __('update', $lang); ?>
                         </button>
-                        <a href="../index.php" class="btn btn-danger">
+                        <a href="../../index.php#adjustment" class="btn btn-danger">
                             <i class="fas fa-arrow-left"></i> <?php echo __('return', $lang); ?>
                         </a>
                     </div>

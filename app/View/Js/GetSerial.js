@@ -23,7 +23,7 @@ serialInput.addEventListener("blur", async function () {
     }
 
     try {
-        const response = await fetch("/3Shape_project/Controller/check_serial.php?serial=" + encodeURIComponent(serial));
+        const response = await fetch("/3Shape_project/app/Controller/check_serial.php?serial=" + encodeURIComponent(serial));
         const contentType = response.headers.get("content-type");
 
         if (!contentType || !contentType.includes("application/json")) {

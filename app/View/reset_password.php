@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         
                         if ($result) {
                             $success_message = 'La contraseña ha sido restablecida exitosamente. Ahora puedes iniciar sesión con tu nueva contraseña.';
-                            header("refresh:3;url=../login.php");
+                            header("refresh:3;url=../../login.php");
                         } else {
                             $error_message = 'Error al restablecer la contraseña. Por favor, inténtalo de nuevo.';
                         }
@@ -370,7 +370,7 @@ if (isset($_GET['token'])) {
                 <?php endif; ?>
                 
                 <div class="text-center mt-3">
-                    <a href="../login.php" class="text-decoration-none">Volver al Inicio de Sesión</a>
+                    <a href="../../login.php" class="text-decoration-none">Volver al Inicio de Sesión</a>
                 </div>
             </div>
             

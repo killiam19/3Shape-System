@@ -103,7 +103,7 @@ include '../View/Fragments/idioma.php';
                                 <button type="submit" class="btn btn-secondary"><?php echo __('register', $lang); ?>
                                 <i class="fas fa-clipboard-check"></i> 
                                 </button>                               
-                         <a href="../index.php" class="btn btn-danger ms-2"><?php echo __('return', $lang); ?>
+                         <a href="../../index.php#adjustment" class="btn btn-danger ms-2"><?php echo __('return', $lang); ?>
                                 <i class="fas fa-arrow-left"></i>
                                 </a>
                             </div>

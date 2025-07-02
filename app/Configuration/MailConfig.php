@@ -5,7 +5,7 @@ header('Content-Type: text/html; charset=UTF-8');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../vendor/autoload.php';
+require '../../vendor/autoload.php';
 
 class MailConfig {
     private $mail;
@@ -63,7 +63,7 @@ class MailConfig {
             $projectFolder = '/3Shape_project';
             
             // Construir la URL completa
-            $resetLink = $protocol . $host . $projectFolder . "/View/reset_password.php?token=" . $resetToken;
+            $resetLink = $protocol . $host . $projectFolder . "./app/View/reset_password.php?token=" . $resetToken;
             
             // Plantilla HTML con caracteres especiales
             $this->mail->Body = "

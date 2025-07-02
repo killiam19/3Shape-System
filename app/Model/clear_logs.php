@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-$logPath = $_SERVER['DOCUMENT_ROOT'].'/3Shape_project/Model/Logs/session_messages.json';
+$logPath = $_SERVER['DOCUMENT_ROOT'].'/3Shape_project/app/Model/Logs/session_messages.json';
 
 // Estructura base vacía
 $emptyLog = [

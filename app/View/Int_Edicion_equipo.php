@@ -413,7 +413,7 @@ $is_admin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
                     <div class="row mt-3">
                         <div class="col-12">
                             <button id="confirmAllButton" type="submit" class="btn btn-secondary"><?php echo __('send', $lang); ?></button>
-                            <a href="../index.php" class="btn btn-outline-secondary"><?php echo __('return', $lang); ?></a>
+                            <a href="../../index.php" class="btn btn-outline-secondary"><?php echo __('return', $lang); ?></a>
                         </div>
                     </div>
                 </form>

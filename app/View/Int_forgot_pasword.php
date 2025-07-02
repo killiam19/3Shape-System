@@ -27,13 +27,13 @@ if (empty($_SESSION['csrf_token'])) {
 
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $tiempo_inactivo) {
     setcookie('error_message', 'Sesión expirada. Vuelve a iniciar sesión.', time() + 30, '/');
-    header("Location: ../index.php");
+    header("Location: ../../index.php");
     include_once '../Controller/Cerrar_sesion.php';
     exit();
 }
 
 if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
-    header("Location: ../index.php");
+    header("Location: ../../index.php");
     include_once '../Controller/Cerrar_sesion.php';
     exit("Acceso denegado.");
 }
@@ -135,7 +135,7 @@ $_SESSION['last_activity'] = time();
                                     onclick="return confirm('Are you sure you want to send this information?')">
                                     <i class="fas fa-paper-plane me-2"></i><?php echo __('send', $lang); ?>
                                 </button>
-                                <a href="../index.php" class="btn btn-danger btn-lg shadow-sm">
+                                <a href="../../index.php" class="btn btn-danger btn-lg shadow-sm">
                                     <i class="fas fa-arrow-left me-2"></i><?php echo __('back', $lang); ?>
                                 </a>
                             </div>

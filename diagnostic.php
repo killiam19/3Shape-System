@@ -27,8 +27,8 @@ echo '<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diagnóstico del Sistema</title>
-    <link href="./Configuration/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./Configuration/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link href="./app/Configuration/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./app/Configuration/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <style>
         body { padding: 20px; }
         .diagnostic-header { margin-bottom: 30px; }
@@ -43,12 +43,12 @@ echo '<!DOCTYPE html>
         </div>';
 
 // Verificar si el archivo de conexión existe
-if (file_exists('./Configuration/Connection.php')) {
+if (file_exists('./app/Configuration/Connection.php')) {
     show_result('Archivo de conexión', 'El archivo Connection.php existe');
     
     // Intentar incluir el archivo de conexión
     try {
-        include_once './Configuration/Connection.php';
+        include_once './app/Configuration/Connection.php';
         show_result('Inclusión del archivo de conexión', 'El archivo Connection.php se incluyó correctamente');
     } catch (Exception $e) {
         show_result('Error al incluir el archivo de conexión', $e->getMessage(), true);

@@ -303,7 +303,7 @@ $fieldLabels = require '../View/Fragments/field_labels.php';
                             <button id="confirmAllButton" type="submit" class="btn btn-secondary">
                                 <i class="fas fa-paper-plane me-2"></i><?php echo __('next', $lang); ?>: <?php echo __('asset_status', $lang); ?>
                             </button>
-                            <a href="../index.php" class="btn btn-outline-secondary">
+                            <a href="../../index.php" class="btn btn-outline-secondary">
                                 <i class="fas fa-arrow-left me-2"></i><?php echo __('return', $lang); ?>
                             </a>
                         </div>

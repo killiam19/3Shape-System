@@ -293,7 +293,7 @@ include '../View/Fragments/idioma.php';
     <button id="confirmAllButton" type="submit" class="btn btn-secondary my-2">
         <i class="fas fa-paper-plane me-2"></i><?php echo __('send', $lang); ?>
     </button>
-    <a href="../index.php" class="btn my-2">
+    <a href="../../index.php" class="btn my-2">
         <i class="fas fa-arrow-left me-2"></i><?php echo __('return', $lang); ?>
     </a>
 </div>

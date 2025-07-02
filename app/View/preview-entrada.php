@@ -320,7 +320,7 @@ $celular_status_options = ["Nuevo", "Bueno", "Regular", "Malo", "Dañado", "Perd
 
                     <!-- Botón de volver -->
                     <div class="text-center mt-4">
-                        <a href="../index.php" class="btn btn-secondary">
+                        <a href="../../index.php" class="btn btn-secondary">
                             <i class="fas fa-arrow-left"></i> Back to Menu
                         </a>
                     </div>
