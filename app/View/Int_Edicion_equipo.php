@@ -573,7 +573,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             confirmButtonColor: '#3085d6'
                         }).then(() => {
                             // Redirect to index page after success
-                            window.location.href = '../index.php';
+                            window.location.href = '../../index.php#assets';
                         });
                     })
                     .catch(error => {

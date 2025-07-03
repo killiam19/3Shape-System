@@ -5,7 +5,7 @@ session_start();
 include "../Configuration/Connection.php";
 
 // Incluir PhpSpreadsheet
-require_once '../vendor/autoload.php';
+require_once '../../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 

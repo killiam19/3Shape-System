@@ -51,18 +51,18 @@ if (isset($_SESSION['asset_data']['assetname'])) {
         // Confirmación de eliminación
         if ($stmt1->rowCount() > 0 || $stmt2->rowCount() > 0) {
             $_SESSION['success'] = "Record successfully deleted.";
-            header("Location: ../index.php");
+            header("Location: ../../index.php");
             exit();
         } else {
             $_SESSION['error'] =  "No records found to delete.";
-            header("Location: ../index.php");
+            header("Location: ../../index.php");
         }
 
         // Limpiar la sesión
         unset($_SESSION['asset_data']);
     } catch (PDOException $e) {
         $_SESSION['error'] =  "Error: " . $e->getMessage();
-        header("Location: ../index.php");
+        header("Location: ../../index.php");
         exit();
     }
 } else {

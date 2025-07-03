@@ -200,7 +200,7 @@ function deleteAllRecords() {
         }
       });
 
-      fetch("../app/Controller/delete_regist.php", {
+      fetch("/3Shape_project/app/Controller/delete_regist.php", {
         method: "POST",
       })
       .then(response => response.json())

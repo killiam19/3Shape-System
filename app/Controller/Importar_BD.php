@@ -4,7 +4,7 @@ session_start();
 include('../Configuration/Connection.php');
 
 // Instalar PhpSpreadsheet via Composer: composer require phpoffice/phpspreadsheet
-require_once '../vendor/autoload.php';
+require_once '../../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 // Validación de archivo incluyendo Excel
@@ -201,7 +201,7 @@ function processExcel($pdo, $filePath)
         }, $headers);
         
         // Mapeo de campos
-        include_once $_SERVER['DOCUMENT_ROOT'] . '/3Shape_project/Configuration/Config_map.php';
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/3Shape_project/app/Configuration/Config_map.php';
 
         // Validar que el array de mapeo existe
         if (!isset($fieldMap) || empty($fieldMap)) {
@@ -287,7 +287,7 @@ function processCSV($pdo, $filePath)
         return strtolower(preg_replace('/[^a-z0-9]/', '', $header));
     }, $headers);
     // Mapeo de campos
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/3Shape_project/Configuration/Config_map.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/3Shape_project/app/Configuration/Config_map.php';
 
 // Validar que el array de mapeo existe
 if (!isset($fieldMap) || empty($fieldMap)) {
@@ -367,7 +367,7 @@ function processTXT($pdo, $filePath)
     }
 
     // Mismo mapeo de campos que en processCSV
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/3Shape_project/Configuration/Config_map.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/3Shape_project/app/Configuration/Config_map.php';
 
 // Validar que el array de mapeo existe
 if (!isset($fieldMap) || empty($fieldMap)) {
@@ -465,5 +465,5 @@ if (isset($_FILES['Proyeccion_garan']) && $_FILES['Proyeccion_garan']['error'] =
     $_SESSION['error'] = "Error uploading file";
 }
 ob_end_clean(); // Limpiar buffer de salida
-header("Location: ../index.php");
+header("Location: ../../index.php");
 exit;

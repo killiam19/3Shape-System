@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($existingRecord) {
             try {
                 // Recuperar todos los datos del equipo seleccionado
-                $currentDataSql = "SELECT e.serial_number, e.purchase_country, e.warranty_enddate, e.expired, e.new_laptop 
+                $currentDataSql = "SELECT e.serial_number
                                    FROM equipos AS e 
                                    WHERE e.assetname = :assetname";
                 $currentDataStmt = $pdo->prepare($currentDataSql);
@@ -78,18 +78,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 function updateEquipment($pdo, $data, $assetname)
                 {
                     $updateSql = "UPDATE equipos AS e 
-                                  SET e.serial_number = :serial_number, 
-                                    e.purchase_country = :purchase_country, 
-                                    e.warranty_enddate = :warranty_enddate, 
-                                    e.expired = :expired, 
-                                    e.new_laptop = :new_laptop 
+                                  SET e.serial_number = :serial_number 
                                   WHERE e.assetname = :assetname";
                     $stmt = $pdo->prepare($updateSql);
                     $stmt->bindParam(':serial_number', $data['serial_number'], PDO::PARAM_STR);
-                    $stmt->bindParam(':purchase_country', $data['purchase_country'], PDO::PARAM_STR);
-                    $stmt->bindParam(':warranty_enddate', $data['warranty_enddate'], PDO::PARAM_STR);
-                    $stmt->bindParam(':expired', $data['expired'], PDO::PARAM_STR);
-                    $stmt->bindParam(':new_laptop', $data['new_laptop'], PDO::PARAM_STR);
                     $stmt->bindParam(':assetname', $assetname, PDO::PARAM_STR);
                     return $stmt->execute();
                 }
@@ -136,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Confirmar la transacción
             $_SESSION['success'] = 'Asset updated successfully';
             $pdo->commit();
-            header('Location: ../index.php');
+            header('Location: ../../index.php');
         } else {
             throw new Exception("Error by registering the serial number.");
         }
@@ -149,9 +141,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } catch (Exception $e) {
         echo "<p>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
-        header('Location: ../index.php');
+        header('Location: ../../index.php');
     }
 } else {
     echo "<p>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
-    header('Location: ../index.php');
+    header('Location: ../../index.php');
 }

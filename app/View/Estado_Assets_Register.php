@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['phase']) && $_POST['p
         // 7. Limpiar sesión y redirigir
         unset($_SESSION['phase1_data']);
         $_SESSION['success_message'] = "Activo registrado exitosamente!";
-        header("Location: ../index.php");
+        header("Location: ../../index.php");
         exit;
 
     } catch (PDOException $e) {

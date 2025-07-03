@@ -36,20 +36,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':fecha_salida', $fecha_salida, PDO::PARAM_STR);
 
             if ($stmt->execute()) {
-                header('Location: ../index.php');
+                header('Location: ../../index.php');
                 $_SESSION['success'] = "process complete";
             } else {
-                header('Location: ../index.php');
-                $_SESSION['success'] = "porcess complete";
+                header('Location: ../../index.php');
+                $_SESSION['success'] = "process complete";
             }
         } catch (PDOException $e) {
             $_SESSION['error'] = "<p>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
         }
     } else {
-        header('Location: ../index.php');
+        header('Location: ../../index.php');
         $_SESSION['error'] = "Please fill in all fields";
     }
 } else {
-    header('Location: ../index.php');
+    header('Location: ../../index.php');
     $_SESSION['error'] = "Invalid request method";
 }

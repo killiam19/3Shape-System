@@ -541,7 +541,7 @@ include '../View/Fragments/idioma.php';
                 })
                 .then(data => {
                     if (data.success) {
-                        window.location.href = '/3Shape_project/Controller/act_indv_sal.php';
+                        window.location.href = '/3Shape_project/app/Controller/act_indv_sal.php';
                     } else {
                         throw new Error(data.message || 'Error saving signatures');
                     }

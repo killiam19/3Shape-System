@@ -10,7 +10,7 @@ include_once "../Configuration/Connection.php";
 // Verificar si la conexión está establecida
 if (!isset($pdo)) {
     $_SESSION['error_message'] = "Error de conexión a la base de datos";
-    header('Location: ../index.php');
+    header('Location: ../../index.php');
     exit;
 }
 
@@ -107,7 +107,7 @@ try {
         $_SESSION['search_debug_info'] = $debugInfo;
         
         // Redirigir de vuelta a index.php manteniendo la sección de assets
-        header('Location: ../index.php#assets');
+        header('Location: ../../index.php#assets');
         exit;
         
     } else {
@@ -118,7 +118,7 @@ try {
         $_SESSION['resultados_busqueda'] = $resultados;
         
         // Redirigir de vuelta a index.php manteniendo la sección de assets
-        header('Location: ../index.php#assets');
+        header('Location: ../../index.php#assets');
         exit;
     }
 } catch (PDOException $e) {
@@ -131,7 +131,7 @@ try {
     $_SESSION['resultados_busqueda'] = [];
     
     // Redirigir de vuelta a index.php con mensaje de error manteniendo la sección de assets
-    header('Location: ../index.php#assets');
+    header('Location: ../../index.php#assets');
     exit;
 }
 
