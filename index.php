@@ -34,7 +34,7 @@ function __($key, $lang) {
     <link rel="shortcut icon" href="./app/Configuration/3shape-intraoral-logo.png" type="image/x-icon">
     
     <!-- CSS Dependencies -->
-    <link href="./app/Configuration/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./app/Configuration/bootstrap/css/bootstrap.min.css" rel="stylesheet"> 
     <link rel="stylesheet" href="./app/Configuration/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="./app/Configuration/JQuery/all.min.css">
     <link rel="stylesheet" href="./app/Configuration/JQuery/fontawesome.min.css">
@@ -195,10 +195,10 @@ function __($key, $lang) {
                 </div>
                 <div class="header-right">
                     <!-- Notificaciones -->
-                    <div class="notification-container">
-                        <button class="notification-btn" onclick="showModal()">
+                    <div class="bell-container" style="position: relative; display: inline-block;">
+                        <button class="notification-btn bell-button" type="button">
                             <i class="bi bi-bell"></i>
-                            <span class="notification-badge">0</span>
+                            <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
                         </button>
                     </div>
                     
@@ -353,7 +353,6 @@ function __($key, $lang) {
                                                     <th><?php echo __('serial_number', $lang); ?></th>
                                                     <th><?php echo __('user_status', $lang); ?></th>
                                                     <th><?php echo __('last_user', $lang); ?></th>
-                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -367,7 +366,6 @@ function __($key, $lang) {
                                                         echo "<td>" . htmlspecialchars($row['serial_number']) . "</td>";
                                                         echo "<td><span class='badge bg-" . ($row['user_status'] == 'Active User' ? 'success' : ($row['user_status'] == 'Stock' ? 'warning' : 'secondary')) . "'>" . htmlspecialchars($row['user_status']) . "</span></td>";
                                                         echo "<td>" . htmlspecialchars($row['last_user']) . "</td>";
-                                                        echo "<td><button class='btn btn-sm btn-outline-primary'><i class='bi bi-eye'></i></button></td>";
                                                         echo "</tr>";
                                                     }
                                                 } catch (PDOException $e) {

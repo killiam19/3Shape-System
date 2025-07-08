@@ -338,6 +338,10 @@
   color: white;
 }
 
+.dark-mode h2{
+  color: white;
+}
+
 .dark-mode h5{
   color: white;
 }
@@ -895,5 +899,30 @@
   .dark-mode * {
     backface-visibility: hidden;
   }
+  
+  /* Badge de notificaciones en modo oscuro */
+.dark-mode .notification-badge, .dark-mode #notificationBadge {
+  background-color: var(--danger-color, #ef4444) !important;
+  color: #fff !important;
+  border-radius: 999px;
+  min-width: 20px;
+  min-height: 20px;
+  font-size: 0.85rem;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--background-color, #1f2937);
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  z-index: 10;
+  padding: 0 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Asegurar que el badge no desaparezca por display:none accidental */
+.dark-mode .bell-button .notification-badge[style*="display: none"] {
+  display: none !important;
+}
   
  

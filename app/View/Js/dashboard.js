@@ -187,6 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
   // Notification count
+  /*
   function updateNotificationCount() {
     fetch("./app/Model/get_notification_count.php")
       .then((response) => response.json())
@@ -233,6 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Check for notifications on page load and periodically
   updateNotificationCount()
   setInterval(updateNotificationCount, 60000) // Check every minute
+  */
 
   // Filter notifications
   const notificationFilter = document.getElementById("notificationFilter")
@@ -272,7 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p class='mt-3 text-muted'>No notifications</p>
               </div>
             `
-            updateNotificationCount()
+            // updateNotificationCount() // This line is commented out as per the edit hint
           }
         })
         .catch((error) => console.error("Error clearing logs:", error))

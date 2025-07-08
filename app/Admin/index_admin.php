@@ -192,12 +192,12 @@ $fieldLabels = require '../View/Fragments/field_labels.php';
                                 <li class="nav-item ms-auto">
                                     <div class="btn-group">
                                     <div class="notification">
-    <li class="nav-item ms-auto bell-container">
+    <li class="nav-item ms-auto bell-container" style="position: relative; display: inline-block;">
         <div class="bell-wrapper">
-            <a type="button" class="btn btn-outline-warning bell-button" onclick="showModal()">
+            <button type="button" class="btn btn-outline-warning notification-btn bell-button">
                 <i class="fa-solid fa-bell" style="color:black"></i>
-                <span class="notification-badge">0</span>
-            </a>
+                <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+            </button>
         </div>
     </li>
 </div>
@@ -836,40 +836,38 @@ $fieldLabels = require '../View/Fragments/field_labels.php';
                             </div>
                         </div>
                         <div class="notification-container">
-                            <?php if (!empty($alerts)): ?>
-                                <div class="notification-list">
-                                    <?php
-                                    // Mostrar la categoría como insignia antes del mensaje
-                                    $typeLabels = [
-                                        'success' => '<span class="badge bg-success me-2">Éxito</span>',
-                                        'error' => '<span class="badge bg-danger me-2">Error</span>',
-                                        'error_message' => '<span class="badge bg-danger me-2">Error</span>',
-                                        'warnings' => '<span class="badge bg-warning text-dark me-2">Advertencia</span>'
-                                    ];
-                                    $jsonFilePath = '../Model/Logs/session_messages.json';
-                                    if (file_exists($jsonFilePath)) {
-                                        $logData = json_decode(file_get_contents($jsonFilePath), true);
-                                        foreach ([
-                                            'success', 'error', 'error_message', 'warnings'
-                                        ] as $type) {
-                                            if (!empty($logData[$type])) {
-                                                foreach (array_slice($logData[$type], 0, 8) as $entry) {
-                                                    $message = is_array($entry) ? $entry['message'] : $entry;
-                                                    $timestamp = is_array($entry) ? " ({$entry['timestamp']})" : '';
-                                                    $label = $typeLabels[$type] ?? '';
-                                                    echo "<div class='notification-item p-3 mb-2 bg-white rounded shadow-sm border-start border-4 border-primary'>{$label}{$message}{$timestamp}</div>";
-                                                }
+                            <div class="notification-list">
+                                <?php
+                                // Mostrar la categoría como insignia antes del mensaje
+                                $typeLabels = [
+                                    'success' => '<span class="badge bg-success me-2">Éxito</span>',
+                                    'error' => '<span class="badge bg-danger me-2">Error</span>',
+                                    'error_message' => '<span class="badge bg-danger me-2">Error</span>',
+                                    'warnings' => '<span class="badge bg-warning text-dark me-2">Advertencia</span>'
+                                ];
+                                $jsonFilePath = '../Model/Logs/session_messages.json';
+                                $hayNotificaciones = false;
+                                if (file_exists($jsonFilePath)) {
+                                    $logData = json_decode(file_get_contents($jsonFilePath), true);
+                                    foreach ([
+                                        'success', 'error', 'error_message', 'warnings'
+                                    ] as $type) {
+                                        if (!empty($logData[$type])) {
+                                            foreach (array_slice($logData[$type], 0, 8) as $entry) {
+                                                $hayNotificaciones = true;
+                                                $message = is_array($entry) ? $entry['message'] : $entry;
+                                                $timestamp = is_array($entry) ? " ({$entry['timestamp']})" : '';
+                                                $label = $typeLabels[$type] ?? '';
+                                                echo "<div class='notification-item p-3 mb-2 bg-white rounded shadow-sm border-start border-4 border-primary'>{$label}{$message}{$timestamp}</div>";
                                             }
                                         }
                                     }
-                                    ?>
-                                </div>
-                            <?php else: ?>
-                                <div class="text-center p-4">
-                                    <i class="bi bi-inbox-fill fs-1 text-muted"></i>
-                                    <p class="mt-3 text-muted"><?php echo __('no_notifications', $lang); ?></p>
-                                </div>
-                            <?php endif; ?>
+                                }
+                                if (!$hayNotificaciones) {
+                                    echo "<div class='text-center p-4'><i class='bi bi-inbox-fill fs-1 text-muted'></i><p class='mt-3 text-muted'>" . __('no_notifications', $lang) . "</p></div>";
+                                }
+                                ?>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">

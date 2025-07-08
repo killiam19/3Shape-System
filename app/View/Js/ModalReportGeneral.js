@@ -71,41 +71,86 @@ function updateNotificationBadge(count) {
 document.addEventListener('DOMContentLoaded', function() {
   const bellButton = document.querySelector('.bell-button');
   const bellContainer = document.querySelector('.bell-container');
-  
+  const badge = document.querySelector('.notification-badge');
+  let bodyOverflowBackup = '';
+
   if (bellButton) {
     bellButton.addEventListener('click', function(e) {
       e.preventDefault();
       showModal();
-      
       // Al abrir el modal, guardamos el tiempo actual como último visto
       lastViewedTimestamp = Date.now();
-      // Resetear contador visual (pero mantener la variable de control)
-      document.querySelector('.notification-badge').style.display = 'none';
+      // Guardar en sessionStorage para persistir durante la sesión
+      sessionStorage.setItem('lastNotificationCheck', lastViewedTimestamp);
+      // Resetear contador visual
+      if (badge) {
+        badge.textContent = '0';
+        badge.style.display = 'none';
+      }
     });
   }
-  
+
+  // Restaurar el contador si hay valor en sessionStorage
+  const lastCheckStored = sessionStorage.getItem('lastNotificationCheck');
+  if (lastCheckStored) {
+    lastViewedTimestamp = parseInt(lastCheckStored);
+  }
+
   // Add hover effects to bell container
   if (bellContainer) {
     bellContainer.addEventListener('mouseenter', function() {
       this.querySelector('.bell-button').classList.add('bell-hover');
     });
-    
     bellContainer.addEventListener('mouseleave', function() {
       this.querySelector('.bell-button').classList.remove('bell-hover');
     });
   }
-  
+
+  // Fix scroll bar issue when closing modal
+  const modalElement = document.getElementById('notificationModal');
+  if (modalElement) {
+    modalElement.addEventListener('show.bs.modal', function() {
+      // Guardar el overflow actual
+      bodyOverflowBackup = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+    });
+    modalElement.addEventListener('hidden.bs.modal', function() {
+      // Restaurar el overflow
+      document.body.style.overflow = bodyOverflowBackup || '';
+    });
+  }
+
   // Fetch initial notification count
   fetchNotificationCount(true); // true para inicialización
-  
+
   // Set up periodic checking for new notifications (every 15 seconds)
   setInterval(() => fetchNotificationCount(false), 15000);
 });
 
+// Función para obtener la ruta correcta del endpoint de notificaciones
+function getNotificationCountUrl() {
+  if (window.location.pathname.includes('/app/Admin/')) {
+    return '../Model/get_notification_count.php';
+  }
+  return './app/Model/get_notification_count.php';
+}
+function getClearLogsUrl() {
+  if (window.location.pathname.includes('/app/Admin/')) {
+    return '../Model/clear_logs.php';
+  }
+  return './app/Model/clear_logs.php';
+}
+function getDeleteRegistUrl() {
+  if (window.location.pathname.includes('/app/Admin/')) {
+    return '../Controller/delete_regist.php';
+  }
+  return './app/Controller/delete_regist.php';
+}
+
 // Function to fetch notification count from server
 function fetchNotificationCount(isInitialFetch) {
   // Call the notification count endpoint
-  fetch('./app/Model/get_notification_count.php', {
+  fetch(getNotificationCountUrl(), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -160,7 +205,7 @@ function notifyUser() {
 
 function clearLogs() {
   if (confirm("Are you sure you want to delete all records?")) {
-    fetch("../app/Model/clear_logs.php", {
+    fetch(getClearLogsUrl(), {
       method: "POST",
     })
       .then((response) => response.text())
@@ -200,7 +245,7 @@ function deleteAllRecords() {
         }
       });
 
-      fetch("/3Shape_project/app/Controller/delete_regist.php", {
+      fetch(getDeleteRegistUrl(), {
         method: "POST",
       })
       .then(response => response.json())
