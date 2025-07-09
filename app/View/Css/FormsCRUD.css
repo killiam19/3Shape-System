@@ -388,6 +388,20 @@ body {
     animation: modalShow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.dark-mode .form-group label {
+    color: #ffffff;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.dark-mode .form-control[readonly] {
+    background-color: #34495e;
+    cursor: default;
+}
+
 .dark-mode body {
     color: var(--text-color);
     background-color:z#2d3748 !important;

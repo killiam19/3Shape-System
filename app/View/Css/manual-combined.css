@@ -54,6 +54,10 @@
     --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.4);
 }
 
+.dark-mode h3.mb-4{
+    color: black;
+}
+
 /* Body styles */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

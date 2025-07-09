@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div class="mt-4 pt-2 border-top">
-                        <a href="/3Shape_project/View/Int_manual.html" class="text-decoration-none d-flex align-items-center ps-3">
+                        <a href="/3Shape_project/app/View/Int_manual.html" class="text-decoration-none d-flex align-items-center ps-3">
                             <i class="fas fa-book me-2"></i><?php echo __('user_manual', $lang); ?>
                         </a>
                     </div>
@@ -73,7 +73,7 @@
                         <i class="fas fa-cogs me-3 fs-5"></i><?php echo __('technical_details', $lang); ?>
                     </h6>
                     <div class="ps-4 ms-2">
-                        <p class="text-muted mb-3"><i class="fas fa-code-branch me-2"></i><?php echo __('version', $lang); ?>: 5.5.0</p>
+                        <p class="text-muted mb-3"><i class="fas fa-code-branch me-2"></i><?php echo __('version', $lang); ?>: 6.0.0</p>
                         <p class="text-muted mb-3"><i class="fas fa-calendar-plus me-2"></i><?php echo __('created', $lang); ?>: <?= date("F j, Y", filectime($_SERVER['SCRIPT_FILENAME'])); ?></p>
                         <p class="text-muted mb-0"><i class="fas fa-calendar-check me-2"></i><?php echo __('last_updated', $lang); ?>: <?= date("F j, Y", filemtime($_SERVER['SCRIPT_FILENAME'])); ?></p>
                     </div>

@@ -342,6 +342,10 @@
   color: white;
 }
 
+.dark-mode #swal2-title{
+  color: black;
+}
+
 .dark-mode h5{
   color: white;
 }
