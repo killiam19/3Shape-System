@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!$passwordIsValid) {
             debugLog("Invalida password - Comparación fallida");
             $_SESSION['error'] = "Incorrect Password.";
-            header("Location: ../index.php");
+            header("Location: ../../index.php");
             exit;
         }
 
