@@ -1,0 +1,201 @@
+{
+    "success": [
+        {
+            "message": "Asset statuses updated successfully.",
+            "timestamp": "2025-07-02 10:55:52"
+        },
+        {
+            "message": "Asset statuses updated successfully.",
+            "timestamp": "2025-07-02 10:58:57"
+        },
+        {
+            "message": "Asset statuses updated successfully.",
+            "timestamp": "2025-07-02 11:05:19"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-09 10:32:24"
+        },
+        {
+            "message": "Datos actualizados correctamente",
+            "timestamp": "2025-07-09 10:32:59"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-09 10:46:29"
+        },
+        {
+            "message": "Fields added to the table successfully",
+            "timestamp": "2025-07-09 10:53:59"
+        },
+        {
+            "message": "Fields hidden from table view: Tipo_ID",
+            "timestamp": "2025-07-09 17:54:26"
+        },
+        {
+            "message": "Fields hidden successfully from table view: Tipo_ID",
+            "timestamp": "2025-07-09 10:54:26"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-09 10:56:40"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-09 10:57:06"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-09 10:57:22"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-09 10:58:05"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-09 10:58:17"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-09 11:03:42"
+        },
+        {
+            "message": "Datos actualizados correctamente",
+            "timestamp": "2025-07-09 11:04:54"
+        },
+        {
+            "message": "Asset statuses updated successfully.",
+            "timestamp": "2025-07-09 11:05:22"
+        },
+        {
+            "message": "process complete",
+            "timestamp": "2025-07-09 11:06:58"
+        },
+        {
+            "message": "File 'exportData_2025-07-09 (2).csv' processed successfully",
+            "timestamp": "2025-07-09 11:09:55"
+        },
+        {
+            "message": "New user 'Juan.Cuadros@3shape.com' created by admin",
+            "timestamp": "2025-07-09 18:10:51"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-09 15:35:45"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-10 12:21:37"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-11 07:19:37"
+        },
+        {
+            "message": "Datos actualizados correctamente",
+            "timestamp": "2025-07-11 07:37:53"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-11 11:23:25"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-14 07:39:56"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-14 10:57:05"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-14 12:09:36"
+        },
+        {
+            "message": "User Killiam logged in successfully via email",
+            "timestamp": "2025-07-14 15:13:30"
+        }
+    ],
+    "error": [
+        {
+            "message": "Incorrect Password.",
+            "timestamp": "2025-07-09 10:34:14"
+        },
+        {
+            "message": "Incorrect Password.",
+            "timestamp": "2025-07-09 10:35:04"
+        },
+        {
+            "message": "Failed login attempt with identifier: killiam1119@gmail.com",
+            "timestamp": "2025-07-09 15:35:34"
+        },
+        {
+            "message": "Failed login attempt with identifier: killiam1119@gmail.com",
+            "timestamp": "2025-07-09 15:35:39"
+        },
+        {
+            "message": "Incorrect Password.",
+            "timestamp": "2025-07-09 15:42:51"
+        },
+        {
+            "message": "Incorrect Password.",
+            "timestamp": "2025-07-09 15:42:57"
+        },
+        {
+            "message": "Incorrect Password.",
+            "timestamp": "2025-07-11 08:18:32"
+        },
+        {
+            "message": "Incorrect Password.",
+            "timestamp": "2025-07-11 08:20:22"
+        },
+        {
+            "message": "Incorrect Password.",
+            "timestamp": "2025-07-14 10:57:35"
+        },
+        {
+            "message": "Incorrect Password.",
+            "timestamp": "2025-07-14 10:57:42"
+        },
+        {
+            "message": "Incorrect Password.",
+            "timestamp": "2025-07-14 10:58:21"
+        },
+        {
+            "message": "Incorrect Password.",
+            "timestamp": "2025-07-14 11:00:45"
+        },
+        {
+            "message": "Incorrect Password.",
+            "timestamp": "2025-07-14 11:00:48"
+        },
+        {
+            "message": "Incorrect Password.",
+            "timestamp": "2025-07-14 11:01:01"
+        },
+        {
+            "message": "Incorrect Password.",
+            "timestamp": "2025-07-14 12:09:41"
+        },
+        {
+            "message": "Incorrect Password.",
+            "timestamp": "2025-07-14 12:10:26"
+        },
+        {
+            "message": "Incorrect Password.",
+            "timestamp": "2025-07-14 12:10:33"
+        }
+    ],
+    "error_message": [
+        {
+            "message": "Successful logout",
+            "timestamp": "2025-07-09 10:56:40"
+        },
+        {
+            "message": "Successful logout",
+            "timestamp": "2025-07-09 10:57:06"
+        }
+    ],
+    "warnings": []
+}

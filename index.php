@@ -14,11 +14,11 @@ if (isset($_GET['lang']) && in_array($_GET['lang'], $available_langs)) {
     $_SESSION['lang'] = $default_lang;
 }
 
-$lang_file = './lang/' . $_SESSION['lang'] . '.json';
+$lang_file = './app/lang/' . $_SESSION['lang'] . '.json';
 if (file_exists($lang_file)) {
     $lang = json_decode(file_get_contents($lang_file), true);
 } else {
-    $lang = json_decode(file_get_contents('./lang/en.json'), true);
+    $lang = json_decode(file_get_contents('./app/lang/en.json'), true);
 }
 
 function __($key, $lang) {
@@ -31,22 +31,22 @@ function __($key, $lang) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo __('page_title', $lang); ?></title>
-    <link rel="shortcut icon" href="./Configuration/3shape-intraoral-logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./app/Configuration/3shape-intraoral-logo.png" type="image/x-icon">
     
     <!-- CSS Dependencies -->
-    <link href="./Configuration/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./Configuration/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="./Configuration/JQuery/all.min.css">
-    <link rel="stylesheet" href="./Configuration/JQuery/fontawesome.min.css">
-    <link rel="stylesheet" href="./Configuration/DataTables/datatables.min.css">
-    <link rel="stylesheet" href="./View/Css/dashboard.css">
-    <link rel="stylesheet" href="./View/Css/dark-mode.css">
-    <link rel="stylesheet" href="./View/Css/button-styles.css">
-    <link rel="stylesheet" href="./Configuration/JQuery/sweetalert2.min.css">
+    <link href="./app/Configuration/bootstrap/css/bootstrap.min.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="./app/Configuration/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="./app/Configuration/JQuery/all.min.css">
+    <link rel="stylesheet" href="./app/Configuration/JQuery/fontawesome.min.css">
+    <link rel="stylesheet" href="./app/Configuration/DataTables/datatables.min.css">
+    <link rel="stylesheet" href="app/View/Css/dashboard.css">
+    <link rel="stylesheet" href="app/View/Css/dark-mode.css">
+    <link rel="stylesheet" href="app/View/Css/button-styles.css">
+    <link rel="stylesheet" href="./app/Configuration/JQuery/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
     <!-- JavaScript Dependencies -->
-    <script src="./Configuration/JQuery/jquery-3.7.1.js"></script>
-    <script src="./Configuration/JQuery/sweetalert2.all.min.js" defer></script>
+    <script src="./app/Configuration/JQuery/jquery-3.7.1.js"></script>
+    <script src="./app/Configuration/JQuery/sweetalert2.all.min.js" defer></script>
 </head>
 <body>
     <!-- Dashboard Layout -->
@@ -55,7 +55,7 @@ function __($key, $lang) {
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo-container">
-                    <img src="./Configuration/3shape-logo.png" alt="Logo" class="sidebar-logo">
+                    <img src="./app/Configuration/3shape-logo.png" alt="Logo" class="sidebar-logo">
                     <span class="logo-text"><?php echo __('page_title', $lang); ?></span>
                 </div>
                 <button class="sidebar-toggle" id="sidebarToggle">
@@ -195,16 +195,16 @@ function __($key, $lang) {
                 </div>
                 <div class="header-right">
                     <!-- Notificaciones -->
-                    <div class="notification-container">
-                        <button class="notification-btn" onclick="showModal()">
+                    <div class="bell-container" style="position: relative; display: inline-block;">
+                        <button class="notification-btn bell-button" type="button">
                             <i class="bi bi-bell"></i>
-                            <span class="notification-badge">0</span>
+                            <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
                         </button>
                     </div>
                     
                     <!-- Acciones Rápidas -->
                     <div class="quick-actions">
-                        <a href="./View/Int_Registro_equipo.php" class="btn btn-primary btn-sm">
+                        <a href="./app/View/Int_Registro_equipo.php" class="btn btn-primary btn-sm">
                             <i class="bi bi-plus-lg"></i>
                             <span class="d-none d-md-inline"><?php echo __('register_new_device', $lang); ?></span>
                         </a>
@@ -236,7 +236,7 @@ function __($key, $lang) {
                     <div class="row g-4 mb-4">
                         <div class="col-xl-3 col-md-6">
                             <?php
-                            include_once './Configuration/Connection.php';
+                            include_once './app/Configuration/Connection.php';
                             try {
                                 $stmt = $pdo->prepare("SELECT COUNT(*) as total FROM vista_equipos_usuarios");
                                 $stmt->execute();
@@ -353,7 +353,6 @@ function __($key, $lang) {
                                                     <th><?php echo __('serial_number', $lang); ?></th>
                                                     <th><?php echo __('user_status', $lang); ?></th>
                                                     <th><?php echo __('last_user', $lang); ?></th>
-                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -367,7 +366,6 @@ function __($key, $lang) {
                                                         echo "<td>" . htmlspecialchars($row['serial_number']) . "</td>";
                                                         echo "<td><span class='badge bg-" . ($row['user_status'] == 'Active User' ? 'success' : ($row['user_status'] == 'Stock' ? 'warning' : 'secondary')) . "'>" . htmlspecialchars($row['user_status']) . "</span></td>";
                                                         echo "<td>" . htmlspecialchars($row['last_user']) . "</td>";
-                                                        echo "<td><button class='btn btn-sm btn-outline-primary'><i class='bi bi-eye'></i></button></td>";
                                                         echo "</tr>";
                                                     }
                                                 } catch (PDOException $e) {
@@ -388,7 +386,7 @@ function __($key, $lang) {
                                 </div>
                                 <div class="card-body">
                                     <div class="d-grid gap-2">
-                                        <a href="./View/Int_Registro_equipo.php" class="btn btn-primary">
+                                        <a href="./app/View/Int_Registro_equipo.php" class="btn btn-primary">
                                             <i class="bi bi-plus-lg me-2"></i><?php echo __('register_new_device', $lang); ?>
                                         </a>
                                         <a href="#import" class="btn btn-outline-secondary" data-section="import">
@@ -426,7 +424,7 @@ function __($key, $lang) {
                         </div>
                         <div class="collapse" id="filterCollapse">
                             <div class="card-body">
-                                <form method="GET" action="./Controller/busqueda_Multicriterio.php">
+                                <form method="GET" action="./app/Controller/busqueda_Multicriterio.php">
                                     <div class="row g-3">
                                         <!-- Asset Information -->
                                         <div class="col-lg-4">
@@ -516,7 +514,7 @@ function __($key, $lang) {
                                         <button type="reset" class="btn btn-secondary me-2">
                                             <i class="bi bi-arrow-clockwise"></i> <?php echo __('clear', $lang); ?>
                                         </button>
-                                        <a href="./Controller/busqueda_Multicriterio.php" class="btn btn-primary">
+                                        <a href="./app/Controller/busqueda_Multicriterio.php" class="btn btn-primary">
                                             <i class="bi bi-arrow-repeat"></i> <?php echo __('refresh', $lang); ?>
                                         </a>
                                     </div>
@@ -529,7 +527,7 @@ function __($key, $lang) {
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0"><?php echo __('all_assets', $lang); ?></h5>
                             <div class="btn-group">
-                                <a href="./View/Int_Registro_equipo.php" class="btn btn-primary btn-sm">
+                                <a href="./app/View/Int_Registro_equipo.php" class="btn btn-primary btn-sm">
                                     <i class="bi bi-plus-lg"></i> <?php echo __('register_new_device', $lang); ?>
                                 </a>
                                 <button id="procesarSeleccionados" type="button" class="btn btn-warning btn-sm">
@@ -567,7 +565,7 @@ function __($key, $lang) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php include './Model/Main_Table.php'; ?>
+                                        <?php include './app/Model/Main_Table.php'; ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -590,7 +588,7 @@ function __($key, $lang) {
                                     <h5 class="card-title"><?php echo __('change_asset', $lang); ?></h5>
                                     <p class="card-text flex-grow-1"><?php echo __('change_asset_description', $lang); ?></p>
                                     <div class="mt-auto">
-                                        <a href="./View/Int_entrada.php" class="btn btn-primary">
+                                        <a href="./app/View/Int_entrada.php" class="btn btn-primary">
                                             <i class="bi bi-arrow-repeat me-2"></i><?php echo __('change_asset', $lang); ?>
                                         </a>
                                     </div>
@@ -605,7 +603,7 @@ function __($key, $lang) {
                                     <h5 class="card-title"><?php echo __('output_asset', $lang); ?></h5>
                                     <p class="card-text flex-grow-1"><?php echo __('output_asset_description', $lang); ?></p>
                                     <div class="mt-auto">
-                                        <a href="./View/Int_salida.php" class="btn btn-warning">
+                                        <a href="./app/View/Int_salida.php" class="btn btn-warning">
                                             <i class="bi bi-box-arrow-up me-2"></i><?php echo __('output_asset', $lang); ?>
                                         </a>
                                     </div>
@@ -624,8 +622,8 @@ function __($key, $lang) {
 
                     <div class="card">
                         <div class="card-body">
-                            <form action="./Controller/Importar_BD.php" method="POST" enctype="multipart/form-data">
-                                <?php include_once "./Controller/validation_message.php"; ?>
+                            <form action="./app/Controller/Importar_BD.php" method="POST" enctype="multipart/form-data">
+                                <?php include_once "./app/Controller/validation_message.php"; ?>
                                 
                                 <div class="upload-area" id="dropZone">
                                     <div class="upload-icon">
@@ -664,7 +662,7 @@ function __($key, $lang) {
                                     <i class="bi bi-file-earmark-pdf text-danger fs-1 mb-3"></i>
                                     <h5 class="card-title"><?php echo __('general_report', $lang); ?></h5>
                                     <p class="card-text"><?php echo __('complete_asset_report', $lang); ?></p>
-                                    <a href="./Model/GeneralReport.php" target="_blank" class="btn btn-danger">
+                                    <a href="./app/Model/GeneralReport.php" target="_blank" class="btn btn-danger">
                                         <i class="bi bi-download"></i> <?php echo __('generate', $lang); ?>
                                     </a>
                                 </div>
@@ -677,7 +675,7 @@ function __($key, $lang) {
                                     <i class="bi bi-file-earmark-arrow-up text-success fs-1 mb-3"></i>
                                     <h5 class="card-title"><?php echo __('entry_certificate', $lang); ?></h5>
                                     <p class="card-text"><?php echo __('employee_entry_certificate', $lang); ?></p>
-                                    <a href="./Model/Acta_entrada.php" target="_blank" class="btn btn-success">
+                                    <a href="./app/Model/Acta_entrada.php" target="_blank" class="btn btn-success">
                                         <i class="bi bi-download"></i> <?php echo __('generate', $lang); ?>
                                     </a>
                                 </div>
@@ -690,7 +688,7 @@ function __($key, $lang) {
                                     <i class="bi bi-file-earmark-arrow-down text-warning fs-1 mb-3"></i>
                                     <h5 class="card-title"><?php echo __('departure_certificate', $lang); ?></h5>
                                     <p class="card-text"><?php echo __('employee_departure_certificate', $lang); ?></p>
-                                    <a href="./Model/Acta_salida.php" target="_blank" class="btn btn-warning">
+                                    <a href="./app/Model/Acta_salida.php" target="_blank" class="btn btn-warning">
                                         <i class="bi bi-download"></i> <?php echo __('generate', $lang); ?>
                                     </a>
                                 </div>
@@ -735,7 +733,7 @@ function __($key, $lang) {
                                         <i class="bi bi-book me-2"></i><?php echo __('user_manual', $lang); ?>
                                     </h5>
                                     <p class="card-text"><?php echo __('complete_user_guide', $lang); ?></p>
-                                    <a href="./View/Int_manual.html" target="_blank" class="btn btn-outline-primary">
+                                    <a href="./app/View/Int_manual.html" target="_blank" class="btn btn-outline-primary">
                                         <i class="bi bi-eye"></i> <?php echo __('view', $lang); ?>
                                     </a>
                                 </div>
@@ -749,7 +747,7 @@ function __($key, $lang) {
                                         <i class="bi bi-question-circle me-2"></i><?php echo __('faq', $lang); ?>
                                     </h5>
                                     <p class="card-text"><?php echo __('frequently_asked_questions', $lang); ?></p>
-                                    <a href="./View/Int_faq.php" class="btn btn-outline-primary">
+                                    <a href="./app/View/Int_faq.php" class="btn btn-outline-primary">
                                         <i class="bi bi-eye"></i> <?php echo __('view', $lang); ?>
                                     </a>
                                 </div>
@@ -762,12 +760,12 @@ function __($key, $lang) {
     </div>
 
     <!-- Scripts -->
-    <script src="./Configuration/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="./Configuration/DataTables/datatables.min.js"></script>
-    <script src="./View/Js/dashboard.js"></script>
-    <script src="./View/Js/ModalReportGeneral.js"></script>
-    <script src="./View/Js/dark-mode-toggle.js"></script>
-    <script src="./View/Js/Select_proccess.js"></script>
+    <script src="./app/Configuration/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./app/Configuration/DataTables/datatables.min.js"></script>
+    <script src="./app/View/Js/dashboard.js"></script>
+    <script src="./app/View/Js/ModalReportGeneral.js"></script>
+    <script src="./app/View/Js/dark-mode-toggle.js"></script>
+    <script src="./app/View/Js/Select_proccess.js"></script>
 
     <!-- Modal de confirmación para procesos -->
     <div id="modalConfirmacion" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; display: none;">
@@ -809,7 +807,7 @@ function __($key, $lang) {
                     </div>
                     <div class="notification-container" id="notificationHistoryContainer">
                         <?php
-                        $jsonFilePath = './Model/Logs/session_messages.json';
+                        $jsonFilePath = './app/Model/Logs/session_messages.json';
                         $alerts = [];
                         if (file_exists($jsonFilePath)) {
                             $logData = json_decode(file_get_contents($jsonFilePath), true);
@@ -862,7 +860,7 @@ function __($key, $lang) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form action="./Admin/token.php" method="POST" id="adminLoginForm">
+                <form action="./app/Admin/token.php" method="POST" id="adminLoginForm">
                     <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
                     
                     <div class="mb-3">
@@ -898,7 +896,7 @@ function __($key, $lang) {
                     </button>
                     
                     <div class="text-center mt-3">
-                        <a href="./View/Int_forgot_pasword.php" class="text-decoration-none">
+                        <a href="./app/View/Int_forgot_pasword.php" class="text-decoration-none">
                             <i class="bi bi-question-circle me-1"></i><?php echo __('forgot_password', $lang); ?>
                         </a>
                     </div>
@@ -1020,6 +1018,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (dateFilter) dateFilter.addEventListener('change', filterNotifications);
 });
 </script>
-    <?php include './View/Fragments/footer.php'; ?>
+    <?php include './app/View/Fragments/footer.php'; ?>
 </body>
 </html>
